@@ -1,0 +1,63 @@
+.signup .container{
+    width: 28%;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+form .wrapper{
+    width: 100%;
+}
+
+form .field{
+    width: 100%;
+}
+
+form .forgot{
+    color:#333;
+    text-align: right;
+    width: 95%;
+    font-size: .9em;
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
+
+form .btn-submit{
+    margin-top: 0px;
+}
+
+@media only screen and (max-width: 765px) {
+
+    .signup {
+        padding-top: 20px;
+    }
+
+    .signup .container{
+        width: 80%;
+        padding: 20px 20px;
+        margin-bottom: 10px;
+    }
+
+    form{
+        -webkit-flex-direction:column;
+	    flex-direction:column;
+    }
+
+    form .wrapper{
+        width: 100%;
+        -webkit-align-items:flex-start;
+	    align-items:flex-start;
+    }
+
+    form .field{
+        width: 90%;
+    }
+
+    form .m-field{
+        width: 100%;
+    }
+
+    form .field input{
+        width: 100%;
+    }
+
+}

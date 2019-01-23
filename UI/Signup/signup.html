@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Signup</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="../assets/imgs/icons/logo.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../Home/home.css">
+  <link rel="stylesheet" href="signup.css">
+
+</head>
+<body>
+
+    <!-- Header -->
+    <!-- Header -->
+    <header class="flex justify-between align-center card-1">
+
+            <div class="title ">
+                <a href="../Home/home.html" class="poli EBold">Poli</span><span class="tico EBold text-primary">tico</a>
+            </div>
+    
+            <nav>
+                <a href="" class="btn signup-btn">SIGNUP</a>
+                <a href="../Signin/signin.html" class="btn primary text-white shadow-1">SIGNIN</a>
+            </nav>
+    
+        </header>
+
+    <!-- Signup form -->
+    <section class="signup flex justify-center align-center">
+
+        <div class="container shadow-1">
+
+                    <div class="top flex justify-between align-end">
+                        <div class="title bold">Signup</div>
+                        <div>
+                            <span class="admin bold">Admin</span>
+                            <input type="checkbox" id="isAdmin" class="admin-check">
+                        </div>
+                    </div>
+
+                    <form class="flex justify-between" action="">
+
+                        <div class="wrapper flex column justify-between align-start">
+
+                                <div class="field flex column">
+                                    <label for="" class="">First name <span class="text-primary">*</span></label>
+                                    <input type="text" id="first-name">
+                                    <div class="error text-primary" id="first-name-error"></div>
+                                </div>
+
+                                <div class="field flex column">
+                                        <label for="" class="">Last name <span class="text-primary">*</span></label>
+                                        <input type="text" id="last-name">
+                                        <div class="error text-primary" id="last-name-error"></div>
+                                    </div>
+
+                                <div class="field flex column">
+                                        <label for="" class="">Other name <span class="text-primary">*</span></label>
+                                        <input type="text" id="other-name">
+                                        <div class="error text-primary" id="other-name-error"></div>
+                                    </div>
+
+                                <div class="field flex column">
+                                        <label for="" class="">Telephone <span class="text-primary"></span></label>
+                                        <input type="number" id="telephone">
+                                        <div class="error text-primary" id="telephone-error"></div>
+                                    </div>    
+
+                        </div>
+
+                        <div class="wrapper flex column justify-between align-end">
+                                    
+                                <div class="field flex column">
+                                        <label for="" class="">Email <span class="text-primary">*</span></label>
+                                        <input type="email" id="email">
+                                        <div class="error text-primary" id="email-error"></div>
+                                    </div>
+
+                                <div class="field flex column">
+                                        <label for="" class="">Password <span class="text-primary">*</span></label>
+                                        <input type="password" id="password" >
+                                        <div class="error text-primary" id="password-error"></div>
+                                    </div>
+
+                                <div class="field flex column">
+                                        <label for="" class="">Confirm password <span class="text-primary">*</span></label>
+                                        <input type="password" id="confirm-password">
+                                        <div class="error text-primary" id="confirm-password-error"></div>
+                                    </div>
+
+                                <div class="field m-field">
+                                        <div id="signup" class="btn btn-submit text-white primary shadow-1" onclick="signup()">SIGNUP</div>
+                                </div>
+
+                        </div>
+
+                    </form>
+
+        </div>
+
+    </section>
+
+        
+    <script src="../index.js" ></script>
+    <script src="signup.js" ></script>
+</body>
+</html>
