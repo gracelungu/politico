@@ -1,0 +1,165 @@
+body{
+    background-color: #f8f8f8;
+}
+
+header .menu{
+    display: none;
+    margin-right: 15px;
+}
+
+header .menu:hover{
+    cursor: pointer;
+}
+
+section{
+    width: 100vw;
+    height: 100vh;
+}
+
+section nav {
+    display: flex;
+    height: 100%;
+    padding: 100px 100px 20px 60px;
+    background-color: #fff;
+}
+
+section nav .title{
+    font-size: 25px;
+    padding: 20px 0 30px;
+}
+
+section nav .subtitle{
+    font-size: 16px;
+    padding: 0 0 10px;
+}
+
+section nav .subtitle:hover{
+    color: #E5323B;
+}
+
+section .settings{
+    padding: 120px 0px 0px 100px;
+}
+
+.settings .subtitle{
+    font-size: 15px;
+    padding-bottom: 20px;
+}
+
+.settings .title{
+    font-size: 30px;
+    padding-bottom: 25px;
+}
+
+.settings .profil .image{
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+    min-width: 90px;
+    background-color: transparent;
+    border-radius: 50%;
+    background-image: url("https://picsum.photos/200/300");
+    border: 2px solid #E5323B;
+    margin-right: 50px;
+}
+
+.upload{
+    margin-bottom: 20px;
+}
+
+.upload img{
+    margin-right: 10px;
+}
+
+.delete{
+    background-color: #fff;
+}
+
+.delete img{
+    margin-right: 10px;
+}
+
+.settings form{
+    padding-top: 60px;
+}
+
+form .wrapper{
+    margin-right: 70px;
+}
+
+form .field{
+    margin-bottom: 25px;
+}
+
+form .field label{
+    color: #111;
+    font-size: .9em;
+    padding-bottom: 10px;
+}
+
+form .field .error{
+    padding-top: 7px;
+    font-size: .7em;
+}
+
+form .field input{
+    padding:8px 10px;
+    width: 280px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    font-size: 1em;
+}
+
+form .save img{
+    padding-right: 10px;
+}
+
+@media only screen and (max-width: 1000px){
+
+    header .menu{
+        display: inline-block;
+    }
+
+    section nav{
+        display: none;
+        min-width: 150px;
+    }
+
+}
+
+@media only screen and (max-width: 765px){
+    
+    section{
+        overflow: hidden;
+    }
+
+    section .settings{
+        padding-left: 0;
+    }
+
+    section .settings{
+        width: 100%;
+        margin: 0 20px;
+        padding: 100px 0 0px;
+    }
+
+    .settings form{
+        width: 100%;
+        padding: 100px 0px;
+        -webkit-flex-direction:column;
+        flex-direction:column;
+    }
+
+    form .field{
+        width: 100%;
+    }
+
+    form .field input{
+        width: 250px;
+    }
+
+    form .wrapper{
+        margin: 0 auto;
+    }
+
+}

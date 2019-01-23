@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Politico</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="../assets/imgs/folder.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../Home/home.css">
+  <link rel="stylesheet" href="account.css">
+
+</head>
+<body>
+  
+    
+    <!-- Header -->
+    <header class="flex justify-between align-center card-1">
+
+        <div class="title flex align-center">
+            <img class="menu" id="menu" width="auto" height="20px" src="../assets/imgs/icons/menu.png" onclick="toggleMenu()">
+            <img width="auto" height="18px" src="../assets/imgs/folder.png" alt="">
+            <a href="../Home/home.html" class="poli EBold">Poli</span><span class="tico EBold text-primary">tico</a>
+        </div>
+
+        <nav id="nav">
+            <a href="" class="btn primary text-white shadow-1">LOGOUT</a>
+        </nav>
+
+    </header>
+
+    <section class="flex justify-start">
+
+        <!-- Navigation menu -->
+        <nav class=" column">
+            
+            <div class="title bold">Settings</div>
+
+            <a href="" class="subtitle ">Personal account</a>
+            <a href="" class="subtitle ">Manage users</a>
+
+            <div class="title bold">Parties</div>
+
+            <a href="" class="subtitle ">Create a partie</a>
+            <a href="" class="subtitle ">Political parties</a>
+
+            <div class="title bold">Offices</div>
+
+            <a href="" class="subtitle ">Create an office</a>
+            <a href="" class="subtitle ">Political offices</a>
+
+        </nav>
+
+        <!-- Account settings -->
+        <div class="settings flex column">
+
+            <div class="subtitle bold">Personal settings |</div>
+            <div class="title bold">Account</div>
+
+            <div class="profil flex ">
+                <div class="image cover"></div>
+                <div class="flex column">
+                    <div class="flex align-center btn btn-small upload primary text-white shadow-1">
+                        <img width="auto" height="15px" src="../assets/imgs/icons/upload.png" alt="">
+                        <span>UPLOAD A PICTURE</span>
+                    </div>
+                    <div>
+                        <span class="btn btn-small delete shadow-1">
+                            <img width="auto" height="15px" src="../assets/imgs/icons/delete.png" alt=""/>
+                            <span>DELETE</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <form action="" class="flex justify-between">
+
+                <div class="wrapper">
+
+                        <div class="field flex column">
+                                <label for="" class="">First name <span class="text-primary">*</span></label>
+                                <input type="text" id="first-name">
+                                <div class="error text-primary" id="first-name-error"></div>
+                            </div>
+
+                            <div class="field flex column">
+                                    <label for="" class="">Last name <span class="text-primary">*</span></label>
+                                    <input type="text" id="last-name">
+                                    <div class="error text-primary" id="last-name-error"></div>
+                                </div>
+                        
+                </div>
+
+                <div class="wrapper">
+
+                        <div class="field flex column">
+                                <label for="" class="">Other name <span class="text-primary">*</span></label>
+                                <input type="text" id="other-name">
+                                <div class="error text-primary" id="other-name-error"></div>
+                            </div>
+
+                        <div class="field flex column">
+                                <label for="" class="">Telephone <span class="text-primary"></span></label>
+                                <input type="number" id="telephone">
+                                <div class="error text-primary" id="telephone-error"></div>
+                            </div>
+
+                            <div class="flex save align-center justify-center btn primary text-white shadow-1" onclick="save()">
+                                <img width="auto" height="14px" src="../assets/imgs/icons/save.png" alt=""/>
+                                <span>SAVE SETTINGS</span>
+                            </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <script src="../index.js" ></script>
+    <script src="account.js" ></script>    
+</body>
+</html>

@@ -21,6 +21,10 @@ form .forgot{
     margin-bottom: 10px;
 }
 
+form .forgot:hover{
+    color: #E5323B;
+}
+
 form .btn-submit{
     margin-top: 0px;
 }
