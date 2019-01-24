@@ -60,10 +60,11 @@ section .settings{
     border-radius: 50%;
     background-image: url("https://picsum.photos/200/300");
     border: 2px solid #E5323B;
-    margin-right: 50px;
+    margin-right: 20px;
 }
 
 .upload{
+    min-height: 20px;
     margin-bottom: 20px;
 }
 
@@ -110,6 +111,10 @@ form .field input{
     font-size: 1em;
 }
 
+form .save{
+    margin-bottom: 20px;
+}
+
 form .save img{
     padding-right: 10px;
 }
@@ -130,7 +135,7 @@ form .save img{
 @media only screen and (max-width: 765px){
     
     section{
-        overflow: hidden;
+        overflow-x: hidden;
     }
 
     section .settings{

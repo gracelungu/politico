@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Users</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="../assets/imgs/folder.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../Home/home.css">
+  <link rel="stylesheet" href="../Account/account.css">
+  <link rel="stylesheet" href="parties.css">
+
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="flex justify-between align-center card-1">
+
+            <div class="title flex align-center">
+                <img class="menu" id="menu" width="auto" height="20px" src="../assets/imgs/icons/menu.png" onclick="toggleMenu()">
+                <img width="auto" height="18px" src="../assets/imgs/folder.png" alt="">
+                <a href="../Home/home.html" class="poli EBold">Poli</span><span class="tico EBold text-primary">tico</a>
+            </div>
+    
+            <nav id="nav">
+                <a href="" class="btn primary text-white shadow-1" >LOGOUT</a>
+            </nav>
+    
+        </header>
+
+    <!-- Navigation menu -->
+    <section class="flex justify-start">
+
+        <!-- Navigation menu -->
+        <nav class=" column">
+            
+            <div class="title bold">Settings</div>
+
+            <a href="../Account/account.html" class="subtitle ">Personal account</a>
+            <a href="" class="subtitle adminOnly1">Manage users</a>
+
+            <div class="title bold">Parties</div>
+
+            <a href="" class="subtitle adminOnly2">Create a party</a>
+            <a href="" class="subtitle active">Political parties</a>
+
+            <div class="title bold">Offices</div>
+
+            <a href="" class="subtitle adminOnly3">Create an office</a>
+            <a href="" class="subtitle ">Political offices</a>
+
+        </nav>
+
+        <div class="parties">
+
+            <div class="top flex justify-between align-start">
+                <div class="subtitle bold">Political parties |</div>
+                <div class="btn btn-small white shadow-1 flex align-center" onclick="parties.toggleCreation()">
+                    <img width="auto" height="12px" src="../assets/imgs/icons/create.png" alt=""/>    
+                    <span>CREATE A PARTY</span>
+                </div>
+            </div>
+
+            <div class="create-party" id="create-party">
+
+                <div class="top flex justify-between align-start">
+                    <div class="subtitle light">New party</div>
+                </div>
+
+                <form action="" class="flex justify-between">
+
+                <div class="party-image cover"></div>
+
+                <div class="wrapper">
+
+                    <div>
+                            <div class="field flex column">
+                                    <label for="" class="">Name <span class="text-primary">*</span></label>
+                                    <input type="text" id="name" >
+                                    <div class="error text-primary" id="name-error"></div>
+                                </div>
+    
+                            <div class="field flex column">
+                                    <label for="" class="">HQ adress <span class="text-primary">*</span></label>
+                                    <input type="text" id="adress" >
+                                    <div class="error text-primary" id="adress-error"></div>
+                                </div>
+                    </div>
+
+                </div>
+
+                <div class="buttons">
+
+                        <div class="flex upload align-center justify-center btn white shadow-1" onclick="account.saveSettings()">
+                                <img width="auto" height="14px" src="../assets/imgs/icons/upload-b.png" alt=""/>
+                                <span>LOGO</span>
+                            </div>
+
+                            <div class="flex save align-center justify-center btn primary text-white shadow-1" onclick="account.saveSettings()">
+                                    <img width="auto" height="14px" src="../assets/imgs/icons/save.png" alt=""/>
+                                    <span>SAVE</span>
+                                </div>
+                            
+                    </div>
+
+            </form>
+
+            </div>
+
+
+            <!-- Parties list -->
+            <div class="list ">
+                
+                <div class="title bold">Parties</div>
+
+                <div class="wrapper flex justify-between wrap">
+                        
+                    <div class="item shadow-1">
+                        <div class="logo"></div>
+                        <div class="details">
+                            <div class="name">AFDC</div>
+                            <div class="adress light">Ullamcorper. Street Roseville </div>
+                        </div>
+                        <div class="bottom flex justify-between">
+                            <div class="btn btn-border flex align-center">
+                                <img width="auto" height="10px" src="../assets/imgs/icons/create.png" alt=""/>
+                                <span>EDIT</span>
+                            </div>
+                            <div class="btn black text-white flex align-center">
+                                <img width="auto" height="10px" src="../assets/imgs/icons/delete-w.png" alt=""/>
+                                <span>DELETE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item shadow-1">
+                        <div class="logo"></div>
+                        <div class="details">
+                            <div class="name">AFDC</div>
+                            <div class="adress light">Ullamcorper. Street Roseville </div>
+                        </div>
+                        <div class="bottom flex justify-between">
+                            <div class="btn btn-border flex align-center">
+                                <img width="auto" height="10px" src="../assets/imgs/icons/create.png" alt=""/>
+                                <span>EDIT</span>
+                            </div>
+                            <div class="btn black text-white flex align-center">
+                                <img width="auto" height="10px" src="../assets/imgs/icons/delete-w.png" alt=""/>
+                                <span>DELETE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item shadow-1">
+                        <div class="logo"></div>
+                        <div class="details">
+                            <div class="name">AFDC</div>
+                            <div class="adress light">Ullamcorper. Street Roseville </div>
+                        </div>
+                        <div class="bottom flex justify-between">
+                            <div class="btn btn-border flex align-center">
+                                <img width="auto" height="10px" src="../assets/imgs/icons/create.png" alt=""/>
+                                <span>EDIT</span>
+                            </div>
+                            <div class="btn black text-white flex align-center">
+                                <img width="auto" height="10px" src="../assets/imgs/icons/delete-w.png" alt=""/>
+                                <span>DELETE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item shadow-1">
+                            <div class="logo"></div>
+                            <div class="details">
+                                <div class="name">AFDC</div>
+                                <div class="adress light">Ullamcorper. Street Roseville </div>
+                            </div>
+                            <div class="bottom flex justify-between">
+                                <div class="btn btn-border flex align-center">
+                                    <img width="auto" height="10px" src="../assets/imgs/icons/create.png" alt=""/>
+                                    <span>EDIT</span>
+                                </div>
+                                <div class="btn black text-white flex align-center">
+                                    <img width="auto" height="10px" src="../assets/imgs/icons/delete-w.png" alt=""/>
+                                    <span>DELETE</span>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="item shadow-1">
+                            <div class="logo"></div>
+                            <div class="details">
+                                <div class="name">AFDC</div>
+                                <div class="adress light">Ullamcorper. Street Roseville </div>
+                            </div>
+                            <div class="bottom flex justify-between">
+                                <div class="btn btn-border flex align-center">
+                                    <img width="auto" height="10px" src="../assets/imgs/icons/create.png" alt=""/>
+                                    <span>EDIT</span>
+                                </div>
+                                <div class="btn black text-white flex align-center">
+                                    <img width="auto" height="10px" src="../assets/imgs/icons/delete-w.png" alt=""/>
+                                    <span>DELETE</span>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="item shadow-1">
+                            <div class="logo"></div>
+                            <div class="details">
+                                <div class="name">AFDC</div>
+                                <div class="adress light">Ullamcorper. Street Roseville </div>
+                            </div>
+                            <div class="bottom flex justify-between">
+                                <div class="btn btn-border flex align-center">
+                                    <img width="auto" height="10px" src="../assets/imgs/icons/create.png" alt=""/>
+                                    <span>EDIT</span>
+                                </div>
+                                <div class="btn black text-white flex align-center">
+                                    <img width="auto" height="10px" src="../assets/imgs/icons/delete-w.png" alt=""/>
+                                    <span>DELETE</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        
+
+    </section>
+
+
+    <script src="../index.js" ></script>
+    <script src="parties.js" ></script>    
+</body>
+</html>

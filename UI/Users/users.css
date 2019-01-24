@@ -1,0 +1,77 @@
+section .users{
+    padding: 120px 0px 0px 100px;
+}
+
+.users .subtitle{
+    font-size: 15px;
+    padding-bottom: 20px;
+}
+
+.users .title{
+    font-size: 30px;
+    padding-bottom: 25px;
+}
+
+.users .container{
+    max-height: 100vh;
+    overflow: auto;
+}
+
+.users .list{
+    display: flex;
+    width: 50vw;
+    background-color: #eee;
+}
+
+.user .item{
+    width: 100%;
+}
+
+.users .item{
+    padding: 12px 15px;
+    background-color: #fff;
+    margin-bottom: 1px;
+}
+
+.users .item .image{
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-width: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    background-image: url("https://picsum.photos/100/100");
+    margin-right: 25px;
+}
+
+.users .info .email{
+    padding-top: 3px;
+    font-size: .9em;
+}
+
+.delete img{
+    margin-right: 5px;
+}
+
+@media only screen and (max-width: 765px){
+    
+    section .users{
+        padding: 100px 0px 0px;
+        width: 100%;
+    }
+
+    .users .title, .users .subtitle{
+        padding-left: 20px;
+    }
+
+    .users .list{
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .users .email{
+        
+    }
+
+}
