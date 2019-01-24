@@ -80,11 +80,6 @@ form .field input{
     background-color: #fff;
 }
 
-.list .item:hover{
-    cursor: pointer;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.12), 0 5px 10px 0 rgba(0,0,0,.16);
-}
-
 .list .item .logo{
     width: 30%;
     height: 150px;
