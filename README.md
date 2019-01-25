@@ -7,3 +7,6 @@ The <a href="https://github.com/gracelungu/politico/tree/feature"><b>feature</b>
 ### Github pages
 The UI is hosted from the gh-pages branch with the adress <a href="https://gracelungu.github.io/politico/UI">https://gracelungu.github.io/politico/UI</a> .
 
+#### Signup page
+Use any random email and password to access the other pages.
+
