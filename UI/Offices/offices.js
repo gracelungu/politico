@@ -60,3 +60,8 @@ class Offices{
 }
 
 let offices = new Offices();
+
+//Preview
+document.querySelector(".item").addEventListener("click", ()=>{
+    document.location.assign("../Office/office.html");
+}); 

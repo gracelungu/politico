@@ -23,9 +23,8 @@ function signin(){
 
     if(valid){
 
-        alert("valid");
-
         console.log(user);
+        document.location.assign("../Account/account.html");
 
     }
 
