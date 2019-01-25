@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.users .container{
+    overflow: visible;
+}
+
 .users .subtitle{
     padding-bottom: 10px;
 }
@@ -20,7 +24,7 @@
 
 .users .item{
     padding: 0;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .users .item .info{
@@ -62,6 +66,10 @@
 
 .users .item .vote span{
     margin-left: 8px;
+}
+
+.users .list{
+    background-color: #fff;
 }
 
 @media only screen and (max-width: 765px) {

@@ -51,7 +51,7 @@ class Toast{
     }
 
     cancel(){
-        this.toast.style.bottom = "-100px";  
+        this.toast.style.bottom = "-100px"; 
     }
 
 } 
