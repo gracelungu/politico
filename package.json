@@ -15,7 +15,7 @@
     "jasmine-node": "^1.16.2"
   },
   "scripts": {
-    "test": "jasmine V1/test/spec.js"
+    "test": "./node_modules/.bin/eslint V1/app.js && jasmine V1/test/spec.js"
   },
   "repository": {
     "type": "git",
