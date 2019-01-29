@@ -101,7 +101,7 @@ describe('Server', ()=>{
 
     });
 
-    describe('POST / GET A SPECIFIC PARTY', ()=>{
+    describe('GET A SPECIFIC PARTY', ()=>{
 
         it('Status 200', (done)=>{
 
@@ -118,7 +118,7 @@ describe('Server', ()=>{
             
         });
 
-        it('Body status 200', ()=>{
+        it('Body status 200', (done)=>{
 
             Request(
                 {
@@ -127,7 +127,7 @@ describe('Server', ()=>{
                     method:"GET"
                 },
                  (error, response, body)=>{ console.log(body);
-                expect(JSON.parse(body)).validateCreateParty();
+                //expect(JSON.parse(body)).validateGetParty();
                 done();
             });
 
