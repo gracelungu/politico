@@ -4,18 +4,24 @@
   "description": "A web-application that enables citizens give their mandate to politicians running for different government offices",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "karma": "^4.0.0",
+    "karma-cli": "^2.0.0",
+    "karma-jasmine": "^2.0.1",
     "request": "^2.88.0"
   },
   "devDependencies": {
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.15.0",
+    "istanbul": "^0.4.5",
     "jasmine": "^3.3.1",
     "jasmine-node": "^1.16.2"
   },
   "scripts": {
-    "test": "./node_modules/.bin/eslint V1/app.js && jasmine V1/test/spec.js"
+    "test": " jasmine ",
+    "start": "nodemon V1/app.js"
   },
   "repository": {
     "type": "git",

@@ -1,10 +1,26 @@
+// External modules
 const express = require('express');
+const bodyParser = require('body-parser');
+
+// Internal modules
+const userController = require('../V1/routes/user');
+const partyController = require('../V1/routes/party');
+const officeController = require('../V1/routes/office');
+
+// Express setup
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.status(200).send('hello');
-});
+// support parsing of application/json type post data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+
+// Express routing
+
+app.use('/',partyController);
+
+
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => console.log(`Listening on port ${port}...`));
