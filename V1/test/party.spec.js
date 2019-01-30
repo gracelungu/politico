@@ -5,6 +5,7 @@ const schema = require('../utils/schema');
 describe('Server', ()=>{
 
     var server;
+    var originalTimeout;
 
     beforeAll(()=>{
         server = require('../app'); 
@@ -16,7 +17,23 @@ describe('Server', ()=>{
 
     beforeEach(()=>{
 
+        //Increase the original timeout
+        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+
         jasmine.addMatchers({
+            toBeJsonString: ()=>{
+                return{
+                    compare: (actual,expected)=>{
+                        try{
+                            JSON.parse(actual);
+                        }catch(e){
+                            return {pass:false,message:"Expected body to be a json string"};
+                        }
+                        return {pass:true};
+                    }
+                }
+            },
             validateCreateParty : ()=>{
                 return {
                     compare : (actual, expected) => { 
@@ -39,22 +56,46 @@ describe('Server', ()=>{
                             data:'array'
                         },actual);
                         if(partySchema.passed == false){
+                            var partySchemaData = schema({
+                                id:"integer",
+                                name:"string",
+                                logoUrl:"string"
+                            },actual.data);
+                            if(partySchemaData.passed == false){
+                                return {pass:false,message:partySchema.message};
+                            }
                             return {pass:false,message:partySchema.message};
                         }
-                        var partySchemaData = schema({
-                            id:"integer",
-                            name:"string",
-                            logoUrl:"string"
-                        },actual.data);
-                        if(partySchemaData.passed == false){
+                        return {pass:true}
+                    }
+                }
+            },
+            validateDeleteParty: ()=> {
+                return{
+                    compare: (actual, expected)=>{
+                        var partySchema = schema({
+                            status:'integer',
+                            data:'array'
+                        },actual);
+                        if(partySchema.passed == false){
+                            var partySchemaData = schema({
+                                message:"string"
+                            },actual.data);
+                            if(partySchemaData.passed == false){
+                                return {pass:false,message:partySchema.message};
+                            }
                             return {pass:false,message:partySchema.message};
                         }
                         return {pass:true}
                     }
                 }
             }
-        })
+        });
 
+    });
+
+    afterEach(()=> {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
 
     describe('POST / CREATE A PARTY', ()=>{
@@ -66,7 +107,7 @@ describe('Server', ()=>{
             logoUrl:"logourl"
         };
 
-        it('Status 200', (done)=>{
+        it('Body status 200', (done)=>{
 
             Request(
                 {
@@ -74,12 +115,41 @@ describe('Server', ()=>{
                     url:base_url+'/parties',
                     method:"POST",
                     body:JSON.stringify(raw_data)
-                }, 
-                (error, response, body)=>{ 
-                expect(response.statusCode).toBe(200);
+                },
+                (error, response, body)=>{ console.log("POST ",body);
+
+                expect(body).toBeJsonString(body);
+
+                body = JSON.parse(body);
+
+                expect(body.status).toBe(200);
+                expect(body).validateCreateParty();
                 done();
+
             });
             
+        });
+
+        it('Body status 200', (done)=>{
+
+            Request(
+                {
+                    headers: {'content-type' : 'application/json'},
+                    url:base_url+'/parties/1',
+                    method:"DELETE"
+                },
+                (error, response, body)=>{ console.log("DELETE", body);
+
+                expect(body).toBeJsonString(body);
+                
+                body = JSON.parse(body);
+
+                expect(body.status).toBe(200);
+                expect(body).validateDeleteParty();
+                done();
+
+            });
+
         });
 
         it('Body status 200', (done)=>{
@@ -91,9 +161,16 @@ describe('Server', ()=>{
                     method:"POST",
                     body:JSON.stringify(raw_data)
                 },
-                 (error, response, body)=>{ console.log(body);
-                expect(JSON.parse(body)).validateCreateParty();
+                (error, response, body)=>{ console.log("POST ",body);
+
+                expect(body).toBeJsonString(body);
+
+                body = JSON.parse(body);
+
+                expect(body.status).toBe(200);
+                expect(body).validateCreateParty();
                 done();
+
             });
             
         });
@@ -103,21 +180,6 @@ describe('Server', ()=>{
 
     describe('GET A SPECIFIC PARTY', ()=>{
 
-        it('Status 200', (done)=>{
-
-            Request(
-                {
-                    headers: {'content-type' : 'application/json'},
-                    url:base_url+'/parties/1',
-                    method:"GET"
-                }, 
-                (error, response, body)=>{ 
-                expect(response.statusCode).toBe(200);
-                done();
-            });
-            
-        });
-
         it('Body status 200', (done)=>{
 
             Request(
@@ -126,13 +188,78 @@ describe('Server', ()=>{
                     url:base_url+'/parties/1',
                     method:"GET"
                 },
-                 (error, response, body)=>{ console.log(body);
-                //expect(JSON.parse(body)).validateGetParty();
+                (error, response, body)=>{ console.log("GET ",body);
+
+                expect(body).toBeJsonString(body);
+                
+                body = JSON.parse(body);
+
+                expect(body.status).toBe(200);
+                expect(body).validateGetParty();
                 done();
+
             });
 
         });
 
     });
+
+    describe('GET ALL PARTIES', ()=>{
+
+        it('Body status 200', (done)=>{
+
+            Request(
+                {
+                    headers: {'content-type' : 'application/json'},
+                    url:base_url+'/parties',
+                    method:"GET"
+                },
+                (error, response, body)=>{ console.log("GET ALL", body);
+
+                expect(body).toBeJsonString(body);
+                
+                body = JSON.parse(body);
+
+                expect(body.status).toBe(200);
+                expect(body).validateCreateParty();
+                done();
+
+            });
+
+        });
+
+    });
+
+    describe('EDIT A PARTY', ()=>{
+
+        it('Body status 200', (done)=>{
+
+            let raw_data = {
+                name: "newName"
+            }
+
+            Request(
+                {
+                    headers: {'content-type' : 'application/json'},
+                    url:base_url+'/parties/1/name',
+                    method:"PATCH",
+                    body:JSON.stringify(raw_data)
+                },
+                (error, response, body)=>{ console.log("EDIT", body);
+
+                expect(body).toBeJsonString(body);
+                
+                body = JSON.parse(body);
+
+                expect(body.status).toBe(200);
+                expect(body).validateCreateParty();
+                done();
+
+            });
+
+        });
+
+    });
+
 
 });

@@ -5,6 +5,73 @@ const schema = require('../utils/schema');
 
 var Parties = [];
 
+//Delete a specific party
+router.delete('/api/v1/parties/:id', (req, res) => {
+
+  for(p in Parties){
+    if(Parties[p].id == req.params.id){
+
+      Parties.splice(p,1);
+
+      res.status(200).json({
+        status:200,
+        data: [{
+          message: "The party was successfully deleted"
+        }]
+      });
+
+    }
+  }
+
+});
+
+//Edit a specific party
+router.patch('/api/v1/parties/:id/name', (req, res) => {
+
+  var name = schema({
+    name:"string"
+  },req.body);
+
+  if(name.passed == false){
+    res.status(400).json({
+      status:400,
+      error:name.message
+    });
+    return;
+  }
+
+  for(p of Parties){
+    if(p.id == req.params.id){
+
+      p.name = req.body.name;
+
+      res.status(200).json({
+        status:200,
+        data: [{
+          id: p.id,
+          name: p.name
+        }]
+      });
+
+      return;
+
+    }
+  }
+
+  
+
+});
+
+//Get all parties
+router.get('/api/v1/parties', (req, res) => {
+
+  res.status(200).json({
+    status:200,
+    data: Parties
+  })
+
+});
+
 //Get a specific party
 router.get('/api/v1/parties/:id', (req, res) => {
 
