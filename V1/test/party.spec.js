@@ -8,7 +8,7 @@ describe('Server', ()=>{
     var originalTimeout;
 
     beforeAll(()=>{
-        server = require('../app'); 
+        server = require('../app');
     });
 
     afterAll(()=>{
@@ -17,9 +17,8 @@ describe('Server', ()=>{
 
     beforeEach(()=>{
 
-        //Increase the original timeout
         originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
         jasmine.addMatchers({
             toBeJsonString: ()=>{
@@ -94,11 +93,11 @@ describe('Server', ()=>{
 
     });
 
-    afterEach(()=> {
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    afterEach(()=>{
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
 
-    describe('POST / CREATE A PARTY', ()=>{
+    describe('POST', ()=>{
 
         var raw_data = {
             id:1,
@@ -127,84 +126,56 @@ describe('Server', ()=>{
                 done();
 
             });
-            
-        });
-
-        it('Body status 200', (done)=>{
-
-            Request(
-                {
-                    headers: {'content-type' : 'application/json'},
-                    url:base_url+'/parties/1',
-                    method:"DELETE"
-                },
-                (error, response, body)=>{ console.log("DELETE", body);
-
-                expect(body).toBeJsonString(body);
-                
-                body = JSON.parse(body);
-
-                expect(body.status).toBe(200);
-                expect(body).validateDeleteParty();
-                done();
-
-            });
-
-        });
-
-        it('Body status 200', (done)=>{
-
-            Request(
-                {
-                    headers: {'content-type' : 'application/json'},
-                    url:base_url+'/parties',
-                    method:"POST",
-                    body:JSON.stringify(raw_data)
-                },
-                (error, response, body)=>{ console.log("POST ",body);
-
-                expect(body).toBeJsonString(body);
-
-                body = JSON.parse(body);
-
-                expect(body.status).toBe(200);
-                expect(body).validateCreateParty();
-                done();
-
-            });
-            
-        });
-
-
-    });
-
-    describe('GET A SPECIFIC PARTY', ()=>{
-
-        it('Body status 200', (done)=>{
-
-            Request(
-                {
-                    headers: {'content-type' : 'application/json'},
-                    url:base_url+'/parties/1',
-                    method:"GET"
-                },
-                (error, response, body)=>{ console.log("GET ",body);
-
-                expect(body).toBeJsonString(body);
-                
-                body = JSON.parse(body);
-
-                expect(body.status).toBe(200);
-                expect(body).validateGetParty();
-                done();
-
-            });
 
         });
 
     });
 
-    describe('GET ALL PARTIES', ()=>{
+    describe('GET /', ()=>{
+
+        it('Body status 200', (done)=>{
+
+            async function call(){
+
+                await Request(
+                    {
+                        headers: {'content-type' : 'application/json'},
+                        url:base_url+'/parties',
+                        method:"POST",
+                        body:JSON.stringify({
+                            id:1,
+                            name:"AFDC",
+                            hqAdress:"adress",
+                            logoUrl:"logourl"
+                        })
+                    },()=>{console.log('POST 2')});
+                    
+                Request(
+                    {
+                        headers: {'content-type' : 'application/json'},
+                        url:base_url+'/parties/1',
+                        method:"GET"
+                    },
+                    (error, response, body)=>{ console.log("GET ",body);
+    
+                    expect(body).toBeJsonString(body);
+                    
+                    body = JSON.parse(body);
+    
+                    expect(body.status).toBe(200);
+                    expect(body).validateGetParty();
+                    done();
+    
+                });
+
+            }call();
+
+        });
+
+    });
+
+
+    describe('GET ', ()=>{
 
         it('Body status 200', (done)=>{
 
@@ -230,7 +201,7 @@ describe('Server', ()=>{
 
     });
 
-    describe('EDIT A PARTY', ()=>{
+    describe('PATCH /',()=>{
 
         it('Body status 200', (done)=>{
 
@@ -261,5 +232,33 @@ describe('Server', ()=>{
 
     });
 
+    describe('POST / CREATE A PARTY', ()=>{
+
+        it('Body status 200', (done)=>{
+
+            Request(
+                {
+                    headers: {'content-type' : 'application/json'},
+                    url:base_url+'/parties/1',
+                    method:"DELETE"
+                },
+                (error, response, body)=>{ console.log("DELETE", body);
+    
+                expect(body).toBeJsonString(body);
+                
+                body = JSON.parse(body);
+    
+                expect(body.status).toBe(200);
+                expect(body).validateDeleteParty();
+                done();
+    
+            });
+    
+        });
+
+    });
+    
 
 });
+
+
