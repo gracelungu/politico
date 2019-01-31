@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Express routing
 
 app.use('/',partyController);
+app.use('/',officeController);
 
 
 

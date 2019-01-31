@@ -20,7 +20,7 @@
     "jasmine-node": "^1.16.2"
   },
   "scripts": {
-    "test": " jasmine ",
+    "test": " jasmine V1/test/party.spec.js ",
     "start": "nodemon V1/app.js"
   },
   "repository": {
