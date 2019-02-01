@@ -4,8 +4,7 @@ node_js:
   - "stable"
 install:
   - npm install -g codecov
-  - npm install jasmine -g
-  - npm install istanbul -g
+  - npm install jasmine istanbul request -g
 script:
   - istanbul cover jasmine
   - codecov
