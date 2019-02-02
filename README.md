@@ -1,10 +1,4 @@
-<p>
-
-<a href='https://travis-ci.com/gracelungu/politico'><img src='https://travis-ci.com/gracelungu/politico.svg?branch=Api' alt='Build status' /></a>
-
-<a href='https://coveralls.io/github/gracelungu/politico?branch=Api'><img src='https://coveralls.io/repos/github/gracelungu/politico/badge.svg?branch=Api' alt='Coverage Status' /></a>
-
-</p>
+<p> <a href='https://travis-ci.com/gracelungu/politico'><img src='https://travis-ci.com/gracelungu/politico.svg?branch=Api' alt='Build status' /></a>   <a href='https://coveralls.io/github/gracelungu/politico?branch=Api'><img src='https://coveralls.io/repos/github/gracelungu/politico/badge.svg?branch=Api' alt='Coverage Status' /></a> </p>
 
 # Politico
 A web-application that enables citizens give their mandate to politicians running for different government offices
