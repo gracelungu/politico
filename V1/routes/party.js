@@ -1,134 +1,122 @@
 const express = require('express');
+
 const router = express.Router();
 
 const schema = require('../utils/schema');
 
-var Parties = [];
+const Parties = [];
 
-//Delete a specific party
+// Delete a specific party
 router.delete('/api/v1/parties/:id', (req, res) => {
-
-  for(p in Parties){
-    if(Parties[p].id == req.params.id){
-
-      Parties.splice(p,1);
+  Parties.forEach((item, index) => {
+    if (item.id === req.params.id) {
+      Parties.splice(index, 1);
 
       res.status(200).json({
-        status:200,
+        status: 200,
         data: [{
-          message: "The party was successfully deleted"
-        }]
+          message: 'The party was successfully deleted',
+        }],
       });
-
     }
-  }
-
+  });
 });
 
-//Edit a specific party
+// Edit a specific party name
 router.patch('/api/v1/parties/:id/name', (req, res) => {
+  const nameSchema = schema({
+    name: 'string',
+  }, req.body);
 
-  var name = schema({
-    name:"string"
-  },req.body);
-
-  if(name.passed == false){
+  if (nameSchema.passed === false) {
     res.status(400).json({
-      status:400,
-      error:name.message
+      status: 400,
+      error: nameSchema.message,
     });
     return;
   }
 
-  for(p of Parties){
-    if(p.id == req.params.id){
-
-      p.name = req.body.name;
+  Parties.forEach((p, index) => {
+    if (p.id === req.params.id) {
+      Parties[index].name = req.body.name;
 
       res.status(200).json({
-        status:200,
+        status: 200,
         data: [{
           id: p.id,
-          name: p.name
-        }]
+          name: p.name,
+        }],
       });
-
-      return;
-
     }
-  }
+  });
 
-  
-
+  res.status(404).json({
+    status: 404,
+    error: 'Party not found',
+  });
 });
 
-//Get all parties
+// Get all parties
 router.get('/api/v1/parties', (req, res) => {
-
   res.status(200).json({
-    status:200,
-    data: Parties
-  })
-
+    status: 200,
+    data: Parties,
+  });
 });
 
-//Get a specific party
+// Get a specific party
 router.get('/api/v1/parties/:id', (req, res) => {
+  let party;
 
-  let party ; 
-
-  for(p of Parties){
-    if(p.id == req.params.id){
+  Parties.forEach((p) => {
+    if (p.id === req.params.id) {
       party = p;
       delete party.hqAdress;
     }
-  }
+  });
 
-  if(party == undefined){
+  if (party === undefined) {
     res.status(404).json({
-      status:404,
-      error: "Party not found"
+      status: 404,
+      error: 'Party not found',
     });
     return;
   }
 
   res.status(200).json({
-    status:200,
-    data:[party]
-  })
-
+    status: 200,
+    data: [party],
+  });
 });
 
-//Create a new party 
+// Create a new party
 router.post('/api/v1/parties', (req, res) => {
+  // Validate the request
+  const partySchema = schema({
+    id: 'integer',
+    name: 'string',
+    hqAdress: 'string',
+    logoUrl: 'string',
+  }, req.body);
 
-  //Validate the request
-  var partySchema = schema({
-    id:'integer',
-    name:'string',
-    hqAdress:'string',
-    logoUrl:'string'
-  },req.body);
-
-  if(partySchema.passed == false){
+  if (partySchema.passed === false) {
     res.status(400).json({
-      status:400,
-      error:partySchema.message
+      status: 400,
+      error: partySchema.message,
     });
     return;
   }
 
-  //Add new party
+  // Add new party
   Parties.push(req.body);
 
   res.status(200).json({
-    status : 200,
-    data : [{
-      id:req.body.id,
-      name:req.body.name
-    }]
+    status: 200,
+    data: [{
+      id: req.body.id,
+      name: req.body.name,
+    }],
   });
-
 });
 
 module.exports = router;
