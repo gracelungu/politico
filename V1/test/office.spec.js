@@ -12,8 +12,6 @@ describe('Server', ()=>{
     });
 
     afterAll(()=>{
-        // server.close();
-        // console.log("server closed");
     });
 
     beforeEach(()=>{
