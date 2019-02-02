@@ -3,8 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // Internal modules
-const partyController = require('../V1/routes/party');
-const officeController = require('../V1/routes/office');
+const partyController = require('./V1/routes/party');
+const officeController = require('./V1/routes/office');
 
 // Express setup
 const app = express();

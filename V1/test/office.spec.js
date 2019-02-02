@@ -4,7 +4,7 @@ const baseUrl = 'http://localhost:3000/api/v1';
 const schema = require('../utils/schema');
 
 // Starts the server
-require('../app');
+require('../../app');
 
 describe('Server', () => {
   beforeEach(() => {
