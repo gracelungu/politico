@@ -101,7 +101,7 @@ describe('Server', ()=>{
 
     describe('POST', ()=>{
 
-        it('Creates and gets an office', (done)=>{
+        it('Create a party', (done)=>{
 
             Request(
                     {

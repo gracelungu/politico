@@ -1,3 +1,3 @@
 # Travis build
-[![Build Status](https://travis-ci.org/gracelungu/politico.svg?branch=master)](https://travis-ci.org/gracelungu/politico)
+[![Coverage Status](https://coveralls.io/repos/gracelungu/politico/badge.svg?branch=Api)](https://coveralls.io/r/gracelungu/politico?branch=Api)
 
