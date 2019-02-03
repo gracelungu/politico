@@ -12,7 +12,11 @@ The UI is hosted from the gh-pages branch with the adress <a href="https://grace
 #### Signup page
 Use any random email and password to access the other pages.
 
+## Api
+The version v1 of the api can be found under <a href="https://github.com/gracelungu/politico/tree/Api">the api branch</a>
 
+### Heroku
+The application is hosted on heroku and can be found at <a href="https://politico-api-service.herokuapp.com/">https://politico-api-service.herokuapp.com/</a>
 
 
 
