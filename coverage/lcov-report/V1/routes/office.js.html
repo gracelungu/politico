@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">83.33% </span>
+        <span class="strong">85.71% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>20/24</span>
+        <span class='fraction'>18/21</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">83.33% </span>
+        <span class="strong">85.71% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>20/24</span>
+        <span class='fraction'>18/21</span>
       </div>
     </div>
   </div>
@@ -102,18 +102,8 @@
 57
 58
 59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+60</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -122,24 +112,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,7 +130,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,9 +137,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,84 +160,73 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
+&nbsp;
 const router = express.Router();
 &nbsp;
 const schema = require('../utils/schema');
 &nbsp;
-var Offices = [];
+const Offices = [];
 &nbsp;
-//Get a specific office
+// Get a specific office
 router.get('/api/v1/offices/:id', (req, res) =&gt; {
+  let office;
 &nbsp;
-    let office ; 
-  
-    for(o of Offices){
-      <span class="missing-if-branch" title="else path not taken" >E</span>if(o.id == req.params.id){
-        office = o;
-        delete office.hqAdress;
-      }
+  Offices.forEach((o) =&gt; {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (o.id === req.params.id) {
+<span class="cstat-no" title="statement not covered" >      office = o;</span>
     }
-  
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(office == undefined){
-<span class="cstat-no" title="statement not covered" >      res.status(404).json({</span>
-        status:404,
-        error: "office not found"
-      });
-<span class="cstat-no" title="statement not covered" >      return;</span>
-    }
-  
-    res.status(200).json({
-      status:200,
-      data:[office]
-    })
-  
   });
 &nbsp;
-//Get all offices
-router.get('/api/v1/offices', (req, res) =&gt; {
-&nbsp;
-    res.status(200).json({
-      status:200,
-      data: Offices
-    })
-  
-  });
-&nbsp;
-//Create an office
-router.post('/api/v1/offices',(req, res)=&gt;{
-&nbsp;
-    var officeSchema = schema({
-        id:'integer',
-        type:'string',
-        name:'string'
-    },req.body);
-&nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if(officeSchema.passed == false){
-<span class="cstat-no" title="statement not covered" >        res.status(400).json({</span>
-            status:400,
-            error:officeSchema.message
-        });
-<span class="cstat-no" title="statement not covered" >        return;</span>
-    }
-&nbsp;
-    Offices.push(req.body);
-&nbsp;
-    res.status(200).json({
-        status:200,
-        data:[req.body]
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (office === undefined) {
+    res.status(404).json({
+      status: 404,
+      error: 'office not found',
     });
-&nbsp;
+  }
 });
 &nbsp;
-module.exports = router;</pre></td></tr>
+// Get all offices
+router.get('/api/v1/offices', (req, res) =&gt; {
+  res.status(200).json({
+    status: 200,
+    data: Offices,
+  });
+});
+&nbsp;
+// Create an office
+router.post('/api/v1/offices', (req, res) =&gt; {
+  const officeSchema = schema({
+    id: 'integer',
+    type: 'string',
+    name: 'string',
+  }, req.body);
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (officeSchema.passed === false) {
+<span class="cstat-no" title="statement not covered" >    res.status(400).json({</span>
+      status: 400,
+      error: officeSchema.message,
+    });
+<span class="cstat-no" title="statement not covered" >    return;</span>
+  }
+&nbsp;
+  Offices.push(req.body);
+&nbsp;
+  res.status(200).json({
+    status: 200,
+    data: [req.body],
+  });
+});
+&nbsp;
+module.exports = router;
+&nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Feb 02 2019 10:56:28 GMT+0300 (East Africa Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Feb 02 2019 20:11:43 GMT+0300 (East Africa Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

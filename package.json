@@ -2,9 +2,10 @@
   "name": "politico",
   "version": "1.0.0",
   "description": "A web-application that enables citizens give their mandate to politicians running for different government offices",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "eslint-config-airbnb": "^17.1.0",
     "express": "^4.16.4",
     "karma": "^4.0.0",
     "karma-cli": "^2.0.0",
@@ -13,18 +14,18 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
-    "eslint": "^5.12.1",
+    "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-import": "^2.16.0",
     "istanbul": "^0.4.5",
     "jasmine": "^3.3.1",
     "jasmine-node": "^1.16.2",
     "jest": "^24.0.0"
   },
   "scripts": {
-    "test": " jasmine  ",
+    "test": "./node_modules/.bin/eslint V1 && jasmine ",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "start": "nodemon V1/app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
