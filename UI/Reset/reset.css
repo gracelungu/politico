@@ -1,0 +1,23 @@
+.signup .top{
+    padding-bottom: 20px;
+}
+
+form .reset-message{
+    padding-bottom: 20px;
+}
+
+form .send-email{
+    margin-bottom: 20px;
+}
+
+form .subtitle{
+    padding-bottom: 15px;
+}
+
+#mail, #reset{
+    width: 100%;
+}
+
+#reset{
+    display: none;
+}
