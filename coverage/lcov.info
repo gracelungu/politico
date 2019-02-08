@@ -61,7 +61,7 @@ BRF:26
 BRH:13
 end_of_record
 TN:
-SF:/Volumes/Extension/projects/politico/V1/app.js
+SF:/Volumes/Extension/projects/politico/app.js
 FNF:0
 FNH:0
 DA:2,1
@@ -154,7 +154,7 @@ DA:7,1
 DA:10,1
 DA:11,1
 DA:13,1
-DA:14,1
+DA:14,0
 DA:15,0
 DA:19,1
 DA:20,1
@@ -169,13 +169,13 @@ DA:51,1
 DA:53,1
 DA:59,1
 LF:21
-LH:18
+LH:17
 BRDA:14,1,0,0
-BRDA:14,1,1,1
+BRDA:14,1,1,0
 BRDA:19,2,0,1
 BRDA:19,2,1,0
 BRDA:43,3,0,0
 BRDA:43,3,1,1
 BRF:6
-BRH:3
+BRH:2
 end_of_record
