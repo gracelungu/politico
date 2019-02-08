@@ -19,7 +19,7 @@ app.use('/', partyController);
 app.use('/', officeController);
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3003;
 const server = app.listen(port);
 
 module.exports = server;
