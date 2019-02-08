@@ -1,6 +1,6 @@
 class User {
 
-    constructor(firstname, lastname, othername, telephone = '', email, password, isAdmin = false){
+    constructor(firstname, lastname, othername, telephone = '', email, password){
         this.firstname = firstname;
         this.lastname = lastname;
         this.othername = othername;
@@ -8,7 +8,6 @@ class User {
         this.passportUrl = '';
         this.email = email;
         this.password = password;
-        this.isAdmin = isAdmin;
     }
 
     validate(confrimPassword){
@@ -78,8 +77,7 @@ function signup(){
         Element("other-name").value,
         Element("telephone").value,
         Element("email").value,
-        Element("password").value,
-        Element("isAdmin").checked
+        Element("password").value
     );
 
     if(user.validate(Element("confirm-password").value)){
