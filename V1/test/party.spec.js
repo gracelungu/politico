@@ -1,6 +1,6 @@
 const Request = require('request');
 
-const baseUrl = 'http://localhost:3000/api/v1';
+const baseUrl = 'http://localhost:3003/api/v1';
 const schema = require('../utils/schema');
 
 describe('Server', () => {
