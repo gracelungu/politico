@@ -10,7 +10,7 @@ before_script:
   - ./cc-test-reporter before-build
 after_success: 'npm run coveralls'
 script:
-  - nyc --reporter=lcov yarn run unit
+  - nyc --reporter=lcov 
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
