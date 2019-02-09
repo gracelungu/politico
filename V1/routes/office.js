@@ -1,8 +1,7 @@
-const express = require('express');
+import express from 'express';
+import schema from '../utils/schema';
 
 const router = express.Router();
-
-const schema = require('../utils/schema');
 
 const Offices = [];
 

@@ -57,7 +57,6 @@ describe('Server', () => {
   });
 
   describe('POST /', () => {
-    
     it('Should create an office', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
@@ -74,8 +73,6 @@ describe('Server', () => {
         expect(JSON.parse(body)).validateCreateOffice();
         done();
       });
-      
-      
     });
 
     it('Should return 400', (done) => {
@@ -94,7 +91,6 @@ describe('Server', () => {
         done();
       });
     });
-    
   });
 
   describe('GET /', () => {
@@ -114,7 +110,6 @@ describe('Server', () => {
   });
 
   describe('GET /', () => {
-  
     it('Should get a specific office', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
@@ -130,7 +125,7 @@ describe('Server', () => {
         done();
       });
     });
-    
+
     it('Should return 404', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
@@ -143,7 +138,5 @@ describe('Server', () => {
         done();
       });
     });
-
   });
-
 });
