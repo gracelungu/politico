@@ -10,6 +10,7 @@ const Parties = [];
 router.delete('/api/v1/parties/:id', (req, res) => {
   Parties.forEach((item, index) => {
     if (item.id === req.params.id) {
+
       Parties.splice(index, 1);
 
       res.status(200).json({
@@ -18,8 +19,15 @@ router.delete('/api/v1/parties/:id', (req, res) => {
           message: 'The party was successfully deleted',
         }],
       });
+      return;
     }
   });
+
+  res.status(404).json({
+    status: 404,
+    error: 'Party not found',
+  });
+
 });
 
 // Edit a specific party name
@@ -91,6 +99,7 @@ router.get('/api/v1/parties/:id', (req, res) => {
 
 // Create a new party
 router.post('/api/v1/parties', (req, res) => {
+
   // Validate the request
   const partySchema = schema({
     id: 'integer',

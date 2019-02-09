@@ -26,7 +26,7 @@
   "scripts": {
     "test": "./node_modules/.bin/eslint V1 && jasmine ",
     "coveralls": "istanbul cover jasmine --captureExceptions && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
