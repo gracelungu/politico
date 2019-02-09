@@ -1,6 +1,7 @@
 // External modules
-const express = require('express');
-const bodyParser = require('body-parser');
+
+import express from 'express';
+import bodyParser from 'body-parser';
 
 // Internal modules
 const partyController = require('./V1/routes/party');
