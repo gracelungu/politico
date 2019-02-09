@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Account</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="../assets/imgs/folder.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../Home/home.css">
+  <link rel="stylesheet" href="account.css">
+
+</head>
+<body>
+
+    
+    <!-- Header -->
+    <header class="flex justify-between align-center card-1">
+
+        <div class="title flex align-center">
+            <img class="menu" id="menu" width="auto" height="20px" src="../assets/imgs/icons/menu.png" onclick="toggleMenu()">
+            <img width="auto" height="18px" src="../assets/imgs/folder.png" alt="">
+            <a href="../Home/home.html" class="poli EBold">Poli</span><span class="tico EBold text-primary">tico</a>
+        </div>
+
+        <nav id="nav">
+            <a href="" class="btn primary text-white shadow-1" >LOGOUT</a>
+        </nav>
+
+    </header>
+
+    <section class="flex justify-start">
+
+        <!-- Navigation menu -->
+        <nav class=" column">
+            
+            <div class="title bold">Settings</div>
+
+            <a href="" class="subtitle active">Personal account</a>
+            <a href="../Users/users.html" class="subtitle adminOnly1">Manage users</a>
+            <a href="../Reset/reset.html" class="subtitle ">Reset password</a>
+
+            <div f class="title bold">Parties</div>
+
+            <a href="../Parties/parties.html" class="subtitle ">Political parties</a>
+
+            <div class="title bold">Offices</div>
+
+            <a href="../Offices/offices.html" class="subtitle ">Political offices</a>
+
+        </nav>
+
+        <!-- Account settings -->
+        <div class="settings flex column">
+
+            <div class="flex top justify-between">
+                <div class="subtitle bold">Personal settings | </div>
+            </div>    
+
+            <div class="title bold">Account</div>
+
+            <div class="profile flex ">
+                <div class="flex details">
+                    <div class="image cover"></div>
+                    <div class="info">
+                        <div class="name bold">Grace lungu</div>
+                        <div class="light">Birindwa</div>
+                    </div>
+                </div>
+                <div class="flex column">
+                    <div class="flex align-center btn btn-small upload primary text-white shadow-1">
+                        <img width="auto" height="15px" src="../assets/imgs/icons/upload.png" alt="">
+                        <span>UPLOAD A PICTURE</span>
+                    </div>
+                    <div>
+                        <span class="btn btn-small delete shadow-1" >
+                            <img width="auto" height="15px" src="../assets/imgs/icons/delete.png" alt=""/>
+                            <span>DELETE</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List of the candidates the user has voted for -->
+            <div class="candidates">
+
+                <div class="subtitle bold">Candidates | <span class="light">The list of the candidates you have voted for.</span></div>
+
+                <div class="list">
+                    
+                    <div class="candidate">
+
+                    <div class="bold office">Prime minister's office :</div>
+
+                    <div class="item shadow-1  flex justify-between align-center">
+
+                    <div class="info flex justify-between">
+
+                        <div class="flex">
+                            <div class="image"></div>
+                            <div class="flex column">
+                                <div class="name bold">Karen Castillo </div>
+                                <div class="email light">Karie</div>
+                            </div>
+                        </div>
+
+                        <div class="flex">
+                            <div class="votes flex align-center primary text-white">
+                                <span class="EBold">12</span>
+                                <img  width="auto" height="22px" src="../assets/imgs/icons/votes.png" alt=""/> 
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+            </div>
+
+                    </div>
+
+
+                <div class="candidate">
+
+                    <div class="bold office">Another office :</div>
+
+                    <div class="item shadow-1  flex justify-between align-center">
+
+                    <div class="info flex justify-between">
+
+                        <div class="flex">
+                            <div class="image"></div>
+                            <div class="flex column">
+                                <div class="name bold">Dorothy Maldonado</div>
+                                <div class="email light">Dorte</div>
+                            </div>
+                        </div>
+
+                        <div class="flex">
+                            <div class="votes flex align-center primary text-white">
+                                <span class="EBold">10</span>
+                                <img  width="auto" height="22px" src="../assets/imgs/icons/votes.png" alt=""/> 
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+            </div>
+
+                    </div>
+
+
+                <div class="candidate">
+
+                    <div class="bold office">Another office :</div>
+
+                    <div class="item shadow-1  flex justify-between align-center">
+
+                    <div class="info flex justify-between">
+
+                        <div class="flex">
+                            <div class="image"></div>
+                            <div class="flex column">
+                                <div class="name bold">Scarlet Mcmillan</div>
+                                <div class="email light">Fowler</div>
+                            </div>
+                        </div>
+
+                        <div class="flex">
+                            <div class="votes flex align-center primary text-white">
+                                <span class="EBold">16</span>
+                                <img  width="auto" height="22px" src="../assets/imgs/icons/votes.png" alt=""/> 
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+            </div>
+
+                    </div>
+
+                </div>
+                    
+            </div>
+
+            <!-- The user's personal informations -->
+            <div class="subtitle bold personal">Personal details |</div>
+
+            <form action="" class="flex justify-between">
+
+                <div class="wrapper">
+
+                        <div class="field flex column">
+                                <label for="" class="">First name <span class="text-primary">*</span></label>
+                                <input type="text" id="first-name" value="grace">
+                                <div class="error text-primary" id="first-name-error"></div>
+                            </div>
+
+                            <div class="field flex column">
+                                    <label for="" class="">Last name <span class="text-primary">*</span></label>
+                                    <input type="text" id="last-name" value="lungu">
+                                    <div class="error text-primary" id="last-name-error"></div>
+                                </div>
+                        
+                </div>
+
+                <div class="wrapper">
+
+                        <div class="field flex column">
+                                <label for="" class="">Other name <span class="text-primary">*</span></label>
+                                <input type="text" id="other-name" value="birindwa">
+                                <div class="error text-primary" id="other-name-error"></div>
+                            </div>
+
+                        <div class="field flex column">
+                                <label for="" class="">Telephone <span class="text-primary"></span></label>
+                                <input type="number" id="telephone" value="0706973278">
+                                <div class="error text-primary" id="telephone-error"></div>
+                            </div>
+
+                            <div class="flex save align-center justify-center btn primary text-white shadow-1" onclick="account.saveSettings()">
+                                <img width="auto" height="14px" src="../assets/imgs/icons/save.png" alt=""/>
+                                <span>SAVE SETTINGS</span>
+                            </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <script src="../index.js" ></script>
+    <script src="account.js" ></script>    
+</body>
+</html>

@@ -3,7 +3,7 @@ const Request = require('request');
 const baseUrl = 'http://localhost:3003/api/v1';
 const schema = require('../utils/schema');
 
-describe('Server', () => {
+describe('PARTY', () => {
   beforeEach(() => {
     jasmine.addMatchers({
       toBeJsonString: () => ({
@@ -70,7 +70,8 @@ describe('Server', () => {
   });
 
   describe('POST', () => {
-    it('Creates a party', (done) => {
+
+    it('Should create a party', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
@@ -92,10 +93,36 @@ describe('Server', () => {
         },
       );
     });
+
+    it('Should retun 400 for a bad request', (done) => {
+      Request(
+        {
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/parties`,
+          method: 'POST',
+          body: JSON.stringify({ //The id is a string
+            id: "1",
+            name: 'AFDC',
+            hqAdress: 'adress',
+            logoUrl: 'logourl'
+          }),
+        }, (error, response, body) => {
+
+          expect(body).toBeJsonString(body);
+
+          expect(JSON.parse(body).status).toBe(400);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+
+        },
+      );
+    });
+
   });
 
   describe('GET ', () => {
-    it(' Gets a specific party', (done) => {
+
+    it(' Should get a specific party', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
@@ -114,6 +141,26 @@ describe('Server', () => {
         },
       );
     });
+
+    it(' Should should return 404 ', (done) => {
+      Request(
+        {
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/parties/2`,
+          method: 'GET',
+        },
+        (error, response, body) => {
+
+          expect(body).toBeJsonString(body);
+
+          expect(JSON.parse(body).status).toBe(404);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+          
+        },
+      );
+    });
+
   });
 
   describe('GET ', () => {
@@ -137,7 +184,8 @@ describe('Server', () => {
   });
 
   describe('PATCH /', () => {
-    it('Edit a party', (done) => {
+
+    it('Should edit a party', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
@@ -159,10 +207,34 @@ describe('Server', () => {
         },
       );
     });
+
+    it('Should return 404 ', (done) => {
+      Request(
+        {
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/parties/2/name`,
+          method: 'PATCH',
+          body: JSON.stringify({
+            name: 'newName',
+          }),
+        },
+        (error, response, body) => {
+
+          expect(body).toBeJsonString(body);
+
+          expect(JSON.parse(body).status).toBe(404);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+
+        },
+      );
+    });
+
   });
 
   describe('DELETE ', () => {
-    xit('Delete a party', (done) => {
+
+    it('Should delete a party', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
@@ -181,5 +253,23 @@ describe('Server', () => {
         },
       );
     });
+
+    it('Should return 404', (done) => {
+      Request(
+        {
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/parties/2`,
+          method: 'DELETE',
+        },
+        (error, response, body) => {
+          expect(body).toBeJsonString(body);
+
+          expect(JSON.parse(body).status).toBe(404);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+        },
+      );
+    });
+
   });
 });
