@@ -57,7 +57,8 @@ describe('Server', () => {
   });
 
   describe('POST /', () => {
-    it('Creates an office', (done) => {
+    
+    it('Should create an office', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices`,
@@ -73,7 +74,27 @@ describe('Server', () => {
         expect(JSON.parse(body)).validateCreateOffice();
         done();
       });
+      
+      
     });
+
+    it('Should return 400', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/offices`,
+        method: 'POST',
+        body: JSON.stringify({
+          type: 'federal',
+          name: 'Minister',
+        }),
+      }, (error, response, body) => {
+        expect(body).toBeJsonString();
+        expect(JSON.parse(body).status).toBe(400);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+    
   });
 
   describe('GET /', () => {
@@ -93,7 +114,8 @@ describe('Server', () => {
   });
 
   describe('GET /', () => {
-    it('Gets specific office', (done) => {
+  
+    it('Should get a specific office', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices/1`,
@@ -108,5 +130,20 @@ describe('Server', () => {
         done();
       });
     });
+    
+    it('Should return 404', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/offices/2`,
+        method: 'GET',
+      }, (error, response, body) => {
+        expect(body).toBeJsonString();
+        expect(JSON.parse(body).status).toBe(404);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
   });
+
 });

@@ -23,42 +23,12 @@ function schema(args, obj) {
       }
     }
 
-    // When the type is a date
-    if (args[arg] === 'date') {
-      if (!(obj[arg] instanceof Date)) {
-        return {
-          passed: false,
-          message: `${arg} should be a valid Date `,
-        };
-      }
-    }
-
-    // When the type is an email
-    if (args[arg] === 'email') {
-      if (!RegExp(/^[a-zA-Z-._]+@[a-zA-Z-._]+.[a-zA-Z]{2,4}$/).test(obj[arg].toString().toLowerCase())) {
-        return {
-          passed: false,
-          message: `${arg} should be a valid email adress `,
-        };
-      }
-    }
-
     // When the schema requires an integer
     if (args[arg] === 'integer') {
       if (!Number.isInteger(obj[arg])) {
         return {
           passed: false,
           message: `${arg} should be an integer `,
-        };
-      }
-    }
-
-    // When the type is a number
-    if (args[arg] === 'number') {
-      if (typeof obj[arg] !== 'number') {
-        return {
-          passed: false,
-          message: `${arg} should be a number `,
         };
       }
     }
@@ -72,6 +42,37 @@ function schema(args, obj) {
         };
       }
     }
+
+    // When the type is a number
+    // if (args[arg] === 'number') {
+    //   if (typeof obj[arg] !== 'number') {
+    //     return {
+    //       passed: false,
+    //       message: `${arg} should be a number `,
+    //     };
+    //   }
+    // }
+
+    // When the type is a date
+    // if (args[arg] === 'date') {
+    //   if (!(obj[arg] instanceof Date)) {
+    //     return {
+    //       passed: false,
+    //       message: `${arg} should be a valid Date `,
+    //     };
+    //   }
+    // }
+
+    // When the type is an email
+    // if (args[arg] === 'email') {
+    //   if (!RegExp(/^[a-zA-Z-._]+@[a-zA-Z-._]+.[a-zA-Z]{2,4}$/).test(obj[arg].toString().toLowerCase())) {
+    //     return {
+    //       passed: false,
+    //       message: `${arg} should be a valid email adress `,
+    //     };
+    //   }
+    // }
+
   }
 
   return {

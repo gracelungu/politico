@@ -4,14 +4,29 @@ const router = express.Router();
 
 const schema = require('../utils/schema');
 
-const Parties = [];
+const Parties = [{
+  id: 3,
+  name: 'AFDC',
+  hqAdress: 'adress',
+  logoUrl: 'logourl'
+},
+{
+  id: 4,
+  name: 'AFDC',
+  hqAdress: 'adress',
+  logoUrl: 'logourl'
+}];
 
 // Delete a specific party
-router.delete('/api/v1/parties/:id', (req, res) => {
-  Parties.forEach((item, index) => {
-    if (item.id === req.params.id) {
+router.delete('/api/v1/parties/:id', (req, res) => { 
 
-      Parties.splice(index, 1);
+  const index = Parties.findIndex((item) => { 
+    return item.id === parseInt(req.params.id)
+  });
+
+  if(index >= 0){
+
+    Parties.splice(index, 1);
 
       res.status(200).json({
         status: 200,
@@ -19,9 +34,8 @@ router.delete('/api/v1/parties/:id', (req, res) => {
           message: 'The party was successfully deleted',
         }],
       });
-      return;
-    }
-  });
+       return;
+  }
 
   res.status(404).json({
     status: 404,
@@ -32,6 +46,7 @@ router.delete('/api/v1/parties/:id', (req, res) => {
 
 // Edit a specific party name
 router.patch('/api/v1/parties/:id/name', (req, res) => {
+
   const nameSchema = schema({
     name: 'string',
   }, req.body);
@@ -44,19 +59,22 @@ router.patch('/api/v1/parties/:id/name', (req, res) => {
     return;
   }
 
-  Parties.forEach((p, index) => {
-    if (p.id === req.params.id) {
-      Parties[index].name = req.body.name;
+  const item = Parties.find((item) => { 
+    return item.id === parseInt(req.params.id);
+  });
+
+  if(item){
+    item.name = req.body.name;
 
       res.status(200).json({
         status: 200,
         data: [{
-          id: p.id,
-          name: p.name,
+          id: item.id,
+          name: item.name,
         }],
       });
-    }
-  });
+      return;
+  }
 
   res.status(404).json({
     status: 404,
@@ -74,16 +92,12 @@ router.get('/api/v1/parties', (req, res) => {
 
 // Get a specific party
 router.get('/api/v1/parties/:id', (req, res) => {
-  let party;
 
-  Parties.forEach((p) => {
-    if (p.id === req.params.id) {
-      party = p;
-      delete party.hqAdress;
-    }
+  const item = Parties.find((item)=>{ 
+    return item.id === parseInt(req.params.id);
   });
 
-  if (party === undefined) {
+  if (!item) {
     res.status(404).json({
       status: 404,
       error: 'Party not found',
@@ -93,7 +107,7 @@ router.get('/api/v1/parties/:id', (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: [party],
+    data: [item],
   });
 });
 
