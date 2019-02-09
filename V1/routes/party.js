@@ -1,52 +1,45 @@
-const express = require('express');
+import express from 'express';
+import schema from '../utils/schema';
 
 const router = express.Router();
-
-const schema = require('../utils/schema');
 
 const Parties = [{
   id: 3,
   name: 'AFDC',
   hqAdress: 'adress',
-  logoUrl: 'logourl'
+  logoUrl: 'logourl',
 },
 {
   id: 4,
   name: 'AFDC',
   hqAdress: 'adress',
-  logoUrl: 'logourl'
+  logoUrl: 'logourl',
 }];
 
 // Delete a specific party
-router.delete('/api/v1/parties/:id', (req, res) => { 
+router.delete('/api/v1/parties/:id', (req, res) => {
+  const index = Parties.findIndex(item => item.id === parseInt(req.params.id, 10));
 
-  const index = Parties.findIndex((item) => { 
-    return item.id === parseInt(req.params.id)
-  });
-
-  if(index >= 0){
-
+  if (index >= 0) {
     Parties.splice(index, 1);
 
-      res.status(200).json({
-        status: 200,
-        data: [{
-          message: 'The party was successfully deleted',
-        }],
-      });
-       return;
+    res.status(200).json({
+      status: 200,
+      data: [{
+        message: 'The party was successfully deleted',
+      }],
+    });
+    return;
   }
 
   res.status(404).json({
     status: 404,
     error: 'Party not found',
   });
-
 });
 
 // Edit a specific party name
 router.patch('/api/v1/parties/:id/name', (req, res) => {
-
   const nameSchema = schema({
     name: 'string',
   }, req.body);
@@ -59,21 +52,19 @@ router.patch('/api/v1/parties/:id/name', (req, res) => {
     return;
   }
 
-  const item = Parties.find((item) => { 
-    return item.id === parseInt(req.params.id);
-  });
+  const item = Parties.find(el => el.id === parseInt(req.params.id, 10));
 
-  if(item){
+  if (item) {
     item.name = req.body.name;
 
-      res.status(200).json({
-        status: 200,
-        data: [{
-          id: item.id,
-          name: item.name,
-        }],
-      });
-      return;
+    res.status(200).json({
+      status: 200,
+      data: [{
+        id: item.id,
+        name: item.name,
+      }],
+    });
+    return;
   }
 
   res.status(404).json({
@@ -92,10 +83,7 @@ router.get('/api/v1/parties', (req, res) => {
 
 // Get a specific party
 router.get('/api/v1/parties/:id', (req, res) => {
-
-  const item = Parties.find((item)=>{ 
-    return item.id === parseInt(req.params.id);
-  });
+  const item = Parties.find(el => el.id === parseInt(req.params.id, 10));
 
   if (!item) {
     res.status(404).json({
@@ -113,7 +101,6 @@ router.get('/api/v1/parties/:id', (req, res) => {
 
 // Create a new party
 router.post('/api/v1/parties', (req, res) => {
-
   // Validate the request
   const partySchema = schema({
     id: 'integer',

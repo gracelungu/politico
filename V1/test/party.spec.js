@@ -70,7 +70,6 @@ describe('PARTY', () => {
   });
 
   describe('POST', () => {
-
     it('Should create a party', (done) => {
       Request(
         {
@@ -100,28 +99,24 @@ describe('PARTY', () => {
           headers: { 'content-type': 'application/json' },
           url: `${baseUrl}/parties`,
           method: 'POST',
-          body: JSON.stringify({ //The id is a string
-            id: "1",
+          body: JSON.stringify({ // The id is a string
+            id: '1',
             name: 'AFDC',
             hqAdress: 'adress',
-            logoUrl: 'logourl'
+            logoUrl: 'logourl',
           }),
         }, (error, response, body) => {
-
           expect(body).toBeJsonString(body);
 
           expect(JSON.parse(body).status).toBe(400);
           expect(JSON.parse(body).error).toBeDefined();
           done();
-
         },
       );
     });
-
   });
 
   describe('GET ', () => {
-
     it(' Should get a specific party', (done) => {
       Request(
         {
@@ -145,18 +140,15 @@ describe('PARTY', () => {
           url: `${baseUrl}/parties/2`,
           method: 'GET',
         },
-        (error, response, body) => { 
-
+        (error, response, body) => {
           expect(body).toBeJsonString(body);
 
           expect(JSON.parse(body).status).toBe(404);
           expect(JSON.parse(body).error).toBeDefined();
           done();
-          
         },
       );
     });
-
   });
 
   describe('GET ', () => {
@@ -180,7 +172,6 @@ describe('PARTY', () => {
   });
 
   describe('PATCH /', () => {
-
     it('Should edit a party', (done) => {
       Request(
         {
@@ -191,13 +182,13 @@ describe('PARTY', () => {
             name: 'newName',
           }),
         },
-        (error, response, body) => { 
+        (error, response, body) => {
           expect(body).toBeJsonString(body);
 
 
           expect(JSON.parse(body).status).toBe(200);
           expect(JSON.parse(body)).validateParty();
-          
+
 
           done();
         },
@@ -215,36 +206,31 @@ describe('PARTY', () => {
           }),
         },
         (error, response, body) => {
-
           expect(body).toBeJsonString(body);
 
           expect(JSON.parse(body).status).toBe(404);
           expect(JSON.parse(body).error).toBeDefined();
           done();
-
         },
       );
     });
-
   });
 
   describe('DELETE ', () => {
-
     it('Should delete a party', (done) => {
-      
       Request(
         {
           headers: { 'content-type': 'application/json' },
           url: `${baseUrl}/parties/4`,
           method: 'DELETE',
         },
-        (error, response, body) => { 
+        (error, response, body) => {
           expect(body).toBeJsonString(body);
 
 
           expect(JSON.parse(body).status).toBe(200);
           expect(JSON.parse(body)).validateDeleteParty();
-          
+
 
           done();
         },
@@ -267,6 +253,5 @@ describe('PARTY', () => {
         },
       );
     });
-
   });
 });
