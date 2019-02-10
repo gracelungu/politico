@@ -14,37 +14,37 @@ class User {
 
         let valid = true;
 
-        if(!RegExp(/^[a-zA-Z'-]{2,30}$/).test(this.firstname.toString().trim())){
+        if(!isValidName(this.firstname)){
             Element('first-name-error').innerHTML = "Invalid first name";
             valid = false ;
         }else{
             Element('first-name-error').innerHTML = "";
         }
 
-        if(!RegExp(/^[a-zA-Z'-]{2,30}$/).test(this.lastname.toString().trim())){
+        if(!isValidName(this.lastname)){
             Element('last-name-error').innerHTML = "Invalid last name";
             valid = false ;
         }else{
             Element('last-name-error').innerHTML = "";
         }
 
-        if(!RegExp(/^[a-zA-Z'-]{2,30}$/).test(this.othername.toString().trim())){
+        if(!isValidName(this.othername)){
             Element('other-name-error').innerHTML = "Invalid other name";
             valid = false ;
         }else{
             Element('other-name-error').innerHTML = "";
         }
 
-        if(!RegExp(/^[0-9/+]{4,20}$/).test(this.phoneNumber.toString().trim())){
+        if(!isValidPhoneNumber(this.phoneNumber)){
             Element('telephone-error').innerHTML = "Invalid telephone number";
             valid = false ;
         }else{
             Element('telephone-error').innerHTML = "";
         }
 
-        if(!RegExp(/^[a-zA-Z-._]+@[a-zA-Z-._]+.[a-zA-Z]{2,4}$/).test(this.email.toString().toLowerCase().trim())){
-            Element('email-error').innerHTML = "Invalid email ";
-            valid = false ;
+        if(!isValidEmail(this.email)){
+            Element('email-error').innerHTML = "Invalid email adress";
+            valid = false;
         }else{
             Element('email-error').innerHTML = "";
         }
@@ -80,9 +80,8 @@ function signup(){
         Element("password").value
     );
 
-    if(user.validate(Element("confirm-password").value)){
 
-        alert("valid");
+    if(user.validate(Element("confirm-password").value)){
 
         console.log(user);
 

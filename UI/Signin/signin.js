@@ -7,9 +7,9 @@ function signin(){
 
     let valid = true;
 
-    if(!RegExp(/^[a-zA-Z-._]+@[a-zA-Z-._]+.[a-zA-Z]{2,4}$/).test(user.email.toString().toLowerCase().trim())){
-        Element('email-error').innerHTML = "Invalid email ";
-        valid = false ;
+    if(!isValidEmail(user.email)){
+        Element('email-error').innerHTML = "Invalid email adress";
+        valid = false;
     }else{
         Element('email-error').innerHTML = "";
     }

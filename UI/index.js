@@ -13,7 +13,7 @@ function toggleMenu() {
   } else {
     nav.style.display = 'none';
   }
-} if (window.innerWidth <= 1000) { toggleMenu(); }
+} try{if (window.innerWidth <= 1000) { toggleMenu(); }}catch(e){};
 
 // Toast
 class Toast {
@@ -49,3 +49,28 @@ class Toast {
     this.toast.style.bottom = '-100px';
   }
 }
+
+
+//VALIDATE
+
+function isValidEmail(email){
+  if(!RegExp(/^[a-zA-Z-._]+@[a-zA-Z-._]+.[a-zA-Z]{2,4}$/).test(email.toString().toLowerCase().trim())){
+    return false;
+  }
+  return true;
+}
+
+function isValidName(name){
+  if(!RegExp(/^[a-zA-Z'-]{2,30}$/).test(name.toString().trim())){
+    return false;
+  }
+  return true;
+}
+
+function isValidPhoneNumber(phoneNumber){
+  if(!RegExp(/^[0-9/+]{4,20}$/).test(phoneNumber.toString().trim())){
+    return false;
+  }
+  return true;
+}
+

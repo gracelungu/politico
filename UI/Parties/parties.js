@@ -50,7 +50,7 @@ class Parties{
 
     }
 
-    saveSettings(){
+    saveParty(){
 
         let partie = {
             name:Element("name").value,

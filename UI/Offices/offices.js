@@ -26,7 +26,7 @@ class Offices{
         }
     }
 
-    saveSettings(){
+    saveOffice(){
 
         let office = {
             name:Element("name").value,
