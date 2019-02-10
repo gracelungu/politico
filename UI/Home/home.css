@@ -89,6 +89,10 @@ header nav .signup-btn{
 
 @media only screen and (max-width: 765px) {
 
+    header nav .signup-btn {
+        margin-right: 0;
+    }
+
     .landing{
         padding: 0 20px;
     }
@@ -115,5 +119,6 @@ header nav .signup-btn{
         text-align: center;
         padding: 0 0px 0vh 0;
     }
+    
 
 }
