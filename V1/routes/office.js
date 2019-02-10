@@ -3,24 +3,28 @@ import schema from '../utils/schema';
 
 const router = express.Router();
 
-const Offices = [];
+const Offices = [{
+  id: 1,
+  type: 'federal',
+  name: 'Minister',
+}];
 
 // Get a specific office
 router.get('/api/v1/offices/:id', (req, res) => {
-  let office;
+  const item = Offices.find(el => el.id === parseInt(req.params.id, 10));
 
-  Offices.forEach((o) => {
-    if (o.id === req.params.id) {
-      office = o;
-    }
-  });
-
-  if (office === undefined) {
+  if (!item) {
     res.status(404).json({
       status: 404,
       error: 'office not found',
     });
+    return;
   }
+
+  res.status(200).json({
+    status: 200,
+    data: [item],
+  });
 });
 
 // Get all offices
