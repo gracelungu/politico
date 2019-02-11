@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Reset password</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="../assets/imgs/folder.png">
+	<link rel="stylesheet" href="../css/styles.css">
+	<link rel="stylesheet" href="../css/home.css">
+	<link rel="stylesheet" href="../css/signup.css">
+	<link rel="stylesheet" href="../css/signin.css">
+	<link rel="stylesheet" href="../css/reset.css">
+</head>
+
+<body>
+	<!-- Header -->
+	<header class="flex justify-between align-center card-1">
+		<div class="title ">
+			<img width="auto" height="18px" src="../assets/imgs/folder.png" alt=""> <a href="../index.html" class="poli EBold">Poli</span><span class="tico EBold text-primary">tico</a>
+		</div>
+		<nav> <a href="" class="btn signup-btn">SIGNIN</a>
+			<a href="../html/signup.html" class="btn primary text-white shadow-1">SIGNUP</a>
+		</nav>
+	</header>
+	<!-- Signup form -->
+	<section class="signup flex justify-center align-center">
+		<div class="container shadow-1">
+			<div class="top flex justify-between align-end">
+				<div class="title bold">Reset password</div>
+			</div>
+			<form class="flex justify-between" action="">
+				<div class="wrapper flex column justify-between align-start">
+					<div id="mail">
+						<div class="reset-message">Enter your email adress and we'll send you a link to reset your password</div>
+						<div class="field flex column">
+							<label for="" class="">Email <span class="text-primary">*</span>
+							</label>
+							<input type="email" id="email">
+							<div class="error text-primary" id="email-error"></div>
+						</div>
+						<div class="field m-field">
+							<div class="btn primary text-white send-email">SEND EMAIL</div>
+						</div>
+					</div>
+					<div id="reset">
+						<div class="bold subtitle">Choose a new password</div>
+						<div class="field flex column">
+							<label for="" class="">New password <span class="text-primary">*</span>
+							</label>
+							<input type="password" id="password">
+							<div class="error text-primary" id="password-error"></div>
+						</div>
+						<div class="field flex column">
+							<label for="" class="">Confirm password <span class="text-primary">*</span>
+							</label>
+							<input type="confirm-password" id="password">
+							<div class="error text-primary" id="confirm-password-error"></div>
+						</div>
+						<div class="field m-field">
+							<div class="btn btn-submit text-white primary shadow-1" onclick="signin()">RESET PASSWORD</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+	<script src="../js/index.js"></script>
+	<script src="../js/signin.js"></script>
+</body>
+
+</html>
