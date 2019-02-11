@@ -57,8 +57,10 @@ class User {
 }
 
 function signup() {
-	let user = new User(Element("first-name").value, Element("last-name").value, Element("other-name").value, Element("telephone").value, Element("email").value, Element("password").value);
-	if (user.validate(Element("confirm-password").value)) {
+	const user = new User(Element("first-name").value, Element("last-name").value, Element("other-name").value, Element("telephone").value, Element("email").value, Element("password").value);
+	const confrimPassword = Element("confirm-password").value;
+	if (user.validate(confrimPassword)) {
 		console.log(user);
+		window.location.assign('../html/Account.html');
 	}
 }

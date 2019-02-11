@@ -46,7 +46,7 @@ form .field input {
 	height: 170px;
 	min-width: 200px;
 	min-height: 170px;
-	/* background-image: url("https://picsum.photos/200/300"); */
+	background-image: url("https://picsum.photos/202/201");
 	margin-right: 40px;
 	background-color: #d0d0d0;
 }
@@ -69,7 +69,7 @@ form .field input {
 	height: 150px;
 	min-width: 240px;
 	min-height: 150px;
-	/* background-image: url("https://picsum.photos/200/300"); */
+	background-image: url("https://picsum.photos/202/201");
 	background-color: #d0d0d0;
 }
 .list .item .details {

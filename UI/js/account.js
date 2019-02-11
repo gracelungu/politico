@@ -56,5 +56,11 @@ class Account {
 			console.log(user);
 		}
 	}
+	update(){
+		this.toast.show('Profile updated',false)
+	}
+	delete(){
+		this.toast.show('Profile deleted',false)
+	}
 }
 let account = new Account();

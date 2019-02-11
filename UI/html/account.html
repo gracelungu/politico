@@ -21,7 +21,7 @@
 				</a>
 			</div>
 			<nav id="nav">
-				<a href="" class="btn primary text-white shadow-1" >LOGOUT</a>
+				<a href="../index.html" class="btn primary text-white shadow-1" >LOGOUT</a>
 			</nav>
 		</header>
 		<section class="flex justify-start">
@@ -57,11 +57,11 @@
 						</div>
 					</div>
 					<div class="flex column">
-						<div class="flex align-center btn btn-small upload primary text-white shadow-1">
+						<div class="flex align-center btn btn-small upload primary text-white shadow-1" onclick="account.update()">
 							<img width="auto" height="15px" src="../assets/imgs/icons/upload.png" alt="">
 								<span>UPLOAD A PICTURE</span>
 							</div>
-							<div>
+							<div onclick="account.delete()">
 								<span class="btn btn-small delete shadow-1" >
 									<img width="auto" height="15px" src="../assets/imgs/icons/delete.png" alt=""/>
 									<span>DELETE</span>
@@ -71,7 +71,7 @@
 					</div>
 					<!-- List of the candidates the user has voted for -->
 					<div class="candidates">
-						<div class="subtitle bold">Candidates | 
+						<div class="subtitle bold">Candidates |
 							<span class="light">The list of the candidates you have voted for.</span>
 						</div>
 						<div class="list">
@@ -80,7 +80,7 @@
 								<div class="item shadow-1  flex justify-between align-center">
 									<div class="info flex justify-between">
 										<div class="flex">
-											<div class="image"></div>
+											<div class="image cover"></div>
 											<div class="flex column">
 												<div class="name bold">Karen Castillo </div>
 												<div class="email light">Karie</div>
@@ -100,7 +100,7 @@
 								<div class="item shadow-1  flex justify-between align-center">
 									<div class="info flex justify-between">
 										<div class="flex">
-											<div class="image"></div>
+											<div class="image cover"></div>
 											<div class="flex column">
 												<div class="name bold">Dorothy Maldonado</div>
 												<div class="email light">Dorte</div>
@@ -120,7 +120,7 @@
 								<div class="item shadow-1  flex justify-between align-center">
 									<div class="info flex justify-between">
 										<div class="flex">
-											<div class="image"></div>
+											<div class="image cover"></div>
 											<div class="flex column">
 												<div class="name bold">Scarlet Mcmillan</div>
 												<div class="email light">Fowler</div>

@@ -1,5 +1,6 @@
 class Parties {
 	constructor() {
+		this.toast = new Toast();
 		this.createPartie = Element('create-party');
 		this.init();
 	}
@@ -15,7 +16,7 @@ class Parties {
 		} else {
 			this.createPartie.style.display = "block";
 			Element("create-btn-icon").style.display = "none";
-			Element("create-btn-text").innerHTML = `<img width="auto" height="12px" src="../assets/imgs/icons/up.png" alt=""/> `;
+			Element("create-btn-text").innerHTML = `<img width="auto" height="15px" src="../assets/imgs/icons/cancel-b.png" alt=""/> `;
 		}
 	}
 	reset() {
@@ -54,8 +55,12 @@ class Parties {
 			Element('adress-error').innerHTML = "";
 		}
 		if (valid) {
+			this.toast.show('Settings saved');
 			console.log(partie);
 		}
+	}
+	delete(){
+		this.toast.show('Party deleted',false);
 	}
 }
 let parties = new Parties();

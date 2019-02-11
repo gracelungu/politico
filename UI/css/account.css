@@ -108,6 +108,7 @@ section .settings {
 	min-width: 90px;
 	min-height: 80px;
 	border-radius: 0;
+	background-image: url("https://picsum.photos/201/201");
 	background-color: #ddd;
 	margin-right: 20px;
 }
