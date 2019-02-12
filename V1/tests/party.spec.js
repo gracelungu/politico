@@ -212,6 +212,26 @@ describe('PARTY', () => {
         },
       );
     });
+
+    it('Should return 404 when the id is not a number', (done) => {
+      Request(
+        {
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/parties/id/name`,
+          method: 'PATCH',
+          body: JSON.stringify({
+            name: 'newName',
+          }),
+        },
+        (error, response, body) => {
+          expect(body).toBeJsonString(body);
+
+          expect(JSON.parse(body).status).toBe(404);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+        },
+      );
+    });
   });
 
   describe('DELETE ', () => {
@@ -240,6 +260,23 @@ describe('PARTY', () => {
         {
           headers: { 'content-type': 'application/json' },
           url: `${baseUrl}/parties/9`,
+          method: 'DELETE',
+        },
+        (error, response, body) => {
+          expect(body).toBeJsonString(body);
+
+          expect(JSON.parse(body).status).toBe(404);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+        },
+      );
+    });
+
+    it('Should return 404 when the id is not a number', (done) => {
+      Request(
+        {
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/parties/id`,
           method: 'DELETE',
         },
         (error, response, body) => {

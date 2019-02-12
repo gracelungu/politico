@@ -136,5 +136,18 @@ describe('Server', () => {
         done();
       });
     });
+
+    it('Should return 404 when the id is not a number', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/offices/id`,
+        method: 'GET',
+      }, (error, response, body) => {
+        expect(body).toBeJsonString();
+        expect(JSON.parse(body).status).toBe(404);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
   });
 });
