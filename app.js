@@ -1,5 +1,3 @@
-import "babel-polyfill";
-
 // External modules
 import express from 'express';
 import bodyParser from 'body-parser';
