@@ -1,11 +1,10 @@
 // External modules
-
 import express from 'express';
 import bodyParser from 'body-parser';
 
 // Internal modules
-const partyController = require('./V1/routes/party');
-const officeController = require('./V1/routes/office');
+import partyController from './V1/routes/party';
+import officeController from './V1/routes/office';
 
 // Express setup
 const app = express();
@@ -14,13 +13,18 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
 // Express routing
 app.use('/', partyController);
 app.use('/', officeController);
 
+app.use('*',(req, res)=>{
+    res.status(404).json({
+        status:404,
+        error: 'Endpoint not found'
+    });
+});
 
 const port = process.env.PORT || 3003;
 const server = app.listen(port);
 
-module.exports = server;
+export default server ;

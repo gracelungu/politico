@@ -1,16 +1,24 @@
 import express from 'express';
-import schema from '../utils/schema';
+import schema from '../helpers/schema';
 
 const router = express.Router();
 
-const Offices = [{
-  id: 1,
-  type: 'federal',
-  name: 'Minister',
-}];
+const Offices = [];
 
 // Get a specific office
 router.get('/api/v1/offices/:id', (req, res) => {
+  const idSchema = schema({
+    id: 'number',
+  }, { id: parseInt(req.params.id, 10) });
+
+  if (idSchema.passed === false) {
+    res.status(404).json({
+      status: 404,
+      error: idSchema.message,
+    });
+    return;
+  }
+
   const item = Offices.find(el => el.id === parseInt(req.params.id, 10));
 
   if (!item) {
@@ -38,7 +46,6 @@ router.get('/api/v1/offices', (req, res) => {
 // Create an office
 router.post('/api/v1/offices', (req, res) => {
   const officeSchema = schema({
-    id: 'integer',
     type: 'string',
     name: 'string',
   }, req.body);
@@ -51,12 +58,16 @@ router.post('/api/v1/offices', (req, res) => {
     return;
   }
 
-  Offices.push(req.body);
+  let office = officeSchema.obj;
+
+  office = Object.assign({ id: Offices.length + 1 }, office);
+
+  Offices.push(office);
 
   res.status(200).json({
-    status: 200,
-    data: [req.body],
+    status: 201,
+    data: [office],
   });
 });
 
-module.exports = router;
+export default router;
