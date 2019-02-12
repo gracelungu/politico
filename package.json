@@ -35,7 +35,7 @@
     "test": "./node_modules/.bin/eslint V1 --fix && npm run test-cov ",
     "coveralls": "istanbul cover jasmine --captureExceptions && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "build": "./node_modules/.bin/babel V1 app.js",
-    "start": "npm run build && babel-register app.js"
+    "start": " babel-node app.js"
   },
   "repository": {
     "type": "git",
