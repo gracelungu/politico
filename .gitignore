@@ -1,5 +1,9 @@
 node_modules/
 coverage/
+<<<<<<< HEAD
 UI/
 karma.conf.js
 coverage/
+=======
+V1/
+>>>>>>> UItemplate
