@@ -20,6 +20,16 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
+<<<<<<< HEAD
+=======
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-istanbul": "^5.1.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+>>>>>>> f5f48eab819694bdd816ed4a4121704a3f93dcc6
     "coveralls": "^3.0.2",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",

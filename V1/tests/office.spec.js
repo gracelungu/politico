@@ -1,7 +1,7 @@
-const Request = require('request');
+import Request from 'request';
+import schema from '../helpers/schema';
 
 const baseUrl = 'http://localhost:3003/api/v1';
-const schema = require('../utils/schema');
 
 // Starts the server
 require('../../app');
@@ -15,7 +15,7 @@ describe('Server', () => {
           try {
             JSON.parse(actual);
           } catch (e) {
-            return { pass: false, message: 'Expected body to be a json string' };
+            return { pass: false, message: 'Expects the body to be a json string' };
           }
           return { pass: true };
         },
@@ -63,25 +63,23 @@ describe('Server', () => {
         url: `${baseUrl}/offices`,
         method: 'POST',
         body: JSON.stringify({
-          id: 1,
           type: 'federal',
           name: 'Minister',
         }),
       }, (error, response, body) => {
         expect(body).toBeJsonString();
-        expect(JSON.parse(body).status).toBe(200);
+        expect(JSON.parse(body).status).toBe(201);
         expect(JSON.parse(body)).validateCreateOffice();
         done();
       });
     });
 
-    it('Should return 400', (done) => {
+    it('Should return 400 when the type is missing', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices`,
         method: 'POST',
         body: JSON.stringify({
-          type: 'federal',
           name: 'Minister',
         }),
       }, (error, response, body) => {
@@ -113,7 +111,7 @@ describe('Server', () => {
     it('Should get a specific office', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/offices/1`,
+        url: `${baseUrl}/offices/2`,
         method: 'GET',
       }, (error, response, body) => {
         expect(body).toBeJsonString();
@@ -126,10 +124,10 @@ describe('Server', () => {
       });
     });
 
-    it('Should return 404', (done) => {
+    it('Should return 404 when the office does not exist', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/offices/2`,
+        url: `${baseUrl}/offices/9`,
         method: 'GET',
       }, (error, response, body) => {
         expect(body).toBeJsonString();

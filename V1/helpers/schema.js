@@ -1,5 +1,6 @@
 /* eslint no-restricted-syntax: 0 */
 /* eslint guard-for-in: 0 */
+/* eslint no-param-reassign: 0 */
 
 function schema(args, obj) {
   // Checks if the property is defined
@@ -7,7 +8,7 @@ function schema(args, obj) {
     if (!obj[arg]) {
       return {
         passed: false,
-        message: `The ${arg} is undefined `,
+        message: `The ${arg} attribute is required `,
       };
     }
   }
@@ -18,7 +19,7 @@ function schema(args, obj) {
       if (!(obj[arg] instanceof Array)) {
         return {
           passed: false,
-          message: `${arg} should be an Array `,
+          message: `The ${arg} should be an Array `,
         };
       }
     }
@@ -28,7 +29,7 @@ function schema(args, obj) {
       if (!Number.isInteger(obj[arg])) {
         return {
           passed: false,
-          message: `${arg} should be an integer `,
+          message: `The ${arg} should be an integer `,
         };
       }
     }
@@ -38,7 +39,18 @@ function schema(args, obj) {
       if (typeof obj[arg] !== 'string') {
         return {
           passed: false,
-          message: `${arg} should be a string `,
+          message: `The ${arg} should be a string `,
+        };
+      }
+      obj[arg] = obj[arg].replace(/\s+/g, ' ').trim();
+    }
+
+    // When the type is a number
+    if (args[arg] === 'number') {
+      if (typeof obj[arg] !== 'number') {
+        return {
+          passed: false,
+          message: `The ${arg} should be a number `,
         };
       }
     }
