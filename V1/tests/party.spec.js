@@ -1,7 +1,7 @@
-const Request = require('request');
+import Request from 'request';
+import schema from '../helpers/schema';
 
 const baseUrl = 'http://localhost:3003/api/v1';
-const schema = require('../utils/schema');
 
 describe('PARTY', () => {
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('PARTY', () => {
           try {
             JSON.parse(actual);
           } catch (e) {
-            return { pass: false, message: 'Expected body to be a json string' };
+            return { pass: false, message: 'Expectes the body to be a json string' };
           }
           return { pass: true };
         },
@@ -77,7 +77,6 @@ describe('PARTY', () => {
           url: `${baseUrl}/parties`,
           method: 'POST',
           body: JSON.stringify({
-            id: 1,
             name: 'AFDC',
             hqAdress: 'adress',
             logoUrl: 'logourl',
@@ -86,22 +85,21 @@ describe('PARTY', () => {
           expect(body).toBeJsonString(body);
 
 
-          expect(JSON.parse(body).status).toBe(200);
+          expect(JSON.parse(body).status).toBe(201);
           expect(JSON.parse(body)).validateParty();
           done();
         },
       );
     });
 
-    it('Should retun 400 for a bad request', (done) => {
+    it('Should retun 400 when the name is not a string', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
           url: `${baseUrl}/parties`,
           method: 'POST',
-          body: JSON.stringify({ // The id is a string
-            id: '1',
-            name: 'AFDC',
+          body: JSON.stringify({
+            name: 2,
             hqAdress: 'adress',
             logoUrl: 'logourl',
           }),
@@ -133,11 +131,11 @@ describe('PARTY', () => {
       );
     });
 
-    it(' Should should return 404 ', (done) => {
+    it(' Should return 404 when the party is not found', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
-          url: `${baseUrl}/parties/2`,
+          url: `${baseUrl}/parties/9`,
           method: 'GET',
         },
         (error, response, body) => {
@@ -195,11 +193,11 @@ describe('PARTY', () => {
       );
     });
 
-    it('Should return 404 ', (done) => {
+    it('Should return 404 when the party is not found', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
-          url: `${baseUrl}/parties/2/name`,
+          url: `${baseUrl}/parties/9/name`,
           method: 'PATCH',
           body: JSON.stringify({
             name: 'newName',
@@ -237,11 +235,11 @@ describe('PARTY', () => {
       );
     });
 
-    it('Should return 404', (done) => {
+    it('Should return 404 when the party is not found', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
-          url: `${baseUrl}/parties/2`,
+          url: `${baseUrl}/parties/9`,
           method: 'DELETE',
         },
         (error, response, body) => {

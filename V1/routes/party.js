@@ -1,5 +1,5 @@
 import express from 'express';
-import schema from '../utils/schema';
+import schema from '../helpers/schema';
 
 const router = express.Router();
 
@@ -18,6 +18,18 @@ const Parties = [{
 
 // Delete a specific party
 router.delete('/api/v1/parties/:id', (req, res) => {
+  const idSchema = schema({
+    id: 'number',
+  }, { id: parseInt(req.params.id, 10) });
+
+  if (idSchema.passed === false) {
+    res.status(404).json({
+      status: 404,
+      error: idSchema.message,
+    });
+    return;
+  }
+
   const index = Parties.findIndex(item => item.id === parseInt(req.params.id, 10));
 
   if (index >= 0) {
@@ -103,7 +115,6 @@ router.get('/api/v1/parties/:id', (req, res) => {
 router.post('/api/v1/parties', (req, res) => {
   // Validate the request
   const partySchema = schema({
-    id: 'integer',
     name: 'string',
     hqAdress: 'string',
     logoUrl: 'string',
@@ -118,15 +129,16 @@ router.post('/api/v1/parties', (req, res) => {
   }
 
   // Add new party
-  Parties.push(req.body);
+  let party = partySchema.obj;
+
+  party = Object.assign({ id: Parties.length + 1 }, party);
+
+  Parties.push(party);
 
   res.status(200).json({
-    status: 200,
-    data: [{
-      id: req.body.id,
-      name: req.body.name,
-    }],
+    status: 201,
+    data: [party],
   });
 });
 
-module.exports = router;
+export default router;
