@@ -18,8 +18,8 @@ The application is hosted on heroku and can be found at <a href="https://politic
 #### Basic usage
 <b>GET / Offices :</b> https://politico-api-service.herokuapp.com/api/v1/offices
 
-<b>GET / A specific offices :</b> https://politico-api-service.herokuapp.com/api/v1/offices/officeId
+<b>GET / A specific office :</b> https://politico-api-service.herokuapp.com/api/v1/offices/officeId
 
-<b>GET / Offices :</b> https://politico-api-service.herokuapp.com/api/v1/parties
+<b>GET / Parties :</b> https://politico-api-service.herokuapp.com/api/v1/parties
 
-<b>GET / A specific offices :</b> https://politico-api-service.herokuapp.com/api/v1/offices/partyId
+<b>GET / A specific party :</b> https://politico-api-service.herokuapp.com/api/v1/offices/partyId
