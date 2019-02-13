@@ -61,6 +61,6 @@ function signup() {
 	const confrimPassword = Element("confirm-password").value;
 	if (user.validate(confrimPassword)) {
 		console.log(user);
-		window.location.assign('../html/Account.html');
+		window.location.assign('../html/account.html');
 	}
 }
