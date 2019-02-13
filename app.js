@@ -20,7 +20,7 @@ app.use('/', officeController);
 app.use('*',(req, res)=>{
     res.status(404).json({
         status:404,
-        error: 'Endpoint not found'
+        error: 'Wrong http request'
     });
 });
 
