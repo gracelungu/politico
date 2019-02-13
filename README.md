@@ -28,18 +28,18 @@ Or follow these steps to install node
 
 Download the intaller from the [official Node.js website](http://nodejs.org/) 
 
-Clone the project from github
+#### Clone the project from github
 
 ```
  $ git clone  https://github.com/gracelungu/politico
 ```
-Install the required dependencies found in package.json
+#### Install the required dependencies found in package.json
 
 ```
  $ npm install
 ```
 
-## Start & Watch
+## Start the server
 
 ```
  $ npm start
@@ -51,7 +51,7 @@ Testing the code coverage with jasmine
 ```
  $ jasmine
 ```
-Getting the code coverage report 
+Testing and Getting the code coverage report 
 ```
  $ npm test
 ```
@@ -65,7 +65,7 @@ The application template is hosted on github pages
 <a href="https://gracelungu.github.io/politico/UI">https://gracelungu.github.io/politico/UI</a>
 
 ### Deploying on heroku
-Make sure you have loggedin to heroku
+Make sure you have logged in to heroku
 ```
  $ git push heroku develop:master
 ```

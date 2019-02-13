@@ -17,6 +17,9 @@ class Offices {
 			Element("create-btn-text").innerHTML = `<img width="auto" height="12px" src="../assets/imgs/icons/up.png" alt=""/> `;
 		}
 	}
+	navigate() {
+		window.location.assign("../html/office.html");
+	}
 	saveOffice() {
 		let office = {
 			name: Element("name").value,
@@ -41,7 +44,3 @@ class Offices {
 	}
 }
 let offices = new Offices();
-//Preview
-document.querySelector(".item").addEventListener("click", () => {
-	document.location.assign("../html/office.html");
-});
