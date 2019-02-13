@@ -3,8 +3,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 // Internal modules
-import partyController from './V1/routes/party';
-import officeController from './V1/routes/office';
+import partyController from './server/routes/party';
+import officeController from './server/routes/office';
 
 // Express setup
 const app = express();

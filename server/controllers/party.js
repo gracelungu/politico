@@ -1,7 +1,4 @@
-import express from 'express';
 import schema from '../helpers/schema';
-
-const router = express.Router();
 
 const Parties = [{
   id: 3,
@@ -16,8 +13,7 @@ const Parties = [{
   logoUrl: 'logourl',
 }];
 
-// Delete a specific party
-router.delete('/api/v1/parties/:id', (req, res) => {
+const deleteParty = (req, res) => {
   const idSchema = schema({
     id: 'number',
   }, { id: parseInt(req.params.id, 10) });
@@ -48,10 +44,26 @@ router.delete('/api/v1/parties/:id', (req, res) => {
     status: 404,
     error: 'Party not found',
   });
-});
+};
 
-// Edit a specific party name
-router.patch('/api/v1/parties/:id/name', (req, res) => {
+const getParty = (req, res) => {
+  const item = Parties.find(el => el.id === parseInt(req.params.id, 10));
+
+  if (!item) {
+    res.status(404).json({
+      status: 404,
+      error: 'Party not found',
+    });
+    return;
+  }
+
+  res.status(200).json({
+    status: 200,
+    data: [item],
+  });
+};
+
+const editParty = (req, res) => {
   const nameSchema = schema({
     name: 'string',
   }, req.body);
@@ -83,36 +95,16 @@ router.patch('/api/v1/parties/:id/name', (req, res) => {
     status: 404,
     error: 'Party not found',
   });
-});
+};
 
-// Get all parties
-router.get('/api/v1/parties', (req, res) => {
+const getParties = (req, res) => {
   res.status(200).json({
     status: 200,
     data: Parties,
   });
-});
+};
 
-// Get a specific party
-router.get('/api/v1/parties/:id', (req, res) => {
-  const item = Parties.find(el => el.id === parseInt(req.params.id, 10));
-
-  if (!item) {
-    res.status(404).json({
-      status: 404,
-      error: 'Party not found',
-    });
-    return;
-  }
-
-  res.status(200).json({
-    status: 200,
-    data: [item],
-  });
-});
-
-// Create a new party
-router.post('/api/v1/parties', (req, res) => {
+const createParty = (req, res) => {
   // Validate the request
   const partySchema = schema({
     name: 'string',
@@ -139,6 +131,8 @@ router.post('/api/v1/parties', (req, res) => {
     status: 201,
     data: [party],
   });
-});
+};
 
-export default router;
+export {
+  deleteParty, getParty, editParty, getParties, createParty,
+};

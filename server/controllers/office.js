@@ -1,12 +1,8 @@
-import express from 'express';
 import schema from '../helpers/schema';
-
-const router = express.Router();
 
 const Offices = [];
 
-// Get a specific office
-router.get('/api/v1/offices/:id', (req, res) => {
+const getOffice = (req, res) => {
   const idSchema = schema({
     id: 'number',
   }, { id: parseInt(req.params.id, 10) });
@@ -33,18 +29,16 @@ router.get('/api/v1/offices/:id', (req, res) => {
     status: 200,
     data: [item],
   });
-});
+};
 
-// Get all offices
-router.get('/api/v1/offices', (req, res) => {
+const getOffices = (req, res) => {
   res.status(200).json({
     status: 200,
     data: Offices,
   });
-});
+};
 
-// Create an office
-router.post('/api/v1/offices', (req, res) => {
+const createOffice = (req, res) => {
   const officeSchema = schema({
     type: 'string',
     name: 'string',
@@ -68,6 +62,6 @@ router.post('/api/v1/offices', (req, res) => {
     status: 201,
     data: [office],
   });
-});
+};
 
-export default router;
+export { getOffice, getOffices, createOffice };
