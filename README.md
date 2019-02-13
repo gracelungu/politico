@@ -1,25 +1,99 @@
 <p> <a href='https://travis-ci.com/gracelungu/politico'><img src='https://travis-ci.com/gracelungu/politico.svg?branch=develop' alt='Build status' /></a>   <a href='https://coveralls.io/github/gracelungu/politico?branch=develop'><img src='https://coveralls.io/repos/github/gracelungu/politico/badge.svg?branch=develop&kill_cache=1' alt='Coverage Status' /></a>   <a href="https://codeclimate.com/github/gracelungu/politico/maintainability"><img src="https://api.codeclimate.com/v1/badges/34cfd0c34cd614c8481e/maintainability" /></a>   <a href="https://codeclimate.com/github/gracelungu/politico/test_coverage"><img src="https://api.codeclimate.com/v1/badges/34cfd0c34cd614c8481e/test_coverage" /></a></p>
 
 # Politico
+
 A web-application that enables citizens give their mandate to politicians running for different government offices
 
-## UI template
-The <a href="https://github.com/gracelungu/politico/tree/gh-pages"><b>gh-pages</b> </a> branch contains the ui template which has the User Interface (UI) elements, pages, and views! for this project.
+## Getting Started
 
-### Github pages
-The UI is hosted from the gh-pages branch at <a href="https://gracelungu.github.io/politico/UI">https://gracelungu.github.io/politico/UI</a> .
+To get the project up and running on your local machine, please follow these instructions.
 
-#### Signup page
-Use any random email and password to access the other pages.
+### Prerequisites
 
-### Heroku
-The application is hosted on heroku and can be found at <a href="https://politico-api-service.herokuapp.com/">https://politico-api-service.herokuapp.com/</a>
+Make sure you have node -v 10 and above installed.
 
-#### Basic usage
-<b>GET / Offices :</b> https://politico-api-service.herokuapp.com/api/v1/offices
+Or follow these steps to install node
 
-<b>GET / A specific office :</b> https://politico-api-service.herokuapp.com/api/v1/offices/officeId
+#### Node installation on OS X
+    $ ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
-<b>GET / Parties :</b> https://politico-api-service.herokuapp.com/api/v1/parties
+#### Node installation on Linux
 
-<b>GET / A specific party :</b> https://politico-api-service.herokuapp.com/api/v1/offices/partyId
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:chris-lea/node.js
+    sudo apt-get update
+    sudo apt-get install nodejs
+
+#### Node installation on Windows
+
+Download the intaller from the [official Node.js website](http://nodejs.org/) 
+
+Clone the project from github
+
+```
+ $ git clone  https://github.com/gracelungu/politico
+```
+Install the required dependencies found in package.json
+
+```
+ $ npm install
+```
+
+## Start & Watch
+
+```
+ $ npm start
+```
+
+## Running the tests
+
+Testing the code coverage with jasmine 
+```
+ $ jasmine
+```
+Getting the code coverage report 
+```
+ $ npm test
+```
+Testing the code style with eslint
+```
+ $ ./node_modules/.bin/eslint server
+```
+## Deployment
+
+The application template is hosted on github pages
+<a href="https://gracelungu.github.io/politico/UI">https://gracelungu.github.io/politico/UI</a>
+
+### Deploying on heroku
+Make sure you have loggedin to heroku
+```
+ $ git push heroku develop:master
+```
+
+#### Endpoints to create, get, edit and delete parties.
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+POST | /api/v1/parties | False | Create a party
+GET | /api/v1/parties | False | Get all parties
+GET | /api/v1/parties/<party_id> | False | Get a specific party
+PATCH | /api/v1/parties/<party_id>/name | False | Edit a single party name
+DELETE | /api/v1/parties/<product_id> | False | Delete a single party
+
+#### Endpoints to create, and get offices
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+POST | /api/v1/offices | False | Create an office
+GET | /api/v1/offices | False | Get all offices
+GET | /api/v1/offices/<office_id> | False | Get a specific office
+
+## Author
+
+* **Grace Lungu** - *kivubox@gmail.com* - [github](https://github.com/gracelungu)
+
+## License
+
+This project is licensed under the MIT License 
+
+## Acknowledgments
+
+* My thanks goes to my learning facilitators and team members
