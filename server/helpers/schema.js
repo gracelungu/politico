@@ -24,16 +24,6 @@ function schema(args, obj) {
       }
     }
 
-    if (args[arg] === 'object') {
-      if (!(obj[arg] instanceof Object)) {
-        return {
-          passed: false,
-          message: `The ${arg} should be an Object `,
-        };
-      }
-    }
-
-
     // When the schema requires an integer
     if (args[arg] === 'integer') {
       if (!Number.isInteger(obj[arg])) {
@@ -46,16 +36,18 @@ function schema(args, obj) {
 
     // When the type is a string
     if (args[arg] === 'string') {
+      if (obj[arg]) {
+        if (typeof obj[arg] === 'string') {
+          obj[arg] = obj[arg].toString().replace(/\s+/g, ' ').trim();
+        }
+      }
 
-      obj[arg] = obj[arg].toString().replace(/\s+/g, ' ').trim();
-
-      if (typeof obj[arg] !== 'string' || obj[arg] === '' ) {
+      if (typeof obj[arg] !== 'string' || obj[arg] === '') {
         return {
           passed: false,
           message: `The ${arg} should be a valid string `,
         };
       }
-      
     }
 
     // When the type is a number
