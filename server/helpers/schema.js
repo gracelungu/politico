@@ -46,13 +46,16 @@ function schema(args, obj) {
 
     // When the type is a string
     if (args[arg] === 'string') {
-      if (typeof obj[arg] !== 'string') {
+
+      obj[arg] = obj[arg].toString().replace(/\s+/g, ' ').trim();
+
+      if (typeof obj[arg] !== 'string' || obj[arg] === '' ) {
         return {
           passed: false,
-          message: `The ${arg} should be a string `,
+          message: `The ${arg} should be a valid string `,
         };
       }
-      obj[arg] = obj[arg].replace(/\s+/g, ' ').trim();
+      
     }
 
     // When the type is a number
