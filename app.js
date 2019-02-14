@@ -3,8 +3,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 // Internal modules
-import partyController from './server/routes/party';
-import officeController from './server/routes/office';
+import party from './server/routes/party';
+import office from './server/routes/office';
+import user from './server/routes/user';
 
 // Express setup
 const app = express();
@@ -14,8 +15,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Express routing
-app.use('/', partyController);
-app.use('/', officeController);
+app.use('/', party);
+app.use('/', office);
+app.use('/', user);
 
 app.use('*',(req, res)=>{
     res.status(404).json({
