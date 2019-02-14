@@ -58,7 +58,7 @@ const createOffice = (req, res) => {
 
   Offices.push(office);
 
-  res.status(200).json({
+  res.status(201).json({
     status: 201,
     data: [office],
   });

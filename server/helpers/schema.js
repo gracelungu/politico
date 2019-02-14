@@ -5,7 +5,7 @@
 function schema(args, obj) {
   // Checks if the property is defined
   for (const arg in args) {
-    if (!obj[arg]) {
+    if (!obj[arg] === undefined) {
       return {
         passed: false,
         message: `The ${arg} attribute is required `,
@@ -51,6 +51,16 @@ function schema(args, obj) {
         return {
           passed: false,
           message: `The ${arg} should be a number `,
+        };
+      }
+    }
+
+    // When the type is a boolean
+    if (args[arg] === 'boolean') {
+      if (typeof obj[arg] !== 'boolean') {
+        return {
+          passed: false,
+          message: `The ${arg} should be a boolean `,
         };
       }
     }
