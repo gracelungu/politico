@@ -24,6 +24,16 @@ function schema(args, obj) {
       }
     }
 
+    if (args[arg] === 'object') {
+      if (!(obj[arg] instanceof Object)) {
+        return {
+          passed: false,
+          message: `The ${arg} should be an Object `,
+        };
+      }
+    }
+
+
     // When the schema requires an integer
     if (args[arg] === 'integer') {
       if (!Number.isInteger(obj[arg])) {

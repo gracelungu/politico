@@ -1,17 +1,6 @@
 import schema from '../helpers/schema';
 
-const Parties = [{
-  id: 3,
-  name: 'AFDC',
-  hqAdress: 'adress',
-  logoUrl: 'logourl',
-},
-{
-  id: 4,
-  name: 'AFDC',
-  hqAdress: 'adress',
-  logoUrl: 'logourl',
-}];
+const Parties = [];
 
 const deleteParty = (req, res) => {
   const idSchema = schema({

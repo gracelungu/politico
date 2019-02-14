@@ -119,14 +119,27 @@ describe('PARTY', () => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
-          url: `${baseUrl}/parties/3`,
-          method: 'GET',
-        },
-        (error, response, body) => {
-          expect(body).toBeJsonString(body);
-          expect(JSON.parse(body).status).toBe(200);
-          expect(JSON.parse(body)).validateGetParty();
-          done();
+          url: `${baseUrl}/parties`,
+          method: 'POST',
+          body: JSON.stringify({
+            name: 'AFDC',
+            hqAdress: 'adress',
+            logoUrl: 'logourl',
+          }),
+        }, () => {
+          Request(
+            {
+              headers: { 'content-type': 'application/json' },
+              url: `${baseUrl}/parties/1`,
+              method: 'GET',
+            },
+            (error, response, body) => {
+              expect(body).toBeJsonString(body);
+              expect(JSON.parse(body).status).toBe(200);
+              expect(JSON.parse(body)).validateGetParty();
+              done();
+            },
+          );
         },
       );
     });
@@ -174,21 +187,34 @@ describe('PARTY', () => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
-          url: `${baseUrl}/parties/3/name`,
-          method: 'PATCH',
+          url: `${baseUrl}/parties`,
+          method: 'POST',
           body: JSON.stringify({
-            name: 'newName',
+            name: 'AFDC',
+            hqAdress: 'adress',
+            logoUrl: 'logourl',
           }),
-        },
-        (error, response, body) => {
-          expect(body).toBeJsonString(body);
+        }, () => {
+          Request(
+            {
+              headers: { 'content-type': 'application/json' },
+              url: `${baseUrl}/parties/1/name`,
+              method: 'PATCH',
+              body: JSON.stringify({
+                name: 'newName',
+              }),
+            },
+            (error, response, body) => {
+              expect(body).toBeJsonString(body);
 
 
-          expect(JSON.parse(body).status).toBe(200);
-          expect(JSON.parse(body)).validateParty();
+              expect(JSON.parse(body).status).toBe(200);
+              expect(JSON.parse(body)).validateParty();
 
 
-          done();
+              done();
+            },
+          );
         },
       );
     });
@@ -234,23 +260,53 @@ describe('PARTY', () => {
     });
   });
 
+  const deleteParty = (done) => {
+    Request(
+      {
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/parties/2`,
+        method: 'DELETE',
+      },
+      (error, response, body) => {
+        expect(body).toBeJsonString(body);
+
+
+        expect(JSON.parse(body).status).toBe(200);
+        expect(JSON.parse(body)).validateDeleteParty();
+
+
+        done();
+      },
+    );
+  };
+
   describe('DELETE ', () => {
     it('Should delete a party', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
-          url: `${baseUrl}/parties/4`,
-          method: 'DELETE',
-        },
-        (error, response, body) => {
-          expect(body).toBeJsonString(body);
-
-
-          expect(JSON.parse(body).status).toBe(200);
-          expect(JSON.parse(body)).validateDeleteParty();
-
-
-          done();
+          url: `${baseUrl}/parties`,
+          method: 'POST',
+          body: JSON.stringify({
+            name: 'AFDC',
+            hqAdress: 'adress',
+            logoUrl: 'logourl',
+          }),
+        }, () => {
+          Request(
+            {
+              headers: { 'content-type': 'application/json' },
+              url: `${baseUrl}/parties`,
+              method: 'POST',
+              body: JSON.stringify({
+                name: 'AFDC',
+                hqAdress: 'adress',
+                logoUrl: 'logourl',
+              }),
+            }, () => {
+              deleteParty(done);
+            },
+          );
         },
       );
     });
