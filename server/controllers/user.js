@@ -1,6 +1,6 @@
+import jwt from 'jsonwebtoken';
 import schema from '../helpers/schema';
 import userQueries from '../models/user';
-import jwt from 'jsonwebtoken';
 import secret from '../config/env';
 
 const createUser = async (req, res) => {
@@ -42,13 +42,13 @@ const createUser = async (req, res) => {
     return;
   }
 
-  //Siging the token
-  const token = jwt.sign({ email: req.body.email}, secret, {expiresIn: '24h'});
+  // Siging the token
+  const token = jwt.sign({ email: req.body.email }, secret, { expiresIn: '24h' });
 
   res.status(201).json({
     status: 201,
     data: [{
-      token: token,
+      token,
       user: req.body,
     }],
   });

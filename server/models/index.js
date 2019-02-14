@@ -1,5 +1,5 @@
 import pg from 'pg';
-import { db } from '../config/db';
+import db from '../config/db';
 
 // Making a connection to the db
 const pool = new pg.Pool(db.test);

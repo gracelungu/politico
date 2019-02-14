@@ -36,7 +36,6 @@ const userQueries = {
 
       return res;
     } catch (e) {
-      console.log(e);
       return {
         error: {
           status: 500,
