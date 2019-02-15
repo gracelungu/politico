@@ -21,7 +21,7 @@ describe('User ', () => {
   });
 
   describe('POST', () => {
-    xit('Should create a new user', (done) => {
+    it('Should create a new user', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -45,7 +45,7 @@ describe('User ', () => {
     });
   });
 
-  xit('Should return 403 if the email already exist', (done) => {
+  it('Should return 403 if the email already exist', (done) => {
     Request({
       headers: { 'content-type': 'application/json' },
       url: `${baseUrl}/auth/signup`,

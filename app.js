@@ -20,8 +20,8 @@ app.use('/', office);
 app.use('/', user);
 
 app.use('*',(req, res)=>{
-    res.status(404).json({
-        status:404,
+    res.status(400).json({
+        status:400,
         error: 'Wrong http request'
     });
 });

@@ -52,6 +52,16 @@ const createOffice = (req, res) => {
     return;
   }
 
+  const index = Offices.findIndex(item => item.name === req.body.name);
+
+  if (index >= 0) {
+    res.status(403).json({
+      status: 403,
+      error: 'An office with the same name already exist',
+    });
+    return;
+  }
+
   let office = officeSchema.obj;
 
   office = Object.assign({ id: Offices.length + 1 }, office);

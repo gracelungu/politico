@@ -58,19 +58,34 @@ describe('Server', () => {
 
   describe('POST /', () => {
     it('Should create an office', (done) => {
+      const randName = `minister${Math.floor(Math.random() * 1000)}${1}`;
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices`,
         method: 'POST',
         body: JSON.stringify({
           type: 'federal',
-          name: 'Minister',
+          name: randName,
         }),
-      }, (error, response, body) => {
-        expect(body).toBeJsonString();
-        expect(JSON.parse(body).status).toBe(201);
-        expect(JSON.parse(body)).validateCreateOffice();
-        done();
+      }, (err, resp, bdy) => {
+        expect(bdy).toBeJsonString();
+        expect(JSON.parse(bdy).status).toBe(201);
+        expect(JSON.parse(bdy)).validateCreateOffice();
+
+        Request({
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/offices`,
+          method: 'POST',
+          body: JSON.stringify({
+            name: randName,
+            type: 'federal',
+          }),
+        }, (error, response, body) => {
+          expect(body).toBeJsonString();
+          expect(JSON.parse(body).status).toBe(403);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+        });
       });
     });
 
@@ -145,6 +160,21 @@ describe('Server', () => {
       }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+  });
+
+  describe('Wrong request', () => {
+    it('Should return "wrong http request" when the request is wrong', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/office`,
+        method: 'GET',
+      }, (error, response, body) => {
+        expect(body).toBeJsonString();
+        expect(JSON.parse(body).status).toBe(400);
         expect(JSON.parse(body).error).toBeDefined();
         done();
       });

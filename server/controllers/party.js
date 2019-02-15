@@ -109,6 +109,16 @@ const createParty = (req, res) => {
     return;
   }
 
+  const index = Parties.findIndex(item => item.name === req.body.name);
+
+  if (index >= 0) {
+    res.status(403).json({
+      status: 403,
+      error: 'A Party with the same name already exist',
+    });
+    return;
+  }
+
   // Add new party
   let party = partySchema.obj;
 

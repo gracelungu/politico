@@ -71,23 +71,40 @@ describe('PARTY', () => {
 
   describe('POST', () => {
     it('Should create a party', (done) => {
+      const randName = `AFDC${Math.floor(Math.random() * 1000)}${1}`;
       Request(
         {
           headers: { 'content-type': 'application/json' },
           url: `${baseUrl}/parties`,
           method: 'POST',
           body: JSON.stringify({
-            name: 'AFDC',
+            name: randName,
             hqAdress: 'adress',
             logoUrl: 'logourl',
           }),
         }, (error, response, body) => {
           expect(body).toBeJsonString(body);
-
-
           expect(JSON.parse(body).status).toBe(201);
           expect(JSON.parse(body)).validateParty();
-          done();
+
+          Request(
+            {
+              headers: { 'content-type': 'application/json' },
+              url: `${baseUrl}/parties`,
+              method: 'POST',
+              body: JSON.stringify({
+                name: randName,
+                hqAdress: 'adress',
+                logoUrl: 'logourl',
+              }),
+            }, (err, rep, bdy) => {
+              expect(bdy).toBeJsonString(bdy);
+
+              expect(JSON.parse(bdy).status).toBe(403);
+              expect(JSON.parse(bdy).error).toBeDefined();
+              done();
+            },
+          );
         },
       );
     });
@@ -122,7 +139,7 @@ describe('PARTY', () => {
           url: `${baseUrl}/parties`,
           method: 'POST',
           body: JSON.stringify({
-            name: 'AFDC',
+            name: 'AFDD',
             hqAdress: 'adress',
             logoUrl: 'logourl',
           }),
@@ -190,7 +207,7 @@ describe('PARTY', () => {
           url: `${baseUrl}/parties`,
           method: 'POST',
           body: JSON.stringify({
-            name: 'AFDC',
+            name: 'DFCE',
             hqAdress: 'adress',
             logoUrl: 'logourl',
           }),
@@ -288,7 +305,7 @@ describe('PARTY', () => {
           url: `${baseUrl}/parties`,
           method: 'POST',
           body: JSON.stringify({
-            name: 'AFDC',
+            name: 'FERS',
             hqAdress: 'adress',
             logoUrl: 'logourl',
           }),
