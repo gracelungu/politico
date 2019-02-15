@@ -36,7 +36,7 @@ const deleteParty = (req, res) => {
 };
 
 const getParty = (req, res) => {
-  const item = Parties.find(el => el.id === parseInt(req.params.id, 10));
+  const item = Parties.find(element => element.id === parseInt(req.params.id, 10));
 
   if (!item) {
     res.status(404).json({
@@ -65,7 +65,7 @@ const editParty = (req, res) => {
     return;
   }
 
-  const item = Parties.find(el => el.id === parseInt(req.params.id, 10));
+  const item = Parties.find(element => element.id === parseInt(req.params.id, 10));
 
   if (item) {
     item.name = req.body.name;

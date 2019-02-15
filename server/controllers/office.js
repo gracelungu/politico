@@ -15,7 +15,7 @@ const getOffice = (req, res) => {
     return;
   }
 
-  const item = Offices.find(el => el.id === parseInt(req.params.id, 10));
+  const item = Offices.find(element => element.id === parseInt(req.params.id, 10));
 
   if (!item) {
     res.status(404).json({
