@@ -14,6 +14,7 @@ const initialize = {
             lastname varchar(30),
             othername varchar(30),
             email varchar(50),
+            password text,
             phoneNumber varchar(25),
             passportUrl text,
             isAdmin boolean );`;

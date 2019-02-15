@@ -30,9 +30,10 @@ const userQueries = {
         lastname,
         othername,
         email,
+        password,
         phoneNumber,
         passportUrl,
-        isAdmin) VALUES($1, $2, $3, $4, $5, $6, $7) `, values);
+        isAdmin) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id `, values);
 
       return res;
     } catch (e) {

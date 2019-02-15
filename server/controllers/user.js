@@ -1,7 +1,10 @@
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import schema from '../helpers/schema';
 import userQueries from '../models/user';
 import secret from '../config/env';
+
+const saltRound = 10;
 
 const createUser = async (req, res) => {
   const userSchema = schema({
@@ -9,6 +12,7 @@ const createUser = async (req, res) => {
     lastname: 'string',
     othername: 'string',
     email: 'email',
+    password: 'password',
     phoneNumber: 'number',
     passportUrl: 'string',
     isAdmin: 'boolean',
@@ -22,16 +26,21 @@ const createUser = async (req, res) => {
     return;
   }
 
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(req.body.password, saltRound);
+
   const values = [
     req.body.firstname,
     req.body.lastname,
     req.body.othername,
     req.body.email,
+    hashedPassword,
     req.body.phoneNumber,
     req.body.passportUrl,
     req.body.isAdmin,
   ];
 
+  // Save the user into the database
   const result = await userQueries.create(values);
 
   if (result.error) {
@@ -41,6 +50,13 @@ const createUser = async (req, res) => {
     });
     return;
   }
+
+  // Return the new id
+  const { id } = result.rows[0];
+  req.body = Object.assign({ id }, req.body);
+
+  // Remove the password
+  delete req.body.password;
 
   // Siging the token
   const token = jwt.sign({ email: req.body.email }, secret, { expiresIn: '24h' });
