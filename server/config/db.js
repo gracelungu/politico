@@ -8,10 +8,10 @@ const db = {
     ssl: true,
   },
   test: {
-    user: 'postgres',
+    user: 'travis',
     host: 'localhost',
     port: 5432,
-    database: 'politico',
+    database: 'travis',
   },
 };
 
