@@ -14,10 +14,10 @@ const db = {
     database: 'politico',
   },
   travis: {
-    user: 'postgres',
-    host: 'localhost',
+    user: 'travis',
+    host: 'travis.dev',
     port: 5432,
-    database: 'politico',
+    database: 'travis'
   },
 };
 

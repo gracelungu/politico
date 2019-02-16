@@ -9,13 +9,10 @@ after_success: 'npm run coveralls'
 script: npm test
 before_script:
   - npm install codeclimate-test-reporter istanbul -g
-  - psql -c 'create database politico;' -U postgres
   - psql -c '\conninfo'
 after_script:
   - codeclimate-test-reporter < ./coverage/lcov.info
 services:
   - postgresql
-postgres:
-  adapter: postgresql
-  database: politico
-  username: postgres
+addons:
+  hosts: travis.dev
