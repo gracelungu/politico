@@ -1,6 +1,5 @@
 import Request from 'request';
-
-const baseUrl = 'http://localhost:3003/api/v1';
+import {baseUrl} from '../config/env';
 
 describe('User ', () => {
   beforeEach(() => {

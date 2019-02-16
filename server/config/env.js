@@ -1,3 +1,3 @@
 const secret = 'scrt01';
-
-export default secret;
+const baseUrl = 'http://localhost:3003/api/v1';
+export { secret, baseUrl };

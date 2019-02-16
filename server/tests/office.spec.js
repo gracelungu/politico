@@ -1,7 +1,6 @@
 import Request from 'request';
 import schema from '../helpers/schema';
-
-const baseUrl = 'http://localhost:3003/api/v1';
+import { baseUrl } from '../config/env';
 
 // Starts the server
 require('../../app');

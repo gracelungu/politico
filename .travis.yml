@@ -7,12 +7,23 @@ addons:
         repo_token:772d02e6d14eb53a10f73abbd6e9cdd47716c3d3a81392693805872a973b386c
 after_success: 'npm run coveralls'
 script: npm test
+env:
+  global:
+    - PGPORT=5432
+    - DB_NAME=politico
+    - DB_USER=postgres
 before_script:
   - npm install codeclimate-test-reporter istanbul -g
-  - psql -c '\conninfo'
+  - psql --command="CREATE USER postgres;"
+  - psql --command="CREATE DATABASE politico WITH OWNER = postgres;"
+  - psql --command="\conninfo"
 after_script:
   - codeclimate-test-reporter < ./coverage/lcov.info
 services:
   - postgresql
 addons:
-  hosts: travis.dev
+  postgresql: "10"
+  apt:
+    packages:
+      - postgresql-10
+      - postgresql-client-10

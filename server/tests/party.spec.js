@@ -1,7 +1,6 @@
 import Request from 'request';
 import schema from '../helpers/schema';
-
-const baseUrl = 'http://localhost:3003/api/v1';
+import { baseUrl } from '../config/env';
 
 describe('PARTY', () => {
   beforeEach(() => {
@@ -83,6 +82,7 @@ describe('PARTY', () => {
             logoUrl: 'logourl',
           }),
         }, (error, response, body) => {
+          console.log(body);
           expect(body).toBeJsonString(body);
           expect(JSON.parse(body).status).toBe(201);
           expect(JSON.parse(body)).validateParty();

@@ -1,10 +1,11 @@
 const db = {
   prod: {
-    user: 'postgres',
-    host: 'localhost',
-    password: '1234',
+    user: 'hshzkynyvusbll',
+    host: 'ec2-54-83-50-174.compute-1.amazonaws.com',
+    password: 'e66f42dab9692b41aeaf26e73ce7c0cd7e95761a53748e8dac4f493fcbfcedff',
     port: 5432,
-    database: 'politico',
+    database: 'd5rff5kr0uut53',
+    ssl: true,
   },
   test: {
     user: 'postgres',
@@ -12,12 +13,6 @@ const db = {
     password: '1234',
     port: 5432,
     database: 'politico',
-  },
-  travis: {
-    user: 'travis',
-    host: '127.0.0.1',
-    port: 5432,
-    database: 'travis'
   },
 };
 
