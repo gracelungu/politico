@@ -31,7 +31,7 @@
   },
   "scripts": {
     "test-cov": "npm run build && node_modules/.bin/babel-node node_modules/.bin/istanbul cover jasmine",
-    "test": "./node_modules/.bin/eslint server --fix && npm run test-cov ",
+    "test": " npm run test-cov ",
     "coveralls": "istanbul cover jasmine --captureExceptions && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js ",
     "build": "./node_modules/.bin/babel server app.js",
     "start": " babel-node app.js"
