@@ -47,8 +47,7 @@ const userQueries = {
       };
     }
   },
-  loginUser : async(values) => {
-
+  loginUser: async (values) => {
     try {
       const definition = await initialize.defineUser();
       if (definition.error) {
@@ -62,8 +61,7 @@ const userQueries = {
 
       const res = await pool.query('SELECT * FROM users WHERE email= $1 ', values);
       return res;
-
-    }catch(e){ console.log(e);
+    } catch (e) {
       return {
         error: {
           status: 500,
@@ -71,8 +69,7 @@ const userQueries = {
         },
       };
     }
-
-  }
+  },
 };
 
 export default userQueries;

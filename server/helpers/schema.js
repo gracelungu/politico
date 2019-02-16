@@ -72,24 +72,25 @@ function schema(args, obj) {
 
     // When the type is an email
     if (args[arg] === 'email') {
-      if (!RegExp(/^[a-zA-Z-._]+@[a-zA-Z-._]+.[a-zA-Z]{2,4}$/).test(obj[arg].toString().toLowerCase())) {
+      if (!RegExp(/^[a-zA-Z0-9-._]+@[a-zA-Z-._]+.[a-zA-Z]{2,4}$/).test(obj[arg].toString().toLowerCase())) {
         return {
           passed: false,
-          message: `The email adress is invalid`,
+          message: 'The email adress is invalid',
         };
       }
     }
 
     // When the type is an email
     if (args[arg] === 'password') {
-      if (obj[arg].toString().length < 6) {
-        return {
-          passed: false,
-          message: `The password length is less than 6 characters`,
-        };
+      if (obj[arg]) {
+        if (obj[arg].toString().length < 6) {
+          return {
+            passed: false,
+            message: 'The password length is less than 6 characters',
+          };
+        }
       }
     }
-
   }
 
   return {

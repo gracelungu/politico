@@ -70,11 +70,10 @@ const createUser = async (req, res) => {
   });
 };
 
-const loginUser = async (req, res)=> {
-
+const loginUser = async (req, res) => {
   const userSchema = schema({
-    email : 'email',
-    password : 'password'
+    email: 'email',
+    password: 'password',
   }, req.body);
 
   if (!userSchema.passed) {
@@ -85,64 +84,62 @@ const loginUser = async (req, res)=> {
     return;
   }
 
-  const token = req.headers['authorization'];
+  const token = req.headers.authorization;
 
-  if(!token){
-    res.status(403).json({
-      status: 403,
-      error: "The authorization token is required"
+  if (!token) {
+    res.status(400).json({
+      status: 400,
+      error: 'The authorization token is required',
     });
     return;
   }
 
-  try{
-
-    //Verify the token
+  try {
+    // Verify the token
     const verified = await jwt.verify(token, secret);
-    if(!verified){
+    if (!verified) {
       res.status(403).json({
         status: 403,
-        error: "The authorization token is invalid"
+        error: 'The authorization token is invalid',
       });
       return;
     }
 
     const values = [
-      req.body.email
+      req.body.email,
     ];
 
     const result = await userQueries.loginUser(values);
 
-    if(result.error){
+    if (result.error) {
       res.status(403).json({
         status: 403,
-        error: result.error.message
+        error: result.error.message,
       });
       return;
     }
 
-    if(result.rowCount <= 0){
+    if (result.rowCount <= 0) {
       res.status(404).json({
         status: 404,
-        error: "The user does not exist"
+        error: 'The user does not exist',
       });
       return;
     }
 
-    bcrypt.compare(req.body.password, result.rows[0].password, (error, data)=>{
-
-      if(error){
+    bcrypt.compare(req.body.password, result.rows[0].password, (error, data) => {
+      if (error) {
         res.status(500).json({
           status: 500,
-          error: "An error has occured "
+          error: 'A bcrypt error has occured',
         });
         return;
       }
 
-      if(!data){
+      if (!data) {
         res.status(403).json({
           status: 403,
-          error: "Invalid password"
+          error: 'The token does not match with the user credentials',
         });
         return;
       }
@@ -153,24 +150,18 @@ const loginUser = async (req, res)=> {
       // The authentification has succeeded
       res.status(200).json({
         status: 200,
-        data : [{
+        data: [{
           token,
-          user : result.rows[0]
-        }]
+          user: result.rows[0],
+        }],
       });
-
     });
-
-  }catch(e){
-
+  } catch (e) {
     res.status(403).json({
       status: 403,
-      error: "The authorization token is invalid"
+      error: 'The authorization token is invalid',
     });
-    return;
-
   }
+};
 
-}
-
-export {createUser, loginUser} ;
+export { createUser, loginUser };

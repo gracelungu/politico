@@ -48,7 +48,7 @@ class Toast {
 }
 //VALIDATE
 function isValidEmail(email) {
-	if (!RegExp(/^[a-zA-Z-._]+@[a-zA-Z-._]+.[a-zA-Z]{2,4}$/).test(email.toString().toLowerCase().trim())) {
+	if (!RegExp(/^[a-zA-Z0-9-._]+@[a-zA-Z-._]+.[a-zA-Z]{2,4}$/).test(email.toString().toLowerCase().trim())) {
 		return false;
 	}
 	return true;
