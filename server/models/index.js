@@ -2,7 +2,7 @@ import pg from 'pg';
 import db from '../config/db';
 
 // Making a connection to the db
-const pool = new pg.Pool(db.test);
+const pool = new pg.Pool(db.travis);
 
 // Initialize the db with default tables
 const initialize = {

@@ -13,6 +13,12 @@ const db = {
     port: 5432,
     database: 'politico',
   },
+  travis: {
+    user: 'postgres',
+    host: 'localhost',
+    port: 5432,
+    database: 'politico',
+  },
 };
 
 
