@@ -24,10 +24,10 @@ const initialize = {
     try {
       const res = await pool.query(query);
       return res;
-    } catch (e) {
+    } catch (e) { console.log(e);
       return {
         error: true,
-        res: 'Failed to create the user table',
+        res: 'Failed to create the users table',
       };
     }
   },
