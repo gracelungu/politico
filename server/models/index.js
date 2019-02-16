@@ -1,8 +1,12 @@
 import pg from 'pg';
-import db from '../config/db';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Making a connection to the db
-const pool = new pg.Pool(db.test);
+const pool = new pg.Pool({
+  connectionString: process.env.POSTGRES_URL
+}); 
 
 // Initialize the db with default tables
 const initialize = {

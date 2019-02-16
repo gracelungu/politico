@@ -7,6 +7,8 @@ addons:
         repo_token:772d02e6d14eb53a10f73abbd6e9cdd47716c3d3a81392693805872a973b386c
 after_success: 'npm run coveralls'
 script: npm test
+env:
+  - POSTGRES_URL : postgres://travis@localhost:5432/travis
 before_script:
   - npm install codeclimate-test-reporter istanbul -g
   - psql -c "\conninfo"

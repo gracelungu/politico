@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import schema from '../helpers/schema';
 import userQueries from '../models/user';
-import { secret } from '../config/env';
+import { secret } from '../config/config';
 
 const saltRound = 10;
 

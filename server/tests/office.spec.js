@@ -1,6 +1,6 @@
 import Request from 'request';
 import schema from '../helpers/schema';
-import { baseUrl } from '../config/env';
+import { baseUrl } from '../config/config';
 
 // Starts the server
 require('../../app');

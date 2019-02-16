@@ -1,5 +1,5 @@
 import Request from 'request';
-import { baseUrl } from '../config/env';
+import { baseUrl } from '../config/config';
 
 describe('User ', () => {
   beforeEach(() => {
