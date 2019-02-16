@@ -1,5 +1,5 @@
 import Request from 'request';
-import {baseUrl} from '../config/env';
+import { baseUrl } from '../config/env';
 
 describe('User ', () => {
   beforeEach(() => {
@@ -37,7 +37,7 @@ describe('User ', () => {
           passportUrl: 'url',
           isAdmin: false,
         }),
-      }, (error, response, body) => { console.log(body);
+      }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(201);
         expect(JSON.parse(body).data).toBeDefined();
         expect(JSON.parse(body).data[0].token).toBeDefined();
@@ -64,7 +64,7 @@ describe('User ', () => {
         isAdmin: false,
       }),
     }, (err, res, bdy) => {
-      if (JSON.parse(bdy).data) { console.log(body);
+      if (JSON.parse(bdy).data) {
         authToken = JSON.parse(bdy).data[0].token;
       }
 

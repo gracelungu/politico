@@ -82,7 +82,6 @@ describe('PARTY', () => {
             logoUrl: 'logourl',
           }),
         }, (error, response, body) => {
-          console.log(body);
           expect(body).toBeJsonString(body);
           expect(JSON.parse(body).status).toBe(201);
           expect(JSON.parse(body)).validateParty();
