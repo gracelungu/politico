@@ -2,3 +2,4 @@ node_modules/
 coverage/
 karma.conf.js
 coverage/
+.env
