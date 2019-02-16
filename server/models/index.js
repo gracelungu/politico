@@ -17,7 +17,9 @@ const initialize = {
             password text,
             phoneNumber varchar(25),
             passportUrl text,
-            isAdmin boolean );`;
+            isAdmin boolean,
+            date date,
+            active boolean);`;
 
     try {
       const res = await pool.query(query);
