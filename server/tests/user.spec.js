@@ -23,7 +23,7 @@ describe('User ', () => {
   let authToken;
 
   describe('POST', () => {
-    it('Should create a new user', (done) => {
+    xit('Should create a new user', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -49,7 +49,7 @@ describe('User ', () => {
     });
   });
 
-  it('Should return 403 if the email already exist', (done) => {
+  xit('Should return 403 if the email already exist', (done) => {
     Request({
       headers: { 'content-type': 'application/json' },
       url: `${baseUrl}/auth/signup`,
@@ -92,7 +92,7 @@ describe('User ', () => {
   });
 
   describe('POST', () => {
-    it('Should login the user', (done) => {
+    xit('Should login the user', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -132,7 +132,7 @@ describe('User ', () => {
       });
     });
 
-    it('Should return 403 when the token is invalid', (done) => {
+    xit('Should return 403 when the token is invalid', (done) => {
       Request({
         headers: { 'content-type': 'application/json', authorization: 'wrongtoken' },
         url: `${baseUrl}/auth/login`,
@@ -148,7 +148,7 @@ describe('User ', () => {
       });
     });
 
-    it('Should return 400 when the token is missing', (done) => {
+    xit('Should return 400 when the token is missing', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/login`,
@@ -164,7 +164,7 @@ describe('User ', () => {
       });
     });
 
-    it('Should return 404 when the user does not exist', (done) => {
+    xit('Should return 404 when the user does not exist', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/login`,
@@ -180,7 +180,7 @@ describe('User ', () => {
       });
     });
 
-    it('Should return 400 when the password length is less than 6', (done) => {
+    xit('Should return 400 when the password length is less than 6', (done) => {
       Request({
         headers: { 'content-type': 'application/json', authorization: 'token' },
         url: `${baseUrl}/auth/login`,
