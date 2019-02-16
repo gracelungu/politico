@@ -38,7 +38,7 @@ describe('User ', () => {
           passportUrl: 'url',
           isAdmin: false,
         }),
-      }, (error, response, body) => {
+      }, (error, response, body) => { console.log(body);
         expect(JSON.parse(body).status).toBe(201);
         expect(JSON.parse(body).data).toBeDefined();
         expect(JSON.parse(body).data[0].token).toBeDefined();
@@ -65,7 +65,7 @@ describe('User ', () => {
         isAdmin: false,
       }),
     }, (err, res, bdy) => {
-      if (JSON.parse(bdy).data) {
+      if (JSON.parse(bdy).data) { console.log(body);
         authToken = JSON.parse(bdy).data[0].token;
       }
 
