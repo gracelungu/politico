@@ -21,7 +21,7 @@ describe('User ', () => {
   });
 
   describe('POST', () => {
-    xit('Should create a new user', (done) => {
+    it('Should create a new user', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -31,6 +31,7 @@ describe('User ', () => {
           lastname: 'lungu',
           othername: 'birindwa',
           email: `grace${Math.floor(Math.random() * 1000) + 1}@gmail.com`,
+          password : 'password',
           phoneNumber: 878623545,
           passportUrl: 'url',
           isAdmin: false,
@@ -45,7 +46,7 @@ describe('User ', () => {
     });
   });
 
-  xit('Should return 403 if the email already exist', (done) => {
+  it('Should return 403 if the email already exist', (done) => {
     Request({
       headers: { 'content-type': 'application/json' },
       url: `${baseUrl}/auth/signup`,
@@ -55,14 +56,35 @@ describe('User ', () => {
         lastname: 'lungu',
         othername: 'birindwa',
         email: 'grace@gmail.com',
+        password: 'password',
         phoneNumber: 878623545,
         passportUrl: 'url',
         isAdmin: false,
       }),
-    }, (error, response, body) => {
-      expect(JSON.parse(body).status).toBe(403);
-      expect(JSON.parse(body).error).toBeDefined();
-      done();
+    }, () => {
+
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/signup`,
+        method: 'POST',
+        body: JSON.stringify({
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: 'grace@gmail.com',
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: false,
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+
     });
+    
   });
+
 });

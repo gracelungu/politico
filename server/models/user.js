@@ -38,7 +38,7 @@ const userQueries = {
         active) VALUES($1, $2, $3, $4, $5, $6, $7, $8, NOW(), true) RETURNING id `, values);
 
       return res;
-    } catch (e) { console.log(e);
+    } catch (e) {
       return {
         error: {
           status: 500,
@@ -47,6 +47,32 @@ const userQueries = {
       };
     }
   },
+  loginUser : async(values) => {
+
+    try {
+      const definition = await initialize.defineUser();
+      if (definition.error) {
+        return {
+          error: {
+            status: 500,
+            message: definition.res,
+          },
+        };
+      }
+
+      const res = await pool.query('SELECT * FROM users WHERE email= $1 ', values);
+      return res;
+
+    }catch(e){ console.log(e);
+      return {
+        error: {
+          status: 500,
+          message: 'Failed to select data from the users table',
+        },
+      };
+    }
+
+  }
 };
 
 export default userQueries;
