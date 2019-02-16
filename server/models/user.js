@@ -15,7 +15,7 @@ const userQueries = {
       }
 
       // Check if the email adress exist
-      const exist = await pool.query('SELECT * FROM users WHERE email = $1', [values[3]]);
+      const exist = await pool.query('SELECT * FROM userstable WHERE email = $1', [values[3]]);
       if (exist.rowCount > 0) {
         return {
           error: {
@@ -25,7 +25,7 @@ const userQueries = {
         };
       }
 
-      const res = await pool.query(`INSERT INTO users (
+      const res = await pool.query(`INSERT INTO userstable (
         firstname,
         lastname,
         othername,
@@ -59,7 +59,7 @@ const userQueries = {
         };
       }
 
-      const res = await pool.query('SELECT * FROM users WHERE email= $1 ', values);
+      const res = await pool.query('SELECT * FROM userstable WHERE email= $1 ', values);
       return res;
     } catch (e) {
       return {
