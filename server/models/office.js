@@ -88,6 +88,30 @@ const officeQueries = {
       };
     }
   },
+  getResults: async (values) => {
+    try {
+      const definition = await initialize.defineVotes();
+      if (definition.error) {
+        return {
+          error: {
+            status: 500,
+            message: definition.res,
+          },
+        };
+      }
+
+      const res = await pool.query('SELECT * FROM votes WHERE office = $1 ', [values[0]]);
+
+      return res;
+    } catch (e) {
+      return {
+        error: {
+          status: 500,
+          message: 'Failed to select office votes',
+        },
+      };
+    }
+  },
 };
 
 export default officeQueries;

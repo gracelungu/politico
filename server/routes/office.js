@@ -1,5 +1,7 @@
 import express from 'express';
-import { getOffice, getOffices, createOffice } from '../controllers/office';
+import {
+  getOffice, getOffices, createOffice, getResults,
+} from '../controllers/office';
 
 const router = express.Router();
 
@@ -11,6 +13,10 @@ router.route('/api/v1/offices/:id')
 router.route('/api/v1/offices')
   .get(getOffices)
   .post(createOffice);
+
+// Get office results
+router.route('/api/v1/office/:id/result')
+  .get(getResults);
 
 
 export default router;
