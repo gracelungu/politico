@@ -86,19 +86,39 @@ describe('User ', () => {
 
   describe('POST', () => {
     it('Should login the user', (done) => {
+      const email = `name${Math.floor(Math.random() * 1000000) + 1}@gmail.com`;
       Request({
         headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/auth/login`,
+        url: `${baseUrl}/auth/signup`,
         method: 'POST',
         body: JSON.stringify({
-          email: 'grace@gmail.com',
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email,
           password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: false,
         }),
-      }, (error, response, body) => {
-        expect(JSON.parse(body).status).toBe(200);
-        expect(JSON.parse(body).data).toBeDefined();
-        done();
+      }, () => {
+
+        Request({
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/auth/login`,
+          method: 'POST',
+          body: JSON.stringify({
+            email,
+            password: 'password',
+          }),
+        }, (error, response, body) => {
+          expect(JSON.parse(body).status).toBe(200);
+          expect(JSON.parse(body).data).toBeDefined();
+          done();
+        });
+
       });
+      
     });
 
     it('Should return 404 when the user does not exist', (done) => {
@@ -123,7 +143,7 @@ describe('User ', () => {
         url: `${baseUrl}/auth/login`,
         method: 'POST',
         body: JSON.stringify({
-          email: 'notexist@gmail.com',
+          email: 'grace@gmail.com',
           password: 'pass',
         }),
       }, (error, response, body) => {
