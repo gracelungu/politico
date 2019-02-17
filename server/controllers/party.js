@@ -1,5 +1,5 @@
-import schema from '../helpers/schema';
 import jwt from 'jsonwebtoken';
+import schema from '../helpers/schema';
 import { secret } from '../config/config';
 
 const Parties = [];
@@ -42,33 +42,28 @@ const deleteParty = async (req, res) => {
 
     const index = Parties.findIndex(item => item.id === parseInt(req.params.id, 10));
 
-  if (index >= 0) {
-    Parties.splice(index, 1);
+    if (index >= 0) {
+      Parties.splice(index, 1);
 
-    res.status(200).json({
-      status: 200,
-      data: [{
-        message: 'The party was successfully deleted',
-      }],
+      res.status(200).json({
+        status: 200,
+        data: [{
+          message: 'The party was successfully deleted',
+        }],
+      });
+      return;
+    }
+
+    res.status(404).json({
+      status: 404,
+      error: 'Party not found',
     });
-    return;
-  }
-
-  res.status(404).json({
-    status: 404,
-    error: 'Party not found',
-  });
-
-  }catch(e){
-
+  } catch (e) {
     res.status(403).json({
       status: 403,
       error: 'The authorization token is invalid',
     });
-
   }
-
-  
 };
 
 const getParty = (req, res) => {
@@ -126,34 +121,29 @@ const editParty = async (req, res) => {
 
     const item = Parties.find(element => element.id === parseInt(req.params.id, 10));
 
-  if (item) {
-    item.name = req.body.name;
+    if (item) {
+      item.name = req.body.name;
 
-    res.status(200).json({
-      status: 200,
-      data: [{
-        id: item.id,
-        name: item.name,
-      }],
+      res.status(200).json({
+        status: 200,
+        data: [{
+          id: item.id,
+          name: item.name,
+        }],
+      });
+      return;
+    }
+
+    res.status(404).json({
+      status: 404,
+      error: 'Party not found',
     });
-    return;
-  }
-
-  res.status(404).json({
-    status: 404,
-    error: 'Party not found',
-  });
-
-  }catch(e){
-
+  } catch (e) {
     res.status(403).json({
       status: 403,
       error: 'The authorization token is invalid',
     });
-
-  }  
-
-  
+  }
 };
 
 const getParties = (req, res) => {
@@ -204,36 +194,31 @@ const createParty = async (req, res) => {
 
     const index = Parties.findIndex(item => item.name === req.body.name);
 
-  if (index >= 0) {
-    res.status(403).json({
-      status: 403,
-      error: 'A Party with the same name already exist',
+    if (index >= 0) {
+      res.status(403).json({
+        status: 403,
+        error: 'A Party with the same name already exist',
+      });
+      return;
+    }
+
+    // Add new party
+    let party = partySchema.obj;
+
+    party = Object.assign({ id: Parties.length + 1 }, party);
+
+    Parties.push(party);
+
+    res.status(200).json({
+      status: 201,
+      data: [party],
     });
-    return;
-  }
-
-  // Add new party
-  let party = partySchema.obj;
-
-  party = Object.assign({ id: Parties.length + 1 }, party);
-
-  Parties.push(party);
-
-  res.status(200).json({
-    status: 201,
-    data: [party],
-  });
-
-  }catch(e){
-
+  } catch (e) {
     res.status(403).json({
       status: 403,
       error: 'The authorization token is invalid',
     });
-
   }
-
-  
 };
 
 export {

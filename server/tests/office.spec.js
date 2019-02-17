@@ -6,9 +6,7 @@ import { baseUrl } from '../config/config';
 require('../../app');
 
 describe('Server', () => {
-
   beforeEach(() => {
-
     jasmine.addMatchers({
 
       toBeJsonString: () => ({
@@ -55,12 +53,10 @@ describe('Server', () => {
       }),
 
     });
-    
   });
 
   describe('POST /', () => {
-
-    it('Should create an office', (done) => { 
+    it('Should create an office', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -75,17 +71,16 @@ describe('Server', () => {
           passportUrl: 'url',
           isAdmin: true,
         }),
-      }, (error, response, bdy) => {
-
+      }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
 
         Request({
-          headers: { 'content-type': 'application/json', 'authorization': authToken },
+          headers: { 'content-type': 'application/json', authorization: authToken },
           url: `${baseUrl}/offices`,
           method: 'POST',
           body: JSON.stringify({
             name: 'Minister',
-            type: 'federal'
+            type: 'federal',
           }),
         }, (error, response, body) => {
           expect(body).toBeJsonString();
@@ -93,9 +88,7 @@ describe('Server', () => {
           expect(JSON.parse(body).data).toBeDefined();
           done();
         });
-        
       });
-      
     });
 
     it('Should return 403 when the token is missing', (done) => {
@@ -105,7 +98,7 @@ describe('Server', () => {
         method: 'POST',
         body: JSON.stringify({
           name: 'Minister1',
-          type: 'federal'
+          type: 'federal',
         }),
       }, (error, response, body) => {
         expect(body).toBeJsonString();
@@ -117,12 +110,12 @@ describe('Server', () => {
 
     it('Should return 403 when the token is invalid', (done) => {
       Request({
-        headers: { 'content-type': 'application/json', 'authorization':'invalidtoken' },
+        headers: { 'content-type': 'application/json', authorization: 'invalidtoken' },
         url: `${baseUrl}/offices`,
         method: 'POST',
         body: JSON.stringify({
           name: 'Minister2',
-          type: 'federal'
+          type: 'federal',
         }),
       }, (error, response, body) => {
         expect(body).toBeJsonString();
@@ -148,7 +141,7 @@ describe('Server', () => {
     });
   });
 
-  const getOffice = (done)=>{
+  const getOffice = (done) => {
     Request({
       headers: { 'content-type': 'application/json' },
       url: `${baseUrl}/offices/1`,
@@ -159,7 +152,7 @@ describe('Server', () => {
       expect(JSON.parse(body)).validateCreateOffice();
       done();
     });
-  }
+  };
 
   describe('GET /', () => {
     it('Should get a specific office', (done) => {
@@ -178,25 +171,20 @@ describe('Server', () => {
           isAdmin: true,
         }),
       }, (error, response, bdy) => {
-
         const authToken = JSON.parse(bdy).data[0].token;
-      
+
         Request({
-          headers: { 'content-type': 'application/json', 'authorization':authToken },
+          headers: { 'content-type': 'application/json', authorization: authToken },
           url: `${baseUrl}/offices`,
           method: 'POST',
           body: JSON.stringify({
             name: 'Ministers',
             type: 'federal',
           }),
-        }, () => { 
-          
+        }, () => {
           getOffice(done);
-  
         });
-
       });
-
     });
 
     it('Should return 404 when the office does not exist', (done) => {

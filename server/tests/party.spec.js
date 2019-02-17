@@ -68,51 +68,47 @@ describe('PARTY', () => {
     });
   });
 
-  const createParty = (done, authToken)=>{
-
+  const createParty = (done, authToken) => {
     const randName = `AFDC${Math.floor(Math.random() * 1000000)}${1}`;
-      Request(
-        {
-          headers: { 'content-type': 'application/json', 'authorization':authToken },
-          url: `${baseUrl}/parties`,
-          method: 'POST',
-          body: JSON.stringify({
-            name: randName,
-            hqAdress: 'adress',
-            logoUrl: 'logourl',
-          }),
-        }, (error, response, body) => {
-          expect(body).toBeJsonString(body);
-          expect(JSON.parse(body).status).toBe(201);
-          expect(JSON.parse(body)).validateParty();
+    Request(
+      {
+        headers: { 'content-type': 'application/json', authorization: authToken },
+        url: `${baseUrl}/parties`,
+        method: 'POST',
+        body: JSON.stringify({
+          name: randName,
+          hqAdress: 'adress',
+          logoUrl: 'logourl',
+        }),
+      }, (error, response, body) => {
+        expect(body).toBeJsonString(body);
+        expect(JSON.parse(body).status).toBe(201);
+        expect(JSON.parse(body)).validateParty();
 
-          Request( // Returns 403 if the name already exist
-            {
-              headers: { 'content-type': 'application/json', 'authorization':authToken },
-              url: `${baseUrl}/parties`,
-              method: 'POST',
-              body: JSON.stringify({
-                name: randName,
-                hqAdress: 'adress',
-                logoUrl: 'logourl',
-              }),
-            }, (err, rep, bdy) => {
-              expect(bdy).toBeJsonString(bdy);
+        Request( // Returns 403 if the name already exist
+          {
+            headers: { 'content-type': 'application/json', authorization: authToken },
+            url: `${baseUrl}/parties`,
+            method: 'POST',
+            body: JSON.stringify({
+              name: randName,
+              hqAdress: 'adress',
+              logoUrl: 'logourl',
+            }),
+          }, (err, rep, bdy) => {
+            expect(bdy).toBeJsonString(bdy);
 
-              expect(JSON.parse(bdy).status).toBe(403);
-              expect(JSON.parse(bdy).error).toBeDefined();
-              done();
-            }
-          );
-        },
-      );
-
-  }
+            expect(JSON.parse(bdy).status).toBe(403);
+            expect(JSON.parse(bdy).error).toBeDefined();
+            done();
+          },
+        );
+      },
+    );
+  };
 
   describe('POST', () => {
-
     it('Should create a party', (done) => {
-
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -128,13 +124,10 @@ describe('PARTY', () => {
           isAdmin: true,
         }),
       }, (error, response, bdy) => {
-
         const authToken = JSON.parse(bdy).data[0].token;
 
         createParty(done, authToken);
-
       });
-      
     });
 
     it('Should retun 400 when the name is not a string', (done) => {
@@ -159,10 +152,10 @@ describe('PARTY', () => {
     });
   });
 
-  const getParty = (done, authToken)=>{
+  const getParty = (done, authToken) => {
     Request(
       {
-        headers: { 'content-type': 'application/json', 'authorization':authToken },
+        headers: { 'content-type': 'application/json', authorization: authToken },
         url: `${baseUrl}/parties`,
         method: 'POST',
         body: JSON.stringify({
@@ -173,7 +166,7 @@ describe('PARTY', () => {
       }, () => {
         Request(
           {
-            headers: { 'content-type': 'application/json', 'authorization':authToken },
+            headers: { 'content-type': 'application/json', authorization: authToken },
             url: `${baseUrl}/parties/1`,
             method: 'GET',
           },
@@ -186,7 +179,7 @@ describe('PARTY', () => {
         );
       },
     );
-  }
+  };
 
   describe('GET ', () => {
     it(' Should get a specific party', (done) => {
@@ -205,11 +198,9 @@ describe('PARTY', () => {
           isAdmin: true,
         }),
       }, (error, response, bdy) => {
-
         const authToken = JSON.parse(bdy).data[0].token;
 
         getParty(done, authToken);
-
       });
     });
 
@@ -228,27 +219,24 @@ describe('PARTY', () => {
           passportUrl: 'url',
           isAdmin: true,
         }),
-      }, (error, response, bdy) => {
-
+      }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
-      
+
         Request(
           {
-            headers: { 'content-type': 'application/json', 'authorization':authToken },
+            headers: { 'content-type': 'application/json', authorization: authToken },
             url: `${baseUrl}/parties/9`,
             method: 'GET',
           },
           (error, response, body) => {
             expect(body).toBeJsonString(body);
-  
+
             expect(JSON.parse(body).status).toBe(404);
             expect(JSON.parse(body).error).toBeDefined();
             done();
           },
         );
-
       });
-
     });
   });
 
@@ -272,10 +260,10 @@ describe('PARTY', () => {
     });
   });
 
-  const editParty = (done, authToken) =>{
+  const editParty = (done, authToken) => {
     Request(
       {
-        headers: { 'content-type': 'application/json', 'authorization':authToken },
+        headers: { 'content-type': 'application/json', authorization: authToken },
         url: `${baseUrl}/parties`,
         method: 'POST',
         body: JSON.stringify({
@@ -286,7 +274,7 @@ describe('PARTY', () => {
       }, () => {
         Request(
           {
-            headers: { 'content-type': 'application/json', 'authorization':authToken },
+            headers: { 'content-type': 'application/json', authorization: authToken },
             url: `${baseUrl}/parties/1/name`,
             method: 'PATCH',
             body: JSON.stringify({
@@ -306,7 +294,7 @@ describe('PARTY', () => {
         );
       },
     );
-  }
+  };
 
   describe('PATCH /', () => {
     it('Should edit a party', (done) => {
@@ -325,11 +313,9 @@ describe('PARTY', () => {
           isAdmin: true,
         }),
       }, (error, response, bdy) => {
-
         const authToken = JSON.parse(bdy).data[0].token;
 
         editParty(done, authToken);
-
       });
     });
 
@@ -348,13 +334,12 @@ describe('PARTY', () => {
           passportUrl: 'url',
           isAdmin: true,
         }),
-      }, (error, response, bdy) => {
-
+      }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
 
         Request(
           {
-            headers: { 'content-type': 'application/json', 'authorization':authToken },
+            headers: { 'content-type': 'application/json', authorization: authToken },
             url: `${baseUrl}/parties/9/name`,
             method: 'PATCH',
             body: JSON.stringify({
@@ -363,13 +348,12 @@ describe('PARTY', () => {
           },
           (error, response, body) => {
             expect(body).toBeJsonString(body);
-  
+
             expect(JSON.parse(body).status).toBe(404);
             expect(JSON.parse(body).error).toBeDefined();
             done();
           },
         );
-
       });
     });
 
@@ -388,28 +372,26 @@ describe('PARTY', () => {
           passportUrl: 'url',
           isAdmin: true,
         }),
-      }, (error, response, bdy) => {
-
+      }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
-      
+
         Request(
           {
-            headers: { 'content-type': 'application/json', 'authorization':authToken },
+            headers: { 'content-type': 'application/json', authorization: authToken },
             url: `${baseUrl}/parties/id/name`,
             method: 'PATCH',
             body: JSON.stringify({
               name: 'newName',
             }),
           },
-          (error, response, body) => { 
+          (error, response, body) => {
             expect(body).toBeJsonString(body);
-  
+
             expect(JSON.parse(body).status).toBe(404);
             expect(JSON.parse(body).error).toBeDefined();
             done();
           },
         );
-
       });
     });
   });
@@ -417,7 +399,7 @@ describe('PARTY', () => {
   const deleteParty = (done, authToken) => {
     Request(
       {
-        headers: { 'content-type': 'application/json', 'authorization':authToken },
+        headers: { 'content-type': 'application/json', authorization: authToken },
         url: `${baseUrl}/parties/2`,
         method: 'DELETE',
       },
@@ -450,13 +432,12 @@ describe('PARTY', () => {
           passportUrl: 'url',
           isAdmin: true,
         }),
-      }, (error, response, bdy) => {
-
+      }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
-      
+
         Request(
           {
-            headers: { 'content-type': 'application/json', 'authorization':authToken },
+            headers: { 'content-type': 'application/json', authorization: authToken },
             url: `${baseUrl}/parties`,
             method: 'POST',
             body: JSON.stringify({
@@ -467,7 +448,7 @@ describe('PARTY', () => {
           }, () => {
             Request(
               {
-                headers: { 'content-type': 'application/json', 'authorization':authToken },
+                headers: { 'content-type': 'application/json', authorization: authToken },
                 url: `${baseUrl}/parties`,
                 method: 'POST',
                 body: JSON.stringify({
@@ -481,7 +462,6 @@ describe('PARTY', () => {
             );
           },
         );
-      
       });
     });
 
@@ -500,27 +480,24 @@ describe('PARTY', () => {
           passportUrl: 'url',
           isAdmin: true,
         }),
-      }, (error, response, bdy) => {
-
+      }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
 
         Request(
           {
-            headers: { 'content-type': 'application/json', 'authorization':authToken },
+            headers: { 'content-type': 'application/json', authorization: authToken },
             url: `${baseUrl}/parties/9`,
             method: 'DELETE',
           },
           (error, response, body) => {
             expect(body).toBeJsonString(body);
-  
+
             expect(JSON.parse(body).status).toBe(404);
             expect(JSON.parse(body).error).toBeDefined();
             done();
           },
         );
-
       });
-
     });
 
     it('Should return 404 when the id is not a number', (done) => {
@@ -538,25 +515,23 @@ describe('PARTY', () => {
           passportUrl: 'url',
           isAdmin: true,
         }),
-      }, (error, response, bdy) => {
-
+      }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
 
         Request(
           {
-            headers: { 'content-type': 'application/json', 'authorization':authToken },
+            headers: { 'content-type': 'application/json', authorization: authToken },
             url: `${baseUrl}/parties/id`,
             method: 'DELETE',
           },
           (error, response, body) => {
             expect(body).toBeJsonString(body);
-  
+
             expect(JSON.parse(body).status).toBe(404);
             expect(JSON.parse(body).error).toBeDefined();
             done();
           },
         );
-
       });
     });
   });
