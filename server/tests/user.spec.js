@@ -102,7 +102,6 @@ describe('User ', () => {
           isAdmin: false,
         }),
       }, () => {
-
         Request({
           headers: { 'content-type': 'application/json' },
           url: `${baseUrl}/auth/login`,
@@ -116,9 +115,7 @@ describe('User ', () => {
           expect(JSON.parse(body).data).toBeDefined();
           done();
         });
-
       });
-      
     });
 
     it('Should return 404 when the user does not exist', (done) => {

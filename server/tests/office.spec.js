@@ -278,5 +278,31 @@ describe('Server', () => {
         });
       });
     });
+
+    it('Should return 404 when the office doesnt exist', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/office/1000/result`,
+        method: 'GET',
+      }, (error, response, body) => {
+        expect(body).toBeJsonString();
+        expect(JSON.parse(body).status).toBe(404);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
+    it('Should return 400 when the id is not an integer', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/office/id/result`,
+        method: 'GET',
+      }, (error, response, body) => {
+        expect(body).toBeJsonString();
+        expect(JSON.parse(body).status).toBe(400);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
   });
 });

@@ -134,8 +134,8 @@ const getResults = async (req, res) => {
   }, { id: parseInt(req.params.id, 10) });
 
   if (idSchema.passed === false) {
-    res.status(404).json({
-      status: 404,
+    res.status(400).json({
+      status: 400,
       error: idSchema.message,
     });
     return;
