@@ -70,6 +70,40 @@ const userQueries = {
       };
     }
   },
+  registerCandidate: async (values) => {
+    try {
+      const definition = await initialize.defineCandidates();
+      if (definition.error) {
+        return {
+          error: {
+            status: 500,
+            message: definition.res,
+          },
+        };
+      }
+
+      // Check if the candidate is not already registered for that office
+      const exist = await pool.query('SELECT * FROM candidates where candidate = $1 AND office = $2;', values);
+      if (exist.rowCount > 0) {
+        return {
+          error: {
+            status: 403,
+            message: 'The candidate is already registered for this office',
+          },
+        };
+      }
+
+      const res = await pool.query('INSERT INTO candidates (candidate, office, date) VALUES ($1, $2, NOW()) ;', values);
+      return res;
+    } catch (e) {
+      return {
+        error: {
+          status: 500,
+          message: 'Failed to insert data into the candidate table',
+        },
+      };
+    }
+  },
 };
 
 export default userQueries;

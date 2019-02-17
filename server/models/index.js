@@ -35,7 +35,22 @@ const initialize = {
       };
     }
   },
+  defineCandidates: async () => {
+    const query = `CREATE TABLE IF NOT EXISTS candidates (id SERIAL PRIMARY KEY NOT NULL ,
+          candidate int,
+          office varchar(100),
+          date date);`;
 
+    try {
+      const res = await pool.query(query);
+      return res;
+    } catch (e) {
+      return {
+        error: true,
+        res: 'Failed to create the candidates table',
+      };
+    }
+  },
 };
 
 export { pool, initialize };

@@ -19,8 +19,6 @@ describe('User ', () => {
     });
   });
 
-  let authToken;
-
   describe('POST', () => {
     it('Should create a new user', (done) => {
       Request({
@@ -63,11 +61,7 @@ describe('User ', () => {
         passportUrl: 'url',
         isAdmin: false,
       }),
-    }, (err, res, bdy) => {
-      if (JSON.parse(bdy).data) {
-        authToken = JSON.parse(bdy).data[0].token;
-      }
-
+    }, () => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -94,46 +88,6 @@ describe('User ', () => {
     it('Should login the user', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/auth/signup`,
-        method: 'POST',
-        body: JSON.stringify({
-          firstname: 'grace',
-          lastname: 'lungu',
-          othername: 'birindwa',
-          email: 'grace@gmail.com',
-          password: 'password',
-          phoneNumber: 878623545,
-          passportUrl: 'url',
-          isAdmin: false,
-        }),
-      }, (err, res, bdy) => {
-        if (JSON.parse(bdy).data) {
-          authToken = JSON.parse(bdy).data[0].token;
-        }
-
-        if (authToken) {
-          Request({
-            headers: { 'content-type': 'application/json', authorization: authToken },
-            url: `${baseUrl}/auth/login`,
-            method: 'POST',
-            body: JSON.stringify({
-              email: 'grace@gmail.com',
-              password: 'password',
-            }),
-          }, (error, response, body) => {
-            expect(JSON.parse(body).status).toBe(200);
-            expect(JSON.parse(body).data).toBeDefined();
-            done();
-          });
-        }
-
-        done();
-      });
-    });
-
-    it('Should return 403 when the token is invalid', (done) => {
-      Request({
-        headers: { 'content-type': 'application/json', authorization: 'wrongtoken' },
         url: `${baseUrl}/auth/login`,
         method: 'POST',
         body: JSON.stringify({
@@ -141,24 +95,8 @@ describe('User ', () => {
           password: 'password',
         }),
       }, (error, response, body) => {
-        expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toBeDefined();
-        done();
-      });
-    });
-
-    it('Should return 400 when the token is missing', (done) => {
-      Request({
-        headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/auth/login`,
-        method: 'POST',
-        body: JSON.stringify({
-          email: 'grace@gmail.com',
-          password: 'password',
-        }),
-      }, (error, response, body) => {
-        expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).status).toBe(200);
+        expect(JSON.parse(body).data).toBeDefined();
         done();
       });
     });
@@ -173,7 +111,7 @@ describe('User ', () => {
           password: 'password',
         }),
       }, (error, response, body) => {
-        expect(JSON.parse(body).status).toBe(400);
+        expect(JSON.parse(body).status).toBe(404);
         expect(JSON.parse(body).error).toBeDefined();
         done();
       });
@@ -192,6 +130,158 @@ describe('User ', () => {
         expect(JSON.parse(body).status).toBe(400);
         expect(JSON.parse(body).error).toBeDefined();
         done();
+      });
+    });
+  });
+
+  describe('POST /', () => {
+    it('Should register a candidate', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/signup`,
+        method: 'POST',
+        body: JSON.stringify({
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: `admin${Math.floor(Math.random() * 1000000) + 1}@gmail.com`,
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: true,
+        }),
+      }, (err, res, bdy) => {
+        const authToken = JSON.parse(bdy).data[0].token;
+
+        const randomId = Math.floor(Math.random() * 1000) + 1;
+
+        Request({
+          headers: { 'content-type': 'application/json', authorization: authToken },
+          url: `${baseUrl}/office/${randomId}/register`,
+          method: 'POST',
+          body: JSON.stringify({
+            office: randomId,
+          }),
+        }, (error, response, body) => {
+          expect(JSON.parse(body).status).toBe(201);
+          expect(JSON.parse(body).data).toBeDefined();
+          done();
+        });
+      });
+    });
+
+    it('Should return 400 when the user id is not a number', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/office/id/register`,
+        method: 'POST',
+        body: JSON.stringify({
+          office: 1,
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(400);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
+    it('Should return 400 when the office id is not an integer', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/signup`,
+        method: 'POST',
+        body: JSON.stringify({
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: `admin${Math.floor(Math.random() * 1000000) + 1}@gmail.com`,
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: true,
+        }),
+      }, (err, res, bdy) => {
+        const authToken = JSON.parse(bdy).data[0].token;
+
+        Request({
+          headers: { 'content-type': 'application/json', authorization: authToken },
+          url: `${baseUrl}/office/1/register`,
+          method: 'POST',
+          body: JSON.stringify({
+            office: '1',
+          }),
+        }, (error, response, body) => {
+          expect(JSON.parse(body).status).toBe(400);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+        });
+      });
+    });
+
+
+    it('Should return 403 when the authorization token is missing', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/office/1/register`,
+        method: 'POST',
+        body: JSON.stringify({
+          office: '1',
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
+    it('Should return 403 when the authorization token is invalid', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json', authorization: 'invalidTtoken' },
+        url: `${baseUrl}/office/1/register`,
+        method: 'POST',
+        body: JSON.stringify({
+          office: '1',
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
+
+    it('Should return 403 when the user is not an admin', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/signup`,
+        method: 'POST',
+        body: JSON.stringify({
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: `admin${Math.floor(Math.random() * 1000000) + 1}@gmail.com`,
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: false,
+        }),
+      }, (err, res, bdy) => {
+        const authToken = JSON.parse(bdy).data[0].token;
+
+        const randomId = Math.floor(Math.random() * 1000) + 1;
+
+        Request({
+          headers: { 'content-type': 'application/json', authorization: authToken },
+          url: `${baseUrl}/office/${randomId}/register`,
+          method: 'POST',
+          body: JSON.stringify({
+            office: randomId,
+          }),
+        }, (error, response, body) => {
+          expect(JSON.parse(body).status).toBe(403);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+        });
       });
     });
   });
