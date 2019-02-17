@@ -70,12 +70,18 @@ Make sure you have logged in to heroku
  $ git push heroku develop:master
 ```
 
+#### Endpoints to authentificate the user
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+POST | /api/v1/auth/signup | False | Create a user
+POST | /api/v1/auth/login | True | Login the user
+
 #### Endpoints to create, get, edit and delete parties.
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
 POST | /api/v1/parties | False | Create a party
-GET | /api/v1/parties | False | Get all parties
-GET | /api/v1/parties/<party_id> | False | Get a specific party
+GET | /api/v1/parties | True | Get all parties
+GET | /api/v1/parties/<party_id> | True | Get a specific party
 PATCH | /api/v1/parties/<party_id>/name | False | Edit a single party name
 DELETE | /api/v1/parties/<product_id> | False | Delete a single party
 
@@ -83,8 +89,23 @@ DELETE | /api/v1/parties/<product_id> | False | Delete a single party
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
 POST | /api/v1/offices | False | Create an office
-GET | /api/v1/offices | False | Get all offices
-GET | /api/v1/offices/<office_id> | False | Get a specific office
+GET | /api/v1/offices | True | Get all offices
+GET | /api/v1/offices/<office_id> | True | Get a specific office
+
+#### Endpoints to register a candidate
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+POST | /api/v1/office/<office-id>/register | False | Register a candidate
+
+#### Endpoints to vote
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+POST | /api/v1/votes | False | Vote
+
+#### Endpoints to get results for a single office
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+GET | /api/v1/office/<office-id>/result | True | Get office results
 
 ## Author
 
