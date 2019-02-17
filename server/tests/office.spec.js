@@ -79,7 +79,7 @@ describe('Server', () => {
           url: `${baseUrl}/offices`,
           method: 'POST',
           body: JSON.stringify({
-            name: 'Minister',
+            name: `Minister${Math.floor(Math.random() * 1000) + 1}`,
             type: 'federal',
           }),
         }, (error, response, body) => {
@@ -141,10 +141,10 @@ describe('Server', () => {
     });
   });
 
-  const getOffice = (done) => {
+  const getOffice = (done, id) => {
     Request({
       headers: { 'content-type': 'application/json' },
-      url: `${baseUrl}/offices/1`,
+      url: `${baseUrl}/offices/${id}`,
       method: 'GET',
     }, (error, response, body) => {
       expect(body).toBeJsonString();
@@ -170,7 +170,7 @@ describe('Server', () => {
           passportUrl: 'url',
           isAdmin: true,
         }),
-      }, (error, response, bdy) => {
+      }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
 
         Request({
@@ -178,11 +178,12 @@ describe('Server', () => {
           url: `${baseUrl}/offices`,
           method: 'POST',
           body: JSON.stringify({
-            name: 'Ministers',
+            name: `Ministers${Math.floor(Math.random() * 1000) + 1}`,
             type: 'federal',
           }),
-        }, () => {
-          getOffice(done);
+        }, (error, response, body) => {
+          const { id } = JSON.parse(body).data[0];
+          getOffice(done, id);
         });
       });
     });
@@ -190,7 +191,7 @@ describe('Server', () => {
     it('Should return 404 when the office does not exist', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/offices/9`,
+        url: `${baseUrl}/offices/900`,
         method: 'GET',
       }, (error, response, body) => {
         expect(body).toBeJsonString();
@@ -200,7 +201,7 @@ describe('Server', () => {
       });
     });
 
-    it('Should return 404 when the id is not a number', (done) => {
+    it('Should return 404 when the id is not a integer', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices/id`,

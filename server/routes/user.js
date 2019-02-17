@@ -1,5 +1,7 @@
 import express from 'express';
-import { createUser, loginUser, createCandidate } from '../controllers/user';
+import {
+  createUser, loginUser, createCandidate, vote,
+} from '../controllers/user';
 
 const router = express.Router();
 
@@ -14,5 +16,9 @@ router.route('/api/v1/auth/login')
 // Register a candidate
 router.route('/api/v1/office/:id/register')
   .post(createCandidate);
+
+// Vote for a candidate
+router.route('/api/v1/votes')
+  .post(vote);
 
 export default router;

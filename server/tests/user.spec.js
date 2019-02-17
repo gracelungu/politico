@@ -285,4 +285,43 @@ describe('User ', () => {
       });
     });
   });
+
+  describe('POST', () => {
+    it('Should vote for a particular user', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/signup`,
+        method: 'POST',
+        body: JSON.stringify({
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: `admin${Math.floor(Math.random() * 1000000) + 1}@gmail.com`,
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: false,
+        }),
+      }, (err, res, bdy) => {
+        const authToken = JSON.parse(bdy).data[0].token;
+
+        const randomId = Math.floor(Math.random() * 1000) + 1;
+
+        Request({
+          headers: { 'content-type': 'application/json', authorization: authToken },
+          url: `${baseUrl}/votes`,
+          method: 'POST',
+          body: JSON.stringify({
+            office: randomId + 1,
+            candidate: randomId,
+            voter: randomId,
+          }),
+        }, (error, response, body) => {
+          expect(JSON.parse(body).status).toBe(200);
+          expect(JSON.parse(body).data).toBeDefined();
+          done();
+        });
+      });
+    });
+  });
 });

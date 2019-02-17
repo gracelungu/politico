@@ -1,12 +1,11 @@
 import jwt from 'jsonwebtoken';
 import schema from '../helpers/schema';
 import { secret } from '../config/config';
+import officeQueries from '../models/office';
 
-const Offices = [];
-
-const getOffice = (req, res) => {
+const getOffice = async (req, res) => {
   const idSchema = schema({
-    id: 'number',
+    id: 'integer',
   }, { id: parseInt(req.params.id, 10) });
 
   if (idSchema.passed === false) {
@@ -17,9 +16,19 @@ const getOffice = (req, res) => {
     return;
   }
 
-  const item = Offices.find(element => element.id === parseInt(req.params.id, 10));
+  const values = [parseInt(req.params.id, 10)];
 
-  if (!item) {
+  const result = await officeQueries.getOffice(values);
+
+  if (result.error) {
+    res.status(result.error.status).json({
+      status: result.error.status,
+      error: result.error.message,
+    });
+    return;
+  }
+
+  if (result.rowCount <= 0) {
     res.status(404).json({
       status: 404,
       error: 'office not found',
@@ -29,14 +38,24 @@ const getOffice = (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: [item],
+    data: result.rows,
   });
 };
 
-const getOffices = (req, res) => {
+const getOffices = async (req, res) => {
+  const result = await officeQueries.getOffices();
+
+  if (result.error) {
+    res.status(result.error.status).json({
+      status: result.error.status,
+      error: result.error.message,
+    });
+    return;
+  }
+
   res.status(200).json({
     status: 200,
-    data: Offices,
+    data: result.rows,
   });
 };
 
@@ -77,21 +96,25 @@ const createOffice = async (req, res) => {
       return;
     }
 
-    const index = Offices.findIndex(item => item.name === req.body.name);
+    const values = [
+      req.body.name,
+      req.body.type,
+    ];
 
-    if (index >= 0) {
-      res.status(403).json({
-        status: 403,
-        error: 'An office with the same name already exist',
+    const result = await officeQueries.create(values);
+
+    if (result.error) {
+      res.status(result.error.status).json({
+        status: result.error.status,
+        error: result.error.message,
       });
       return;
     }
 
-    let office = officeSchema.obj;
+    const { id } = result.rows[0];
+    const { name, type } = req.body;
 
-    office = Object.assign({ id: Offices.length + 1 }, office);
-
-    Offices.push(office);
+    const office = { id, name, type };
 
     res.status(201).json({
       status: 201,

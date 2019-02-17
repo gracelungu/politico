@@ -104,6 +104,40 @@ const userQueries = {
       };
     }
   },
+  vote: async (values) => {
+    try {
+      const definition = await initialize.defineVotes();
+      if (definition.error) {
+        return {
+          error: {
+            status: 500,
+            message: definition.res,
+          },
+        };
+      }
+
+      // Check if the user did not vote for this candidate on this office
+      const exist = await pool.query('SELECT * FROM votes where office = $1 AND candidate = $2 AND voter = $3 ', values);
+      if (exist.rowCount > 0) {
+        return {
+          error: {
+            status: 403,
+            message: 'The user has voted for this candidate on this office',
+          },
+        };
+      }
+
+      const res = await pool.query('INSERT INTO votes (office, candidate, voter, date) VALUES ($1, $2, $3, NOW()) ;', values);
+      return res;
+    } catch (e) {
+      return {
+        error: {
+          status: 500,
+          message: 'Failed to insert data into the votes table',
+        },
+      };
+    }
+  },
 };
 
 export default userQueries;
