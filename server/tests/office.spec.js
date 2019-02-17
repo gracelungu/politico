@@ -79,10 +79,10 @@ describe('Server', () => {
           url: `${baseUrl}/offices`,
           method: 'POST',
           body: JSON.stringify({
-            name: 'Minister',
+            name: `Minister${Math.floor(Math.random() * 1000) + 1}`,
             type: 'federal',
           }),
-        }, (error, response, body) => {
+        }, (error, response, body) => { 
           expect(body).toBeJsonString();
           expect(JSON.parse(body).status).toBe(201);
           expect(JSON.parse(body).data).toBeDefined();
@@ -190,9 +190,9 @@ describe('Server', () => {
     it('Should return 404 when the office does not exist', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/offices/9`,
+        url: `${baseUrl}/offices/900`,
         method: 'GET',
-      }, (error, response, body) => {
+      }, (error, response, body) => { 
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
         expect(JSON.parse(body).error).toBeDefined();
@@ -200,12 +200,12 @@ describe('Server', () => {
       });
     });
 
-    it('Should return 404 when the id is not a number', (done) => {
+    it('Should return 404 when the id is not a integer', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices/id`,
         method: 'GET',
-      }, (error, response, body) => {
+      }, (error, response, body) => { 
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
         expect(JSON.parse(body).error).toBeDefined();

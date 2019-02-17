@@ -35,10 +35,43 @@ const initialize = {
       };
     }
   },
+  defineOffices: async() => {
+    const query = `CREATE TABLE IF NOT EXISTS offices (id SERIAL PRIMARY KEY NOT NULL ,
+          name varchar(100),
+          type varchar(100),
+          date date);`;
+
+    try {
+      const res = await pool.query(query);
+      return res;
+    } catch (e) {
+      return {
+        error: true,
+        res: 'Failed to create the offices table',
+      };
+    }
+  },
+  defineParties: async() => {
+    const query = `CREATE TABLE IF NOT EXISTS parties (id SERIAL PRIMARY KEY NOT NULL ,
+          name varchar(100),
+          hqadress varchar(100),
+          logourl text,
+          date date);`;
+
+    try {
+      const res = await pool.query(query);
+      return res;
+    } catch (e) {
+      return {
+        error: true,
+        res: 'Failed to create the parties table',
+      };
+    }
+  },
   defineCandidates: async () => {
     const query = `CREATE TABLE IF NOT EXISTS candidates (id SERIAL PRIMARY KEY NOT NULL ,
           candidate int,
-          office varchar(100),
+          office int,
           date date);`;
 
     try {
@@ -51,6 +84,23 @@ const initialize = {
       };
     }
   },
+  defineVotes : async()=>{
+    const query = `CREATE TABLE IF NOT EXISTS votes (id SERIAL PRIMARY KEY NOT NULL ,
+          office int,
+          candidate int,
+          voter int,
+          date date);`;
+
+    try {
+      const res = await pool.query(query);
+      return res;
+    } catch (e) {
+      return {
+        error: true,
+        res: 'Failed to create the votes table',
+      };
+    }
+  }
 };
 
 export { pool, initialize };
