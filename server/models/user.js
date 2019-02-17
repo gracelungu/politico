@@ -35,7 +35,7 @@ const userQueries = {
         passportUrl,
         isAdmin,
         date,
-        active) VALUES($1, $2, $3, $4, $5, $6, $7, $8, NOW(), true) RETURNING id `, values);
+        active) VALUES($1, $2, $3, $4, $5, $6, $7, $8, NOW(), true) RETURNING id, isAdmin `, values);
 
       return res;
     } catch (e) {

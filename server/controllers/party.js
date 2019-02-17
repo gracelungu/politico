@@ -1,8 +1,10 @@
 import schema from '../helpers/schema';
+import jwt from 'jsonwebtoken';
+import { secret } from '../config/config';
 
 const Parties = [];
 
-const deleteParty = (req, res) => {
+const deleteParty = async (req, res) => {
   const idSchema = schema({
     id: 'number',
   }, { id: parseInt(req.params.id, 10) });
@@ -15,7 +17,30 @@ const deleteParty = (req, res) => {
     return;
   }
 
-  const index = Parties.findIndex(item => item.id === parseInt(req.params.id, 10));
+  // Getting the token
+  const token = req.headers.authorization;
+
+  if (!token) {
+    res.status(403).json({
+      status: 403,
+      error: 'The authorization token is required',
+    });
+    return;
+  }
+
+  try {
+    // Verify the token
+    const verified = await jwt.verify(token, secret);
+
+    if (!verified.isadmin) {
+      res.status(403).json({
+        status: 403,
+        error: 'Only the admin is authorized to edit a party',
+      });
+      return;
+    }
+
+    const index = Parties.findIndex(item => item.id === parseInt(req.params.id, 10));
 
   if (index >= 0) {
     Parties.splice(index, 1);
@@ -33,6 +58,17 @@ const deleteParty = (req, res) => {
     status: 404,
     error: 'Party not found',
   });
+
+  }catch(e){
+
+    res.status(403).json({
+      status: 403,
+      error: 'The authorization token is invalid',
+    });
+
+  }
+
+  
 };
 
 const getParty = (req, res) => {
@@ -52,7 +88,7 @@ const getParty = (req, res) => {
   });
 };
 
-const editParty = (req, res) => {
+const editParty = async (req, res) => {
   const nameSchema = schema({
     name: 'string',
   }, req.body);
@@ -65,7 +101,30 @@ const editParty = (req, res) => {
     return;
   }
 
-  const item = Parties.find(element => element.id === parseInt(req.params.id, 10));
+  // Getting the token
+  const token = req.headers.authorization;
+
+  if (!token) {
+    res.status(403).json({
+      status: 403,
+      error: 'The authorization token is required',
+    });
+    return;
+  }
+
+  try {
+    // Verify the token
+    const verified = await jwt.verify(token, secret);
+
+    if (!verified.isadmin) {
+      res.status(403).json({
+        status: 403,
+        error: 'Only the admin is authorized to edit a party',
+      });
+      return;
+    }
+
+    const item = Parties.find(element => element.id === parseInt(req.params.id, 10));
 
   if (item) {
     item.name = req.body.name;
@@ -84,6 +143,17 @@ const editParty = (req, res) => {
     status: 404,
     error: 'Party not found',
   });
+
+  }catch(e){
+
+    res.status(403).json({
+      status: 403,
+      error: 'The authorization token is invalid',
+    });
+
+  }  
+
+  
 };
 
 const getParties = (req, res) => {
@@ -93,7 +163,7 @@ const getParties = (req, res) => {
   });
 };
 
-const createParty = (req, res) => {
+const createParty = async (req, res) => {
   // Validate the request
   const partySchema = schema({
     name: 'string',
@@ -109,7 +179,30 @@ const createParty = (req, res) => {
     return;
   }
 
-  const index = Parties.findIndex(item => item.name === req.body.name);
+  // Getting the token
+  const token = req.headers.authorization;
+
+  if (!token) {
+    res.status(403).json({
+      status: 403,
+      error: 'The authorization token is required',
+    });
+    return;
+  }
+
+  try {
+    // Verify the token
+    const verified = await jwt.verify(token, secret);
+
+    if (!verified.isadmin) {
+      res.status(403).json({
+        status: 403,
+        error: 'Only the admin is authorized to create a party',
+      });
+      return;
+    }
+
+    const index = Parties.findIndex(item => item.name === req.body.name);
 
   if (index >= 0) {
     res.status(403).json({
@@ -130,6 +223,17 @@ const createParty = (req, res) => {
     status: 201,
     data: [party],
   });
+
+  }catch(e){
+
+    res.status(403).json({
+      status: 403,
+      error: 'The authorization token is invalid',
+    });
+
+  }
+
+  
 };
 
 export {
