@@ -1,12 +1,11 @@
 import jwt from 'jsonwebtoken';
 import schema from '../helpers/schema';
 import { secret } from '../config/config';
-
-const Parties = [];
+import partyQueries from '../models/party';
 
 const deleteParty = async (req, res) => {
   const idSchema = schema({
-    id: 'number',
+    id: 'integer',
   }, { id: parseInt(req.params.id, 10) });
 
   if (idSchema.passed === false) {
@@ -40,11 +39,19 @@ const deleteParty = async (req, res) => {
       return;
     }
 
-    const index = Parties.findIndex(item => item.id === parseInt(req.params.id, 10));
+    const values = [parseInt(req.params.id, 10)];
 
-    if (index >= 0) {
-      Parties.splice(index, 1);
+    const result = await partyQueries.deleteParty(values);
 
+    if (result.error) {
+      res.status(result.error.status).json({
+        status: result.error.status,
+        error: result.error.message,
+      });
+      return;
+    } 
+
+    if (result.rowCount !== 0) {
       res.status(200).json({
         status: 200,
         data: [{
@@ -66,10 +73,33 @@ const deleteParty = async (req, res) => {
   }
 };
 
-const getParty = (req, res) => {
-  const item = Parties.find(element => element.id === parseInt(req.params.id, 10));
+const getParty = async (req, res) => {
 
-  if (!item) {
+  const idSchema = schema({
+    id: 'integer',
+  }, { id: parseInt(req.params.id, 10) });
+
+  if (idSchema.passed === false) {
+    res.status(404).json({
+      status: 404,
+      error: idSchema.message,
+    });
+    return;
+  }
+
+  const values = [parseInt(req.params.id, 10)];
+
+  const result = await partyQueries.getParty(values);
+
+    if (result.error) {
+      res.status(result.error.status).json({
+        status: result.error.status,
+        error: result.error.message,
+      });
+      return;
+    } 
+
+  if (result.rowCount <= 0) {
     res.status(404).json({
       status: 404,
       error: 'Party not found',
@@ -79,11 +109,24 @@ const getParty = (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: [item],
+    data: result.rows,
   });
 };
 
 const editParty = async (req, res) => {
+
+  const idSchema = schema({
+    id: 'integer',
+  }, { id: parseInt(req.params.id, 10) });
+
+  if (idSchema.passed === false) {
+    res.status(404).json({
+      status: 404,
+      error: idSchema.message,
+    });
+    return;
+  }
+
   const nameSchema = schema({
     name: 'string',
   }, req.body);
@@ -119,25 +162,36 @@ const editParty = async (req, res) => {
       return;
     }
 
-    const item = Parties.find(element => element.id === parseInt(req.params.id, 10));
+    const values = [
+      req.body.name,
+      parseInt(req.params.id, 10)
+    ];
 
-    if (item) {
-      item.name = req.body.name;
+    const result = await partyQueries.editParty(values);
+
+    if (result.error) {
+      res.status(result.error.status).json({
+        status: result.error.status,
+        error: result.error.message,
+      });
+      return;
+    } 
+
+    if (result.rowCount > 0) {
 
       res.status(200).json({
         status: 200,
-        data: [{
-          id: item.id,
-          name: item.name,
-        }],
+        data: result.rows,
       });
       return;
+
     }
 
     res.status(404).json({
       status: 404,
       error: 'Party not found',
     });
+
   } catch (e) {
     res.status(403).json({
       status: 403,
@@ -146,10 +200,20 @@ const editParty = async (req, res) => {
   }
 };
 
-const getParties = (req, res) => {
+const getParties = async (req, res) => {
+  const result = await partyQueries.getParties();
+
+  if (result.error) {
+    res.status(result.error.status).json({
+      status: result.error.status,
+      error: result.error.message,
+    });
+    return;
+  }
+
   res.status(200).json({
     status: 200,
-    data: Parties,
+    data: result.rows,
   });
 };
 
@@ -192,26 +256,25 @@ const createParty = async (req, res) => {
       return;
     }
 
-    const index = Parties.findIndex(item => item.name === req.body.name);
+    const values = [
+      req.body.name,
+      req.body.hqAdress,
+      req.body.logoUrl
+    ];
 
-    if (index >= 0) {
-      res.status(403).json({
-        status: 403,
-        error: 'A Party with the same name already exist',
+    const result = await partyQueries.create(values);
+
+    if (result.error) {
+      res.status(result.error.status).json({
+        status: result.error.status,
+        error: result.error.message,
       });
       return;
-    }
-
-    // Add new party
-    let party = partySchema.obj;
-
-    party = Object.assign({ id: Parties.length + 1 }, party);
-
-    Parties.push(party);
+    } 
 
     res.status(200).json({
       status: 201,
-      data: [party],
+      data: result.rows,
     });
   } catch (e) {
     res.status(403).json({

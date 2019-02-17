@@ -35,7 +35,7 @@ const initialize = {
       };
     }
   },
-  defineOffices: async() => {
+  defineOffices: async () => {
     const query = `CREATE TABLE IF NOT EXISTS offices (id SERIAL PRIMARY KEY NOT NULL ,
           name varchar(100),
           type varchar(100),
@@ -51,7 +51,7 @@ const initialize = {
       };
     }
   },
-  defineParties: async() => {
+  defineParties: async () => {
     const query = `CREATE TABLE IF NOT EXISTS parties (id SERIAL PRIMARY KEY NOT NULL ,
           name varchar(100),
           hqadress varchar(100),
@@ -84,7 +84,7 @@ const initialize = {
       };
     }
   },
-  defineVotes : async()=>{
+  defineVotes: async () => {
     const query = `CREATE TABLE IF NOT EXISTS votes (id SERIAL PRIMARY KEY NOT NULL ,
           office int,
           candidate int,
@@ -100,7 +100,7 @@ const initialize = {
         res: 'Failed to create the votes table',
       };
     }
-  }
+  },
 };
 
 export { pool, initialize };

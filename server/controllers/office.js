@@ -20,13 +20,13 @@ const getOffice = async (req, res) => {
 
   const result = await officeQueries.getOffice(values);
 
-    if (result.error) {
-      res.status(result.error.status).json({
-        status: result.error.status,
-        error: result.error.message,
-      });
-      return;
-    }
+  if (result.error) {
+    res.status(result.error.status).json({
+      status: result.error.status,
+      error: result.error.message,
+    });
+    return;
+  }
 
   if (result.rowCount <= 0) {
     res.status(404).json({
@@ -38,21 +38,20 @@ const getOffice = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: [result.rows[0]],
+    data: result.rows,
   });
 };
 
 const getOffices = async (req, res) => {
-
   const result = await officeQueries.getOffices();
 
-    if (result.error) {
-      res.status(result.error.status).json({
-        status: result.error.status,
-        error: result.error.message,
-      });
-      return;
-    }
+  if (result.error) {
+    res.status(result.error.status).json({
+      status: result.error.status,
+      error: result.error.message,
+    });
+    return;
+  }
 
   res.status(200).json({
     status: 200,
@@ -99,8 +98,8 @@ const createOffice = async (req, res) => {
 
     const values = [
       req.body.name,
-      req.body.type
-    ]
+      req.body.type,
+    ];
 
     const result = await officeQueries.create(values);
 
@@ -111,11 +110,11 @@ const createOffice = async (req, res) => {
       });
       return;
     }
-    
-    const {id} = result.rows[0];
-    const {name, type} = req.body;
 
-    const office = {id, name, type};
+    const { id } = result.rows[0];
+    const { name, type } = req.body;
+
+    const office = { id, name, type };
 
     res.status(201).json({
       status: 201,

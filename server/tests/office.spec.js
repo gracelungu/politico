@@ -82,7 +82,7 @@ describe('Server', () => {
             name: `Minister${Math.floor(Math.random() * 1000) + 1}`,
             type: 'federal',
           }),
-        }, (error, response, body) => { 
+        }, (error, response, body) => {
           expect(body).toBeJsonString();
           expect(JSON.parse(body).status).toBe(201);
           expect(JSON.parse(body).data).toBeDefined();
@@ -141,10 +141,10 @@ describe('Server', () => {
     });
   });
 
-  const getOffice = (done) => {
+  const getOffice = (done, id) => {
     Request({
       headers: { 'content-type': 'application/json' },
-      url: `${baseUrl}/offices/1`,
+      url: `${baseUrl}/offices/${id}`,
       method: 'GET',
     }, (error, response, body) => {
       expect(body).toBeJsonString();
@@ -170,7 +170,7 @@ describe('Server', () => {
           passportUrl: 'url',
           isAdmin: true,
         }),
-      }, (error, response, bdy) => {
+      }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
 
         Request({
@@ -178,11 +178,12 @@ describe('Server', () => {
           url: `${baseUrl}/offices`,
           method: 'POST',
           body: JSON.stringify({
-            name: 'Ministers',
+            name: `Ministers${Math.floor(Math.random() * 1000) + 1}`,
             type: 'federal',
           }),
-        }, () => {
-          getOffice(done);
+        }, (error, response, body) => { 
+          const {id} = JSON.parse(body).data[0];
+          getOffice(done, id);
         });
       });
     });
@@ -192,7 +193,7 @@ describe('Server', () => {
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices/900`,
         method: 'GET',
-      }, (error, response, body) => { 
+      }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
         expect(JSON.parse(body).error).toBeDefined();
@@ -205,7 +206,7 @@ describe('Server', () => {
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices/id`,
         method: 'GET',
-      }, (error, response, body) => { 
+      }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
         expect(JSON.parse(body).error).toBeDefined();
