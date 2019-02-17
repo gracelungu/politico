@@ -57,48 +57,69 @@ describe('Server', () => {
 
   describe('POST /', () => {
     it('Should create an office', (done) => {
-      const randName = `minister${Math.floor(Math.random() * 1000)}${1}`;
       Request({
         headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/offices`,
+        url: `${baseUrl}/auth/signup`,
         method: 'POST',
         body: JSON.stringify({
-          type: 'federal',
-          name: randName,
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: `admin${Math.floor(Math.random() * 1000) + 1}@gmail.com`,
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: true,
         }),
-      }, (err, resp, bdy) => {
-        expect(bdy).toBeJsonString();
-        expect(JSON.parse(bdy).status).toBe(201);
-        expect(JSON.parse(bdy)).validateCreateOffice();
+      }, (err, res, bdy) => {
+        const authToken = JSON.parse(bdy).data[0].token;
 
         Request({
-          headers: { 'content-type': 'application/json' },
+          headers: { 'content-type': 'application/json', authorization: authToken },
           url: `${baseUrl}/offices`,
           method: 'POST',
           body: JSON.stringify({
-            name: randName,
+            name: 'Minister',
             type: 'federal',
           }),
         }, (error, response, body) => {
           expect(body).toBeJsonString();
-          expect(JSON.parse(body).status).toBe(403);
-          expect(JSON.parse(body).error).toBeDefined();
+          expect(JSON.parse(body).status).toBe(201);
+          expect(JSON.parse(body).data).toBeDefined();
           done();
         });
       });
     });
 
-    it('Should return 400 when the type is missing', (done) => {
+    it('Should return 403 when the token is missing', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices`,
         method: 'POST',
         body: JSON.stringify({
-          name: 'Minister',
+          name: 'Minister1',
+          type: 'federal',
         }),
       }, (error, response, body) => {
         expect(body).toBeJsonString();
-        expect(JSON.parse(body).status).toBe(400);
+        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
+    it('Should return 403 when the token is invalid', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json', authorization: 'invalidtoken' },
+        url: `${baseUrl}/offices`,
+        method: 'POST',
+        body: JSON.stringify({
+          name: 'Minister2',
+          type: 'federal',
+        }),
+      }, (error, response, body) => {
+        expect(body).toBeJsonString();
+        expect(JSON.parse(body).status).toBe(403);
         expect(JSON.parse(body).error).toBeDefined();
         done();
       });
@@ -113,7 +134,6 @@ describe('Server', () => {
         method: 'GET',
       }, (error, response, body) => {
         expect(body).toBeJsonString();
-
         expect(JSON.parse(body).status).toBe(200);
         expect(JSON.parse(body)).validateGetOffices();
         done();
@@ -121,20 +141,49 @@ describe('Server', () => {
     });
   });
 
+  const getOffice = (done) => {
+    Request({
+      headers: { 'content-type': 'application/json' },
+      url: `${baseUrl}/offices/1`,
+      method: 'GET',
+    }, (error, response, body) => {
+      expect(body).toBeJsonString();
+      expect(JSON.parse(body).status).toBe(200);
+      expect(JSON.parse(body)).validateCreateOffice();
+      done();
+    });
+  };
+
   describe('GET /', () => {
     it('Should get a specific office', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/offices/2`,
-        method: 'GET',
-      }, (error, response, body) => {
-        expect(body).toBeJsonString();
+        url: `${baseUrl}/auth/signup`,
+        method: 'POST',
+        body: JSON.stringify({
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: `admin${Math.floor(Math.random() * 1000) + 1}@gmail.com`,
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: true,
+        }),
+      }, (error, response, bdy) => {
+        const authToken = JSON.parse(bdy).data[0].token;
 
-        if (body.status === 200) {
-          expect(JSON.parse(body)).validateCreateOffice();
-        }
-
-        done();
+        Request({
+          headers: { 'content-type': 'application/json', authorization: authToken },
+          url: `${baseUrl}/offices`,
+          method: 'POST',
+          body: JSON.stringify({
+            name: 'Ministers',
+            type: 'federal',
+          }),
+        }, () => {
+          getOffice(done);
+        });
       });
     });
 

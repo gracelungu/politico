@@ -52,14 +52,14 @@ const createUser = async (req, res) => {
   }
 
   // Return the new id
-  const { id } = result.rows[0];
+  const { id, isadmin } = result.rows[0];
   req.body = Object.assign({ id }, req.body);
 
   // Remove the password
   delete req.body.password;
 
   // Siging the token
-  const token = jwt.sign({ email: req.body.email }, secret, { expiresIn: '24h' });
+  const token = jwt.sign({ id, email: req.body.email, isadmin }, secret, { expiresIn: '24h' });
 
   res.status(201).json({
     status: 201,
@@ -96,14 +96,7 @@ const loginUser = async (req, res) => {
 
   try {
     // Verify the token
-    const verified = await jwt.verify(token, secret);
-    if (!verified) {
-      res.status(403).json({
-        status: 403,
-        error: 'The authorization token is invalid',
-      });
-      return;
-    }
+    await jwt.verify(token, secret);
 
     const values = [
       req.body.email,
