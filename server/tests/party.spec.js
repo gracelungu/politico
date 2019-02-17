@@ -159,13 +159,12 @@ describe('PARTY', () => {
         url: `${baseUrl}/parties`,
         method: 'POST',
         body: JSON.stringify({
-          name: `AFDD${Math.floor(Math.random()*100)+1}`,
+          name: `AFDD${Math.floor(Math.random() * 100) + 1}`,
           hqAdress: 'adress',
           logoUrl: 'logourl',
         }),
       }, (err, res, bdy) => {
-        
-        const {id} = JSON.parse(bdy).data[0];
+        const { id } = JSON.parse(bdy).data[0];
 
         Request(
           {
@@ -284,7 +283,7 @@ describe('PARTY', () => {
               name: 'newName',
             }),
           },
-          (error, response, body) => { 
+          (error, response, body) => {
             expect(body).toBeJsonString(body);
             expect(JSON.parse(body).status).toBe(200);
             expect(JSON.parse(body)).validateParty();
@@ -402,7 +401,7 @@ describe('PARTY', () => {
         url: `${baseUrl}/parties/${id}`,
         method: 'DELETE',
       },
-      (error, response, body) => { 
+      (error, response, body) => {
         expect(body).toBeJsonString(body);
 
 
@@ -432,7 +431,6 @@ describe('PARTY', () => {
           isAdmin: true,
         }),
       }, (err, res, bdy) => {
-
         const authToken = JSON.parse(bdy).data[0].token;
 
         Request(
@@ -456,8 +454,8 @@ describe('PARTY', () => {
                   hqAdress: 'adress',
                   logoUrl: 'logourl',
                 }),
-              }, (error, response, body) => { 
-                const {id} = JSON.parse(body).data[0];
+              }, (error, response, body) => {
+                const { id } = JSON.parse(body).data[0];
                 deleteParty(done, authToken, id);
               },
             );
@@ -502,7 +500,6 @@ describe('PARTY', () => {
     });
 
     it('Should return 404 when the id is not a number', (done) => {
-      
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,

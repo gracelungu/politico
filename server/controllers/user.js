@@ -221,4 +221,63 @@ const createCandidate = async (req, res) => {
   }
 };
 
-export { createUser, loginUser, createCandidate };
+const vote = async (req, res) => {
+  // Getting the token
+  const token = req.headers.authorization;
+
+  if (!token) {
+    res.status(403).json({
+      status: 403,
+      error: 'The authorization token is required',
+    });
+    return;
+  }
+
+  try {
+    // Verify the token
+    await jwt.verify(token, secret);
+
+    const voteSchema = schema({
+      office: 'integer',
+      candidate: 'integer',
+      voter: 'integer',
+    }, req.body);
+
+    if (voteSchema.passed === false) {
+      res.status(400).json({
+        status: 400,
+        error: voteSchema.message,
+      });
+      return;
+    }
+
+    const values = [
+      req.body.office,
+      req.body.candidate,
+      req.body.voter,
+    ];
+
+    const result = await userQueries.vote(values);
+    if (result.error) {
+      res.status(result.error.status).json({
+        status: result.error.status,
+        error: result.error.message,
+      });
+      return;
+    }
+
+    res.status(200).json({
+      status: 200,
+      data: [req.body],
+    });
+  } catch (e) {
+    res.status(403).json({
+      status: 403,
+      error: 'The authorization token is invalid',
+    });
+  }
+};
+
+export {
+  createUser, loginUser, createCandidate, vote,
+};

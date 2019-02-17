@@ -181,8 +181,8 @@ describe('Server', () => {
             name: `Ministers${Math.floor(Math.random() * 1000) + 1}`,
             type: 'federal',
           }),
-        }, (error, response, body) => { 
-          const {id} = JSON.parse(body).data[0];
+        }, (error, response, body) => {
+          const { id } = JSON.parse(body).data[0];
           getOffice(done, id);
         });
       });

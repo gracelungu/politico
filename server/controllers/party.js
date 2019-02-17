@@ -49,7 +49,7 @@ const deleteParty = async (req, res) => {
         error: result.error.message,
       });
       return;
-    } 
+    }
 
     if (result.rowCount !== 0) {
       res.status(200).json({
@@ -74,7 +74,6 @@ const deleteParty = async (req, res) => {
 };
 
 const getParty = async (req, res) => {
-
   const idSchema = schema({
     id: 'integer',
   }, { id: parseInt(req.params.id, 10) });
@@ -91,13 +90,13 @@ const getParty = async (req, res) => {
 
   const result = await partyQueries.getParty(values);
 
-    if (result.error) {
-      res.status(result.error.status).json({
-        status: result.error.status,
-        error: result.error.message,
-      });
-      return;
-    } 
+  if (result.error) {
+    res.status(result.error.status).json({
+      status: result.error.status,
+      error: result.error.message,
+    });
+    return;
+  }
 
   if (result.rowCount <= 0) {
     res.status(404).json({
@@ -114,7 +113,6 @@ const getParty = async (req, res) => {
 };
 
 const editParty = async (req, res) => {
-
   const idSchema = schema({
     id: 'integer',
   }, { id: parseInt(req.params.id, 10) });
@@ -164,7 +162,7 @@ const editParty = async (req, res) => {
 
     const values = [
       req.body.name,
-      parseInt(req.params.id, 10)
+      parseInt(req.params.id, 10),
     ];
 
     const result = await partyQueries.editParty(values);
@@ -175,23 +173,20 @@ const editParty = async (req, res) => {
         error: result.error.message,
       });
       return;
-    } 
+    }
 
     if (result.rowCount > 0) {
-
       res.status(200).json({
         status: 200,
         data: result.rows,
       });
       return;
-
     }
 
     res.status(404).json({
       status: 404,
       error: 'Party not found',
     });
-
   } catch (e) {
     res.status(403).json({
       status: 403,
@@ -259,7 +254,7 @@ const createParty = async (req, res) => {
     const values = [
       req.body.name,
       req.body.hqAdress,
-      req.body.logoUrl
+      req.body.logoUrl,
     ];
 
     const result = await partyQueries.create(values);
@@ -270,7 +265,7 @@ const createParty = async (req, res) => {
         error: result.error.message,
       });
       return;
-    } 
+    }
 
     res.status(200).json({
       status: 201,
