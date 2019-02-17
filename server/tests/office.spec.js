@@ -219,13 +219,63 @@ describe('Server', () => {
     it('Should return "wrong http request" when the request is wrong', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
-        url: `${baseUrl}/office`,
+        url: `${baseUrl}/office/1/`,
         method: 'GET',
       }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(400);
         expect(JSON.parse(body).error).toBeDefined();
         done();
+      });
+    });
+  });
+
+  const getResults = (done, id) => {
+    Request({
+      headers: { 'content-type': 'application/json' },
+      url: `${baseUrl}/office/${id}/result`,
+      method: 'GET',
+    }, (error, response, body) => {
+      expect(body).toBeJsonString();
+      expect(JSON.parse(body).status).toBe(200);
+      expect(JSON.parse(body).data).toBeDefined();
+      done();
+    });
+  };
+
+  describe('POST /', () => {
+    it('Should get the results', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/signup`,
+        method: 'POST',
+        body: JSON.stringify({
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: `grace${Math.floor(Math.random() * 1000000) + 1}@gmail.com`,
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: false,
+        }),
+      }, (err, res, bdy) => {
+        const authToken = JSON.parse(bdy).data[0].token;
+
+        const randomId = Math.floor(Math.random() * 1000) + 1;
+
+        Request({
+          headers: { 'content-type': 'application/json', authorization: authToken },
+          url: `${baseUrl}/votes`,
+          method: 'POST',
+          body: JSON.stringify({
+            office: randomId + 1,
+            candidate: randomId,
+            voter: randomId,
+          }),
+        }, () => {
+          getResults(done, randomId + 1);
+        });
       });
     });
   });

@@ -128,4 +128,45 @@ const createOffice = async (req, res) => {
   }
 };
 
-export { getOffice, getOffices, createOffice };
+const getResults = async (req, res) => {
+  const idSchema = schema({
+    id: 'integer',
+  }, { id: parseInt(req.params.id, 10) });
+
+  if (idSchema.passed === false) {
+    res.status(404).json({
+      status: 404,
+      error: idSchema.message,
+    });
+    return;
+  }
+
+  const values = [parseInt(req.params.id, 10)];
+
+  const result = await officeQueries.getResults(values);
+
+  if (result.error) {
+    res.status(result.error.status).json({
+      status: result.error.status,
+      error: result.error.message,
+    });
+    return;
+  }
+
+  if (result.rowCount <= 0) {
+    res.status(404).json({
+      status: 404,
+      error: 'Office not found',
+    });
+    return;
+  }
+
+  res.status(200).json({
+    status: 200,
+    data: result.rows,
+  });
+};
+
+export {
+  getOffice, getOffices, createOffice, getResults,
+};
