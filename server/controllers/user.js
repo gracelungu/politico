@@ -84,11 +84,84 @@ const loginUser = async (req, res) => {
     return;
   }
 
+  const values = [
+    req.body.email,
+  ];
+
+  const result = await userQueries.loginUser(values);
+
+  if (result.error) {
+    res.status(403).json({
+      status: 403,
+      error: result.error.message,
+    });
+    return;
+  }
+
+  if (result.rowCount <= 0) {
+    res.status(404).json({
+      status: 404,
+      error: 'The user does not exist',
+    });
+    return;
+  }
+
+  bcrypt.compare(req.body.password, result.rows[0].password, (error, data) => {
+    if (error) {
+      res.status(500).json({
+        status: 500,
+        error: 'A bcrypt error has occured',
+      });
+      return;
+    }
+
+    if (!data) {
+      res.status(403).json({
+        status: 403,
+        error: 'The token does not match with the user credentials',
+      });
+      return;
+    }
+
+    // Remove the password from the data
+    delete result.rows[0].password;
+
+    const { id, email, isadmin } = result.rows[0];
+
+    // Sign the token
+    const token = jwt.sign({ id, email, isadmin }, secret, { expiresIn: '24h' });
+
+    // The authentification has succeeded
+    res.status(200).json({
+      status: 200,
+      data: [{
+        token,
+        user: result.rows[0],
+      }],
+    });
+  });
+};
+
+const createCandidate = async (req, res) => {
+  // Check if the id is valid
+  const idSchema = schema({
+    id: 'integer',
+  }, { id: parseInt(req.params.id, 10) });
+
+  if (idSchema.passed === false) {
+    res.status(400).json({
+      status: 400,
+      error: idSchema.message,
+    });
+    return;
+  }
+
+  // Getting the token
   const token = req.headers.authorization;
 
   if (!token) {
-    res.status(400).json({
-      status: 400,
+    res.status(403).json({
+      status: 403,
       error: 'The authorization token is required',
     });
     return;
@@ -96,58 +169,49 @@ const loginUser = async (req, res) => {
 
   try {
     // Verify the token
-    await jwt.verify(token, secret);
+    const verified = await jwt.verify(token, secret);
 
-    const values = [
-      req.body.email,
-    ];
-
-    const result = await userQueries.loginUser(values);
-
-    if (result.error) {
+    if (!verified.isadmin) {
       res.status(403).json({
         status: 403,
+        error: 'Only the admin is authorized to create a candidate',
+      });
+      return;
+    }
+
+    const candidateSchema = schema({
+      office: 'integer',
+    }, req.body);
+
+    if (candidateSchema.passed === false) {
+      res.status(400).json({
+        status: 400,
+        error: candidateSchema.message,
+      });
+      return;
+    }
+
+    const values = [
+      parseInt(req.params.id, 10),
+      req.body.office,
+    ];
+
+    const result = await userQueries.registerCandidate(values);
+
+    if (result.error) {
+      res.status(result.error.status).json({
+        status: result.error.status,
         error: result.error.message,
       });
       return;
     }
 
-    if (result.rowCount <= 0) {
-      res.status(404).json({
-        status: 404,
-        error: 'The user does not exist',
-      });
-      return;
-    }
-
-    bcrypt.compare(req.body.password, result.rows[0].password, (error, data) => {
-      if (error) {
-        res.status(500).json({
-          status: 500,
-          error: 'A bcrypt error has occured',
-        });
-        return;
-      }
-
-      if (!data) {
-        res.status(403).json({
-          status: 403,
-          error: 'The token does not match with the user credentials',
-        });
-        return;
-      }
-
-      // Remove the password from the data
-      delete result.rows[0].password;
-
-      // The authentification has succeeded
-      res.status(200).json({
-        status: 200,
-        data: [{
-          token,
-          user: result.rows[0],
-        }],
-      });
+    res.status(201).json({
+      status: 201,
+      data: [{
+        office: req.body.office,
+        user: parseInt(req.params.id, 10),
+      }],
     });
   } catch (e) {
     res.status(403).json({
@@ -157,4 +221,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { createUser, loginUser };
+export { createUser, loginUser, createCandidate };
