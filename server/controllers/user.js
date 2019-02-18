@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import nodemailer from 'nodemailer';
 import schema from '../helpers/schema';
 import userQueries from '../models/user';
-import nodemailer from 'nodemailer';
 import { secret } from '../config/config';
 
 const saltRound = 10;
@@ -144,12 +144,11 @@ const loginUser = async (req, res) => {
 };
 
 const resetPassword = async (req, res) => {
-
   const emailSchema = schema({
-    email: 'email'
+    email: 'email',
   }, req.body);
 
-  if(emailSchema.passed === false){
+  if (emailSchema.passed === false) {
     res.status(400).json({
       status: 400,
       error: emailSchema.message,
@@ -158,21 +157,44 @@ const resetPassword = async (req, res) => {
   }
 
   const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
+    service: 'gmail',
     auth: {
-        user: 'zoe75zgpwznvhva4@ethereal.email',
-        pass: 'Nrk3Ptqt3FxFvKr19K'
-    }
+      user: 'stepslack.grace@gmail.com',
+      pass: '@Walteres2696',
+    },
   });
 
+  // Generating the token for reseting the password
+  const { email } = req.body;
+  const token = await jwt.sign({ email }, secret, { expiresIn: '24h' });
+
   const mailOptions = {
-    from: 'sender@email.com', // sender address
-    to: 'to@email.com', // list of receivers
-    subject: 'Subject of your email', // Subject line
-    html: '<p>Your html here</p>'// plain text body
+    from: 'admin@politico.com',
+    to: req.body.email,
+    subject: 'Politico reset password',
+    html: `
+      <p>User this link to reset your password <a href='https://politico-api-service.herokuapp.com/api/v1/auth/${token}'>Reset link</a> </p>
+    `,
   };
 
+  // Sending the email
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) {
+      res.status(500).json({
+        status: 500,
+        error: 'An error has occured while sending the reset password link',
+      });
+      return;
+    }
+
+    res.status(200).json({
+      status: 200,
+      data: [{
+        message: 'Check your email for password reset link',
+        email,
+      }],
+    });
+  });
 };
 
 const createCandidate = async (req, res) => {
@@ -255,6 +277,20 @@ const createCandidate = async (req, res) => {
 };
 
 const vote = async (req, res) => {
+  const voteSchema = schema({
+    office: 'integer',
+    candidate: 'integer',
+    voter: 'integer',
+  }, req.body);
+
+  if (voteSchema.passed === false) {
+    res.status(400).json({
+      status: 400,
+      error: voteSchema.message,
+    });
+    return;
+  }
+
   // Getting the token
   const token = req.headers.authorization;
 
@@ -269,20 +305,6 @@ const vote = async (req, res) => {
   try {
     // Verify the token
     await jwt.verify(token, secret);
-
-    const voteSchema = schema({
-      office: 'integer',
-      candidate: 'integer',
-      voter: 'integer',
-    }, req.body);
-
-    if (voteSchema.passed === false) {
-      res.status(400).json({
-        status: 400,
-        error: voteSchema.message,
-      });
-      return;
-    }
 
     const values = [
       req.body.office,
@@ -312,5 +334,5 @@ const vote = async (req, res) => {
 };
 
 export {
-  createUser, loginUser, createCandidate, vote, resetPassword
+  createUser, loginUser, createCandidate, vote, resetPassword,
 };

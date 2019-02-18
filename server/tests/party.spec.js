@@ -464,6 +464,41 @@ describe('PARTY', () => {
       });
     });
 
+    it('Should return 403 when the user is not an admin', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/signup`,
+        method: 'POST',
+        body: JSON.stringify({
+          firstname: 'grace',
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: `admin${Math.floor(Math.random() * 1000000) + 1}@gmail.com`,
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: false,
+        }),
+      }, (err, res, bdy) => {
+        const authToken = JSON.parse(bdy).data[0].token;
+
+        Request(
+          {
+            headers: { 'content-type': 'application/json', authorization: authToken },
+            url: `${baseUrl}/parties/1`,
+            method: 'DELETE',
+          },
+          (error, response, body) => {
+            expect(body).toBeJsonString(body);
+
+            expect(JSON.parse(body).status).toBe(403);
+            expect(JSON.parse(body).error).toBeDefined();
+            done();
+          },
+        );
+      });
+    });
+
     it('Should return 404 when the party is not found', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
@@ -497,6 +532,23 @@ describe('PARTY', () => {
           },
         );
       });
+    });
+
+    it('Should return 403 when the authorization token is missing', (done) => {
+      Request(
+        {
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/parties/1`,
+          method: 'DELETE',
+        },
+        (error, response, body) => {
+          expect(body).toBeJsonString(body);
+
+          expect(JSON.parse(body).status).toBe(403);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+        },
+      );
     });
 
     it('Should return 404 when the id is not a number', (done) => {
