@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import schema from '../helpers/schema';
 import userQueries from '../models/user';
+import nodemailer from 'nodemailer';
 import { secret } from '../config/config';
 
 const saltRound = 10;
@@ -142,6 +143,38 @@ const loginUser = async (req, res) => {
   });
 };
 
+const resetPassword = async (req, res) => {
+
+  const emailSchema = schema({
+    email: 'email'
+  }, req.body);
+
+  if(emailSchema.passed === false){
+    res.status(400).json({
+      status: 400,
+      error: emailSchema.message,
+    });
+    return;
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'zoe75zgpwznvhva4@ethereal.email',
+        pass: 'Nrk3Ptqt3FxFvKr19K'
+    }
+  });
+
+  const mailOptions = {
+    from: 'sender@email.com', // sender address
+    to: 'to@email.com', // list of receivers
+    subject: 'Subject of your email', // Subject line
+    html: '<p>Your html here</p>'// plain text body
+  };
+
+};
+
 const createCandidate = async (req, res) => {
   // Check if the id is valid
   const idSchema = schema({
@@ -279,5 +312,5 @@ const vote = async (req, res) => {
 };
 
 export {
-  createUser, loginUser, createCandidate, vote,
+  createUser, loginUser, createCandidate, vote, resetPassword
 };
