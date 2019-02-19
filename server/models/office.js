@@ -1,3 +1,5 @@
+/* eslint no-restricted-syntax: 0 */
+/* eslint no-await-in-loop: 0 */
 import { pool, initialize } from '.';
 
 // Save the user
@@ -102,27 +104,24 @@ const officeQueries = {
 
       const offices = await pool.query('SELECT * FROM votes WHERE office = $1 ', [values[0]]);
       let data = [];
-      
-      for( let office of offices.rows ){
-        const totalResult =  await pool.query('SELECT * FROM votes WHERE office = $1 AND candidate = $2;', [values[0], office.candidate]);
-        
+
+      for (const office of offices.rows) {
+        const totalResult = await pool.query('SELECT * FROM votes WHERE office = $1 AND candidate = $2;', [values[0], office.candidate]);
+
         data.push({
-          office : office.office,
-          candidate : office.candidate,
-          result : totalResult.rows.length
+          office: office.office,
+          candidate: office.candidate,
+          result: totalResult.rows.length,
         });
-        
       }
 
-      //Filtering duplicated objects
-      data = data.filter((item, index, self) =>
-        index === self.findIndex((office) => (
-          office.office === item.office && office.candidate === item.candidate
-        ))
-      );
-      
-      return data; 
-    } catch (e) { 
+      // Filtering duplicated objects
+      data = data.filter((item, index, self) => index === self.findIndex(office => (
+        office.office === item.office && office.candidate === item.candidate
+      )));
+
+      return data;
+    } catch (e) {
       return {
         error: {
           status: 500,

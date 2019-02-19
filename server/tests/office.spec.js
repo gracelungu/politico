@@ -1,5 +1,4 @@
 import Request from 'request';
-import schema from '../helpers/schema';
 import { baseUrl } from '../config/config';
 
 // Starts the server
@@ -18,7 +17,7 @@ describe('Server', () => {
           }
           return { pass: true };
         },
-      })
+      }),
     });
   });
 
@@ -66,10 +65,10 @@ describe('Server', () => {
         body: JSON.stringify({
           type: 'federal',
         }),
-      }, (error, response, body) => { 
+      }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toEqual("The name should be a valid string ");
+        expect(JSON.parse(body).error).toEqual('The name should be a valid string ');
         done();
       });
     });
@@ -83,10 +82,10 @@ describe('Server', () => {
           name: 'Minister1',
           type: 'federal',
         }),
-      }, (error, response, body) => { 
+      }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toEqual("The authorization token is required");
+        expect(JSON.parse(body).error).toEqual('The authorization token is required');
         done();
       });
     });
@@ -100,10 +99,10 @@ describe('Server', () => {
           name: 'Minister2',
           type: 'federal',
         }),
-      }, (error, response, body) => { 
+      }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toEqual("The authorization token is invalid");
+        expect(JSON.parse(body).error).toEqual('The authorization token is invalid');
         done();
       });
     });
@@ -176,10 +175,10 @@ describe('Server', () => {
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices/900`,
         method: 'GET',
-      }, (error, response, body) => { 
+      }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
-        expect(JSON.parse(body).error).toEqual("office not found");
+        expect(JSON.parse(body).error).toEqual('office not found');
         done();
       });
     });
@@ -189,10 +188,10 @@ describe('Server', () => {
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices/id`,
         method: 'GET',
-      }, (error, response, body) => { 
+      }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
-        expect(JSON.parse(body).error).toEqual("The id should be an integer ");
+        expect(JSON.parse(body).error).toEqual('The id should be an integer ');
         done();
       });
     });
@@ -207,7 +206,7 @@ describe('Server', () => {
       }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toEqual("Wrong http request");
+        expect(JSON.parse(body).error).toEqual('Wrong http request');
         done();
       });
     });
@@ -270,7 +269,7 @@ describe('Server', () => {
       }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
-        expect(JSON.parse(body).error).toEqual("Office not found");
+        expect(JSON.parse(body).error).toEqual('Office not found');
         done();
       });
     });
@@ -283,7 +282,7 @@ describe('Server', () => {
       }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toEqual("The id should be an integer ");
+        expect(JSON.parse(body).error).toEqual('The id should be an integer ');
         done();
       });
     });

@@ -34,7 +34,7 @@ const deleteParty = async (req, res) => {
     if (!verified.isadmin) {
       res.status(403).json({
         status: 403,
-        error: 'Only the admin is authorized to edit a party',
+        error: 'Only the admin is authorized to delete a party',
       });
       return;
     }
