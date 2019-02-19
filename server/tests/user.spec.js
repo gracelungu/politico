@@ -2,6 +2,8 @@ import Request from 'request';
 import { baseUrl } from '../config/config';
 
 describe('User ', () => {
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
   beforeEach(() => {
     jasmine.addMatchers({
 
@@ -44,24 +46,29 @@ describe('User ', () => {
         done();
       });
     });
-  });
 
-  it('Should return 403 if the email already exist', (done) => {
-    Request({
-      headers: { 'content-type': 'application/json' },
-      url: `${baseUrl}/auth/signup`,
-      method: 'POST',
-      body: JSON.stringify({
-        firstname: 'grace',
-        lastname: 'lungu',
-        othername: 'birindwa',
-        email: 'grace@gmail.com',
-        password: 'password',
-        phoneNumber: 878623545,
-        passportUrl: 'url',
-        isAdmin: false,
-      }),
-    }, () => {
+    it('Should return 400 when the firstname is missing', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/signup`,
+        method: 'POST',
+        body: JSON.stringify({
+          lastname: 'lungu',
+          othername: 'birindwa',
+          email: `grace${Math.floor(Math.random() * 1000) + 1}@gmail.com`,
+          password: 'password',
+          phoneNumber: 878623545,
+          passportUrl: 'url',
+          isAdmin: false,
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(400);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
+    it('Should return 403 if the email already exist', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -76,10 +83,26 @@ describe('User ', () => {
           passportUrl: 'url',
           isAdmin: false,
         }),
-      }, (error, response, body) => {
-        expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toBeDefined();
-        done();
+      }, () => {
+        Request({
+          headers: { 'content-type': 'application/json' },
+          url: `${baseUrl}/auth/signup`,
+          method: 'POST',
+          body: JSON.stringify({
+            firstname: 'grace',
+            lastname: 'lungu',
+            othername: 'birindwa',
+            email: 'grace@gmail.com',
+            password: 'password',
+            phoneNumber: 878623545,
+            passportUrl: 'url',
+            isAdmin: false,
+          }),
+        }, (error, response, body) => {
+          expect(JSON.parse(body).status).toBe(403);
+          expect(JSON.parse(body).error).toBeDefined();
+          done();
+        });
       });
     });
   });
@@ -338,6 +361,87 @@ describe('User ', () => {
           expect(JSON.parse(body).data).toBeDefined();
           done();
         });
+      });
+    });
+
+    it('Should return 403 when the office is missing', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/votes`,
+        method: 'POST',
+        body: JSON.stringify({
+          candidate: 1,
+          voter: 1,
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(400);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
+    it('Should return 403 when the authorization token is missing', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/votes`,
+        method: 'POST',
+        body: JSON.stringify({
+          office: 1,
+          candidate: 1,
+          voter: 1,
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
+    it('Should return 403 when the authorization token is invalid', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json', authorization: 'invalidToken' },
+        url: `${baseUrl}/votes`,
+        method: 'POST',
+        body: JSON.stringify({
+          office: 1,
+          candidate: 1,
+          voter: 1,
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+  });
+
+  describe('POST', () => {
+    it('Should send the reset password link', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/reset`,
+        method: 'POST',
+        body: JSON.stringify({
+          email: 'gracelungub@gmail.com',
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(200);
+        expect(JSON.parse(body).data).toBeDefined();
+        done();
+      });
+    });
+    it('Should return 400 when the email is invalid', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/reset`,
+        method: 'POST',
+        body: JSON.stringify({
+          email: 'invalidmail.com',
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(400);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
       });
     });
   });

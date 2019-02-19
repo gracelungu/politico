@@ -91,6 +91,22 @@ describe('Server', () => {
       });
     });
 
+    it('Should return 400 when the name is missing', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/offices`,
+        method: 'POST',
+        body: JSON.stringify({
+          type: 'federal',
+        }),
+      }, (error, response, body) => {
+        expect(body).toBeJsonString();
+        expect(JSON.parse(body).status).toBe(400);
+        expect(JSON.parse(body).error).toBeDefined();
+        done();
+      });
+    });
+
     it('Should return 403 when the token is missing', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
