@@ -18,40 +18,7 @@ describe('Server', () => {
           }
           return { pass: true };
         },
-      }),
-      validateCreateOffice: () => ({
-        compare(actual) {
-          const officeSchema = schema({
-            status: 'integer',
-            data: 'array',
-          }, actual);
-          if (officeSchema.passed === false) {
-            const officeSchemaData = schema({
-              id: 'integer',
-              type: 'string',
-              name: 'string',
-            }, actual.data);
-            if (officeSchemaData.passed === false) {
-              return { pass: false, message: officeSchema.message };
-            }
-            return { pass: false, message: officeSchema.message };
-          }
-          return { pass: true };
-        },
-      }),
-      validateGetOffices: () => ({
-        compare(actual) {
-          const officeSchema = schema({
-            status: 'integer',
-            data: 'array',
-          }, actual);
-          if (officeSchema.passed === false) {
-            return { pass: false, message: officeSchema.message };
-          }
-          return { pass: true };
-        },
-      }),
-
+      })
     });
   });
 
@@ -85,7 +52,7 @@ describe('Server', () => {
         }, (error, response, body) => {
           expect(body).toBeJsonString();
           expect(JSON.parse(body).status).toBe(201);
-          expect(JSON.parse(body).data).toBeDefined();
+          expect(JSON.parse(body).data[0].name).toEqual(jasmine.any(String));
           done();
         });
       });
@@ -99,10 +66,10 @@ describe('Server', () => {
         body: JSON.stringify({
           type: 'federal',
         }),
-      }, (error, response, body) => {
+      }, (error, response, body) => { 
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual("The name should be a valid string ");
         done();
       });
     });
@@ -116,10 +83,10 @@ describe('Server', () => {
           name: 'Minister1',
           type: 'federal',
         }),
-      }, (error, response, body) => {
+      }, (error, response, body) => { 
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual("The authorization token is required");
         done();
       });
     });
@@ -133,10 +100,10 @@ describe('Server', () => {
           name: 'Minister2',
           type: 'federal',
         }),
-      }, (error, response, body) => {
+      }, (error, response, body) => { 
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual("The authorization token is invalid");
         done();
       });
     });
@@ -151,7 +118,7 @@ describe('Server', () => {
       }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(200);
-        expect(JSON.parse(body)).validateGetOffices();
+        expect(JSON.parse(body).data[0].name).toEqual(jasmine.any(String));
         done();
       });
     });
@@ -165,7 +132,7 @@ describe('Server', () => {
     }, (error, response, body) => {
       expect(body).toBeJsonString();
       expect(JSON.parse(body).status).toBe(200);
-      expect(JSON.parse(body)).validateCreateOffice();
+      expect(JSON.parse(body).data[0].name).toEqual(jasmine.any(String));
       done();
     });
   };
@@ -209,10 +176,10 @@ describe('Server', () => {
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices/900`,
         method: 'GET',
-      }, (error, response, body) => {
+      }, (error, response, body) => { 
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual("office not found");
         done();
       });
     });
@@ -222,10 +189,10 @@ describe('Server', () => {
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices/id`,
         method: 'GET',
-      }, (error, response, body) => {
+      }, (error, response, body) => { 
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual("The id should be an integer ");
         done();
       });
     });
@@ -240,7 +207,7 @@ describe('Server', () => {
       }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual("Wrong http request");
         done();
       });
     });
@@ -254,7 +221,7 @@ describe('Server', () => {
     }, (error, response, body) => {
       expect(body).toBeJsonString();
       expect(JSON.parse(body).status).toBe(200);
-      expect(JSON.parse(body).data).toBeDefined();
+      expect(JSON.parse(body).data[0].office).toEqual(jasmine.any(Number));
       done();
     });
   };
@@ -303,7 +270,7 @@ describe('Server', () => {
       }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(404);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual("Office not found");
         done();
       });
     });
@@ -316,7 +283,7 @@ describe('Server', () => {
       }, (error, response, body) => {
         expect(body).toBeJsonString();
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual("The id should be an integer ");
         done();
       });
     });

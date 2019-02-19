@@ -75,6 +75,7 @@ HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
 POST | /api/v1/auth/signup | False | Create a user
 POST | /api/v1/auth/login | True | Login the user
+POST | /api/v1/auth/reset | True | Reset the password
 
 #### Endpoints to create, get, edit and delete parties.
 HTTP Method|End point | Public Access|Action

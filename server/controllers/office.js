@@ -153,7 +153,7 @@ const getResults = async (req, res) => {
     return;
   }
 
-  if (result.rowCount <= 0) {
+  if (result.length <= 0) {
     res.status(404).json({
       status: 404,
       error: 'Office not found',
@@ -163,7 +163,7 @@ const getResults = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    data: result.rows,
+    data: result,
   });
 };
 

@@ -416,7 +416,7 @@ describe('User ', () => {
   });
 
   describe('POST', () => {
-    it('Should send the reset password link', (done) => {
+    xit('Should send the reset password link', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/reset`,
@@ -430,7 +430,7 @@ describe('User ', () => {
         done();
       });
     });
-    it('Should return 400 when the email is invalid', (done) => {
+    xit('Should return 400 when the email is invalid', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/reset`,
