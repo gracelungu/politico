@@ -201,7 +201,7 @@ describe('PARTY', () => {
         (error, response, body) => {
           expect(body).toBeJsonString(body);
           expect(JSON.parse(body).status).toBe(200);
-          expect(JSON.parse(body).data[0].name).toEqual(jasmine.any(String));
+          if(JSON.parse(body).data.length > 0){expect(JSON.parse(body).data[0].name).toEqual(jasmine.any(String));}
           done();
         },
       );
