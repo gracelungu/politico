@@ -14,16 +14,16 @@ const initialize = {
   // Create the user table definition
   defineUser: async () => {
     const query = `CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY NOT NULL ,
-            firstname varchar(30),
-            lastname varchar(30),
-            othername varchar(30),
-            email varchar(50),
-            password text,
-            phoneNumber varchar(25),
-            passportUrl text,
-            isAdmin boolean,
-            date date,
-            active boolean);`;
+            firstname varchar(30) NOT NULL,
+            lastname varchar(30) NOT NULL,
+            othername varchar(30) NOT NULL,
+            email varchar(50) NOT NULL,
+            password text NOT NULL,
+            phoneNumber varchar(25) NOT NULL,
+            passportUrl text NOT NULL,
+            isAdmin boolean DEFAULT false,
+            date date DEFAULT NOW(),
+            active boolean DEFAULT true);`;
 
     try {
       const res = await pool.query(query);
@@ -36,10 +36,11 @@ const initialize = {
     }
   },
   defineOffices: async () => {
-    const query = `CREATE TABLE IF NOT EXISTS offices (id SERIAL PRIMARY KEY NOT NULL ,
-          name varchar(100),
-          type varchar(100),
-          date date);`;
+    const query = `CREATE TABLE IF NOT EXISTS offices 
+          (id SERIAL PRIMARY KEY NOT NULL ,
+          name varchar(100) NOT NULL,
+          type varchar(100) NOT NULL,
+          date date DEFAULT NOW());`;
 
     try {
       const res = await pool.query(query);
@@ -52,11 +53,12 @@ const initialize = {
     }
   },
   defineParties: async () => {
-    const query = `CREATE TABLE IF NOT EXISTS parties (id SERIAL PRIMARY KEY NOT NULL ,
-          name varchar(100),
-          hqadress varchar(100),
-          logourl text,
-          date date);`;
+    const query = `CREATE TABLE IF NOT EXISTS parties 
+          (id SERIAL PRIMARY KEY NOT NULL ,
+          name varchar(100) NOT NULL,
+          hqadress varchar(100) NOT NULL,
+          logourl text NOT NULL,
+          date date DEFAULT NOW());`;
 
     try {
       const res = await pool.query(query);
@@ -69,10 +71,11 @@ const initialize = {
     }
   },
   defineCandidates: async () => {
-    const query = `CREATE TABLE IF NOT EXISTS candidates (id SERIAL PRIMARY KEY NOT NULL ,
-          candidate int,
-          office int,
-          date date);`;
+    const query = `CREATE TABLE IF NOT EXISTS candidates 
+          (id SERIAL PRIMARY KEY NOT NULL ,
+          candidate int NOT NULL,
+          office int NOT NULL,
+          date date DEFAULT NOW());`;
 
     try {
       const res = await pool.query(query);
@@ -85,11 +88,12 @@ const initialize = {
     }
   },
   defineVotes: async () => {
-    const query = `CREATE TABLE IF NOT EXISTS votes (id SERIAL PRIMARY KEY NOT NULL ,
-          office int,
-          candidate int,
-          voter int,
-          date date);`;
+    const query = `CREATE TABLE IF NOT EXISTS votes 
+          (id SERIAL PRIMARY KEY NOT NULL ,
+          office int NOT NULL,
+          candidate int NOT NULL,
+          voter int NOT NULL,
+          date date DEFAULT NOW());`;
 
     try {
       const res = await pool.query(query);
