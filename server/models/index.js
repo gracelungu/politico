@@ -80,8 +80,8 @@ const initialize = {
     try {
       const res = await pool.query(query);
       return res;
-    } catch (e) {
-      return {
+    } catch (e) { console.log(e);
+      return { 
         error: true,
         res: 'Failed to create the candidates table',
       };
