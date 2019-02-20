@@ -1,5 +1,4 @@
 import Request from 'request';
-import schema from '../helpers/schema';
 import { baseUrl } from '../config/config';
 
 describe('PARTY', () => {
@@ -11,56 +10,6 @@ describe('PARTY', () => {
             JSON.parse(actual);
           } catch (e) {
             return { pass: false, message: 'Expectes the body to be a json string' };
-          }
-          return { pass: true };
-        },
-      }),
-      validateParty: () => ({
-        compare: (actual) => {
-          const partySchema = schema({
-            status: 'integer',
-            data: 'array',
-          }, actual);
-          if (partySchema.passed === false) {
-            return { pass: false, message: partySchema.message };
-          }
-          return { pass: true };
-        },
-      }),
-      validateGetParty: () => ({
-        compare: (actual) => {
-          const partySchema = schema({
-            status: 'integer',
-            data: 'array',
-          }, actual);
-          if (partySchema.passed === false) {
-            const partySchemaData = schema({
-              id: 'integer',
-              name: 'string',
-              logoUrl: 'string',
-            }, actual.data);
-            if (partySchemaData.passed === false) {
-              return { pass: false, message: partySchema.message };
-            }
-            return { pass: false, message: partySchema.message };
-          }
-          return { pass: true };
-        },
-      }),
-      validateDeleteParty: () => ({
-        compare: (actual) => {
-          const partySchema = schema({
-            status: 'integer',
-            data: 'array',
-          }, actual);
-          if (partySchema.passed === false) {
-            const partySchemaData = schema({
-              message: 'string',
-            }, actual.data);
-            if (partySchemaData.passed === false) {
-              return { pass: false, message: partySchema.message };
-            }
-            return { pass: false, message: partySchema.message };
           }
           return { pass: true };
         },
@@ -83,7 +32,7 @@ describe('PARTY', () => {
       }, (error, response, body) => {
         expect(body).toBeJsonString(body);
         expect(JSON.parse(body).status).toBe(201);
-        expect(JSON.parse(body)).validateParty();
+        expect(JSON.parse(body).data[0].name).toEqual(jasmine.any(String));
 
         Request( // Returns 403 if the name already exist
           {
@@ -99,7 +48,7 @@ describe('PARTY', () => {
             expect(bdy).toBeJsonString(bdy);
 
             expect(JSON.parse(bdy).status).toBe(403);
-            expect(JSON.parse(bdy).error).toBeDefined();
+            expect(JSON.parse(bdy).error).toEqual('A party with the same name already exist');
             done();
           },
         );
@@ -145,7 +94,7 @@ describe('PARTY', () => {
           expect(body).toBeJsonString(body);
 
           expect(JSON.parse(body).status).toBe(400);
-          expect(JSON.parse(body).error).toBeDefined();
+          expect(JSON.parse(body).error).toEqual('The name should be a valid string ');
           done();
         },
       );
@@ -159,7 +108,7 @@ describe('PARTY', () => {
         url: `${baseUrl}/parties`,
         method: 'POST',
         body: JSON.stringify({
-          name: `AFDD${Math.floor(Math.random() * 100) + 1}`,
+          name: `AFDD${Math.floor(Math.random() * 1000) + 1}`,
           hqAdress: 'adress',
           logoUrl: 'logourl',
         }),
@@ -175,7 +124,7 @@ describe('PARTY', () => {
           (error, response, body) => {
             expect(body).toBeJsonString(body);
             expect(JSON.parse(body).status).toBe(200);
-            expect(JSON.parse(body)).validateGetParty();
+            expect(JSON.parse(body).data[0].name).toEqual(jasmine.any(String));
             done();
           },
         );
@@ -232,9 +181,8 @@ describe('PARTY', () => {
           },
           (error, response, body) => {
             expect(body).toBeJsonString(body);
-
             expect(JSON.parse(body).status).toBe(404);
-            expect(JSON.parse(body).error).toBeDefined();
+            expect(JSON.parse(body).error).toEqual('Party not found');
             done();
           },
         );
@@ -252,10 +200,8 @@ describe('PARTY', () => {
         },
         (error, response, body) => {
           expect(body).toBeJsonString(body);
-
-
           expect(JSON.parse(body).status).toBe(200);
-          expect(JSON.parse(body)).validateParty();
+          expect(JSON.parse(body).data[0].name).toEqual(jasmine.any(String));
           done();
         },
       );
@@ -286,7 +232,7 @@ describe('PARTY', () => {
           (error, response, body) => {
             expect(body).toBeJsonString(body);
             expect(JSON.parse(body).status).toBe(200);
-            expect(JSON.parse(body)).validateParty();
+            expect(JSON.parse(body).data[0].name).toEqual(jasmine.any(String));
             done();
           },
         );
@@ -348,7 +294,7 @@ describe('PARTY', () => {
             expect(body).toBeJsonString(body);
 
             expect(JSON.parse(body).status).toBe(404);
-            expect(JSON.parse(body).error).toBeDefined();
+            expect(JSON.parse(body).error).toEqual('Party not found');
             done();
           },
         );
@@ -386,7 +332,7 @@ describe('PARTY', () => {
             expect(body).toBeJsonString(body);
 
             expect(JSON.parse(body).status).toBe(404);
-            expect(JSON.parse(body).error).toBeDefined();
+            expect(JSON.parse(body).error).toEqual('The id should be an integer ');
             done();
           },
         );
@@ -403,12 +349,8 @@ describe('PARTY', () => {
       },
       (error, response, body) => {
         expect(body).toBeJsonString(body);
-
-
         expect(JSON.parse(body).status).toBe(200);
-        expect(JSON.parse(body)).validateDeleteParty();
-
-
+        expect(JSON.parse(body).data[0].message).toEqual('The party was successfully deleted');
         done();
       },
     );
@@ -492,7 +434,7 @@ describe('PARTY', () => {
             expect(body).toBeJsonString(body);
 
             expect(JSON.parse(body).status).toBe(403);
-            expect(JSON.parse(body).error).toBeDefined();
+            expect(JSON.parse(body).error).toEqual('Only the admin is authorized to delete a party');
             done();
           },
         );
@@ -527,7 +469,7 @@ describe('PARTY', () => {
             expect(body).toBeJsonString(body);
 
             expect(JSON.parse(body).status).toBe(404);
-            expect(JSON.parse(body).error).toBeDefined();
+            expect(JSON.parse(body).error).toEqual('Party not found');
             done();
           },
         );
@@ -545,7 +487,7 @@ describe('PARTY', () => {
           expect(body).toBeJsonString(body);
 
           expect(JSON.parse(body).status).toBe(403);
-          expect(JSON.parse(body).error).toBeDefined();
+          expect(JSON.parse(body).error).toEqual('The authorization token is required');
           done();
         },
       );
@@ -579,7 +521,7 @@ describe('PARTY', () => {
             expect(body).toBeJsonString(body);
 
             expect(JSON.parse(body).status).toBe(404);
-            expect(JSON.parse(body).error).toBeDefined();
+            expect(JSON.parse(body).error).toEqual('The id should be an integer ');
             done();
           },
         );

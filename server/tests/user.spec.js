@@ -2,7 +2,7 @@ import Request from 'request';
 import { baseUrl } from '../config/config';
 
 describe('User ', () => {
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
 
   beforeEach(() => {
     jasmine.addMatchers({
@@ -31,7 +31,7 @@ describe('User ', () => {
           firstname: 'grace',
           lastname: 'lungu',
           othername: 'birindwa',
-          email: `grace${Math.floor(Math.random() * 1000) + 1}@gmail.com`,
+          email: `grace${Math.floor(Math.random() * 10000) + 1}@gmail.com`,
           password: 'password',
           phoneNumber: 878623545,
           passportUrl: 'url',
@@ -41,8 +41,7 @@ describe('User ', () => {
         expect(JSON.parse(body).status).toBe(201);
         expect(JSON.parse(body).data).toBeDefined();
         expect(JSON.parse(body).data[0].token).toBeDefined();
-        expect(JSON.parse(body).data[0].user).toBeDefined();
-
+        expect(JSON.parse(body).data[0].user.firstname).toEqual(jasmine.any(String));
         done();
       });
     });
@@ -63,7 +62,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The firstname should be a valid string ');
         done();
       });
     });
@@ -100,7 +99,7 @@ describe('User ', () => {
           }),
         }, (error, response, body) => {
           expect(JSON.parse(body).status).toBe(403);
-          expect(JSON.parse(body).error).toBeDefined();
+          expect(JSON.parse(body).error).toEqual('The email adress already exist');
           done();
         });
       });
@@ -135,7 +134,7 @@ describe('User ', () => {
           }),
         }, (error, response, body) => {
           expect(JSON.parse(body).status).toBe(200);
-          expect(JSON.parse(body).data).toBeDefined();
+          expect(JSON.parse(body).data[0].user.firstname).toEqual(jasmine.any(String));
           done();
         });
       });
@@ -152,7 +151,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(404);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The user does not exist');
         done();
       });
     });
@@ -168,7 +167,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The password length is less than 6 characters');
         done();
       });
     });
@@ -193,18 +192,18 @@ describe('User ', () => {
       }, (err, res, bdy) => {
         const authToken = JSON.parse(bdy).data[0].token;
 
-        const randomId = Math.floor(Math.random() * 1000) + 1;
+        const randomId = Math.floor(Math.random() * 1000000) + 1;
 
         Request({
           headers: { 'content-type': 'application/json', authorization: authToken },
           url: `${baseUrl}/office/${randomId}/register`,
           method: 'POST',
           body: JSON.stringify({
-            office: randomId,
+            candidate: randomId,
           }),
         }, (error, response, body) => {
           expect(JSON.parse(body).status).toBe(201);
-          expect(JSON.parse(body).data).toBeDefined();
+          expect(JSON.parse(body).data[0].office).toEqual(jasmine.any(Number));
           done();
         });
       });
@@ -220,7 +219,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The id should be an integer ');
         done();
       });
     });
@@ -252,7 +251,7 @@ describe('User ', () => {
           }),
         }, (error, response, body) => {
           expect(JSON.parse(body).status).toBe(400);
-          expect(JSON.parse(body).error).toBeDefined();
+          expect(JSON.parse(body).error).toEqual('The candidate should be an integer ');
           done();
         });
       });
@@ -269,7 +268,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The authorization token is required');
         done();
       });
     });
@@ -284,7 +283,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The authorization token is invalid');
         done();
       });
     });
@@ -319,7 +318,7 @@ describe('User ', () => {
           }),
         }, (error, response, body) => {
           expect(JSON.parse(body).status).toBe(403);
-          expect(JSON.parse(body).error).toBeDefined();
+          expect(JSON.parse(body).error).toEqual('Only the admin is authorized to create a candidate');
           done();
         });
       });
@@ -358,7 +357,7 @@ describe('User ', () => {
           }),
         }, (error, response, body) => {
           expect(JSON.parse(body).status).toBe(200);
-          expect(JSON.parse(body).data).toBeDefined();
+          expect(JSON.parse(body).data[0].office).toEqual(jasmine.any(Number));
           done();
         });
       });
@@ -375,7 +374,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The office should be an integer ');
         done();
       });
     });
@@ -392,7 +391,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The authorization token is required');
         done();
       });
     });
@@ -409,7 +408,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(403);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The authorization token is invalid');
         done();
       });
     });
@@ -426,7 +425,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(200);
-        expect(JSON.parse(body).data).toBeDefined();
+        expect(JSON.parse(body).data[0].message).toEqual('Check your email for password reset link');
         done();
       });
     });
@@ -440,7 +439,7 @@ describe('User ', () => {
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(400);
-        expect(JSON.parse(body).error).toBeDefined();
+        expect(JSON.parse(body).error).toEqual('The email adress is invalid');
         done();
       });
     });

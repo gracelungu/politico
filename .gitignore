@@ -3,3 +3,5 @@ coverage/
 karma.conf.js
 coverage/
 .env
+doc.apib
+doc.html

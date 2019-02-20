@@ -235,7 +235,7 @@ const createCandidate = async (req, res) => {
     }
 
     const candidateSchema = schema({
-      office: 'integer',
+      candidate: 'integer',
     }, req.body);
 
     if (candidateSchema.passed === false) {
@@ -264,7 +264,7 @@ const createCandidate = async (req, res) => {
     res.status(201).json({
       status: 201,
       data: [{
-        office: req.body.office,
+        office: req.body.candidate,
         user: parseInt(req.params.id, 10),
       }],
     });
