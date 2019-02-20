@@ -96,7 +96,7 @@ GET | /api/v1/offices/<office_id> | True | Get a specific office
 #### Endpoint to register a candidate
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
-POST | /api/v1/office/<office-id>/register | False | Register a candidate
+POST | /api/v1/office/<office_id>/register | False | Register a candidate
 
 #### Endpoint to vote
 HTTP Method|End point | Public Access|Action
@@ -106,7 +106,7 @@ POST | /api/v1/votes | False | Vote
 #### Endpoint to get results for a single office
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------
-GET | /api/v1/office/<office-id>/result | True | Get office results
+GET | /api/v1/office/<office_id>/result | True | Get office results
 
 ## Author
 
