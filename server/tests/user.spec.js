@@ -2,7 +2,7 @@ import Request from 'request';
 import { baseUrl } from '../config/config';
 
 describe('User ', () => {
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
 
   beforeEach(() => {
     jasmine.addMatchers({
@@ -199,7 +199,7 @@ describe('User ', () => {
           url: `${baseUrl}/office/${randomId}/register`,
           method: 'POST',
           body: JSON.stringify({
-            office: randomId,
+            candidate: randomId,
           }),
         }, (error, response, body) => {
           expect(JSON.parse(body).status).toBe(201);
@@ -251,7 +251,7 @@ describe('User ', () => {
           }),
         }, (error, response, body) => {
           expect(JSON.parse(body).status).toBe(400);
-          expect(JSON.parse(body).error).toEqual('The office should be an integer ');
+          expect(JSON.parse(body).error).toEqual('The candidate should be an integer ');
           done();
         });
       });

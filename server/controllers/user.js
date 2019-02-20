@@ -265,7 +265,7 @@ const createCandidate = async (req, res) => {
       status: 201,
       data: [{
         office: req.body.candidate,
-        user: parseInt(req.params.id, 10)
+        user: parseInt(req.params.id, 10),
       }],
     });
   } catch (e) {
