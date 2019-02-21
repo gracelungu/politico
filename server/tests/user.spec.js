@@ -444,4 +444,17 @@ describe('User ', () => {
       });
     });
   });
+
+  describe('Documentation', () => {
+    it('Should return the documentation page', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/doc`,
+        method: 'GET',
+      }, (error, response, body) => {
+        expect(body).toBeDefined();
+        done();
+      });
+    });
+  });
 });

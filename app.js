@@ -19,6 +19,11 @@ app.use('/', party);
 app.use('/', office);
 app.use('/', user);
 
+//Rendering the Documentation
+app.use('/api/v1/doc',(req, res)=>{
+    res.sendFile(`${__dirname}/doc.html`);
+});
+
 app.use('*',(req, res)=>{
     res.status(400).json({
         status:400,

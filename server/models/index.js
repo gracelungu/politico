@@ -55,7 +55,7 @@ const initialize = {
   defineParties: async () => {
     const query = `CREATE TABLE IF NOT EXISTS parties 
           (id SERIAL PRIMARY KEY NOT NULL ,
-          name varchar(100) NOT NULL,
+          name varchar(100) NOT NULL ,
           hqadress varchar(100) NOT NULL,
           logourl text NOT NULL,
           date date DEFAULT NOW());`;
