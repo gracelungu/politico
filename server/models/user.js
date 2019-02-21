@@ -149,7 +149,7 @@ const userQueries = {
         return {
           error: {
             status: 403,
-            message: 'The user has voted for this candidate on this office',
+            message: 'The user has voted for this office',
           },
         };
       }
