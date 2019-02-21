@@ -117,8 +117,8 @@ const loginUser = async (req, res) => {
     }
 
     if (!data) {
-      res.status(403).json({
-        status: 403,
+      res.status(401).json({
+        status: 401,
         error: 'The token does not match with the user credentials',
       });
       return;
@@ -215,8 +215,8 @@ const createCandidate = async (req, res) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is required',
     });
     return;
@@ -227,8 +227,8 @@ const createCandidate = async (req, res) => {
     const verified = await jwt.verify(token, secret);
 
     if (!verified.isadmin) {
-      res.status(403).json({
-        status: 403,
+      res.status(401).json({
+        status: 401,
         error: 'Only the admin is authorized to create a candidate',
       });
       return;
@@ -269,8 +269,8 @@ const createCandidate = async (req, res) => {
       }],
     });
   } catch (e) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is invalid',
     });
   }
@@ -295,8 +295,8 @@ const vote = async (req, res) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is required',
     });
     return;
@@ -326,8 +326,8 @@ const vote = async (req, res) => {
       data: [req.body],
     });
   } catch (e) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is invalid',
     });
   }

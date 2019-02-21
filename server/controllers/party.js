@@ -20,8 +20,8 @@ const deleteParty = async (req, res) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is required',
     });
     return;
@@ -32,8 +32,8 @@ const deleteParty = async (req, res) => {
     const verified = await jwt.verify(token, secret);
 
     if (!verified.isadmin) {
-      res.status(403).json({
-        status: 403,
+      res.status(401).json({
+        status: 401,
         error: 'Only the admin is authorized to delete a party',
       });
       return;
@@ -66,8 +66,8 @@ const deleteParty = async (req, res) => {
       error: 'Party not found',
     });
   } catch (e) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is invalid',
     });
   }
@@ -141,8 +141,8 @@ const editParty = async (req, res) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is required',
     });
     return;
@@ -153,8 +153,8 @@ const editParty = async (req, res) => {
     const verified = await jwt.verify(token, secret);
 
     if (!verified.isadmin) {
-      res.status(403).json({
-        status: 403,
+      res.status(401).json({
+        status: 401,
         error: 'Only the admin is authorized to edit a party',
       });
       return;
@@ -188,8 +188,8 @@ const editParty = async (req, res) => {
       error: 'Party not found',
     });
   } catch (e) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is invalid',
     });
   }
@@ -232,8 +232,8 @@ const createParty = async (req, res) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is required',
     });
     return;
@@ -244,8 +244,8 @@ const createParty = async (req, res) => {
     const verified = await jwt.verify(token, secret);
 
     if (!verified.isadmin) {
-      res.status(403).json({
-        status: 403,
+      res.status(401).json({
+        status: 401,
         error: 'Only the admin is authorized to create a party',
       });
       return;
@@ -272,8 +272,8 @@ const createParty = async (req, res) => {
       data: result.rows,
     });
   } catch (e) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is invalid',
     });
   }

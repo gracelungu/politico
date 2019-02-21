@@ -70,6 +70,11 @@ Make sure you have logged in to heroku
  $ git push heroku develop:master
 ```
 
+#### The documentation endpoint
+HTTP Method|End point | Public Access|Action
+-----------|----------|--------------|------
+GET | /api/v1/doc | True | Documentation
+
 #### Endpoints to authentificate the user
 HTTP Method|End point | Public Access|Action
 -----------|----------|--------------|------

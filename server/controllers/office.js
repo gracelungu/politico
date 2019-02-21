@@ -77,8 +77,8 @@ const createOffice = async (req, res) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is required',
     });
     return;
@@ -89,8 +89,8 @@ const createOffice = async (req, res) => {
     const verified = await jwt.verify(token, secret);
 
     if (!verified.isadmin) {
-      res.status(403).json({
-        status: 403,
+      res.status(401).json({
+        status: 401,
         error: 'Only the admin is authorized to create an office',
       });
       return;
@@ -121,8 +121,8 @@ const createOffice = async (req, res) => {
       data: [office],
     });
   } catch (e) {
-    res.status(403).json({
-      status: 403,
+    res.status(401).json({
+      status: 401,
       error: 'The authorization token is invalid',
     });
   }
