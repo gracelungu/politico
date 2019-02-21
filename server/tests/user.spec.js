@@ -421,7 +421,7 @@ describe('User ', () => {
         url: `${baseUrl}/auth/reset`,
         method: 'POST',
         body: JSON.stringify({
-          email: 'gracelungub@gmail.com',
+          email: 'grace@gmail.com',
         }),
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(200);
@@ -440,6 +440,20 @@ describe('User ', () => {
       }, (error, response, body) => {
         expect(JSON.parse(body).status).toBe(400);
         expect(JSON.parse(body).error).toEqual('The email adress is invalid');
+        done();
+      });
+    });
+    it('Should return 400 when the email does not exist', (done) => {
+      Request({
+        headers: { 'content-type': 'application/json' },
+        url: `${baseUrl}/auth/reset`,
+        method: 'POST',
+        body: JSON.stringify({
+          email: 'idontexist@gmail.com',
+        }),
+      }, (error, response, body) => {
+        expect(JSON.parse(body).status).toBe(404);
+        expect(JSON.parse(body).error).toEqual('No user is registered with this email');
         done();
       });
     });

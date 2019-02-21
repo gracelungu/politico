@@ -156,6 +156,16 @@ const resetPassword = async (req, res) => {
     return;
   }
 
+  const emailExist = await userQueries.emailExist([req.body.email]);
+
+  if (!emailExist) {
+    res.status(404).json({
+      status: 404,
+      error: 'No user is registered with this email',
+    });
+    return;
+  }
+
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -247,8 +257,8 @@ const createCandidate = async (req, res) => {
     }
 
     const values = [
+      parseInt(req.body.candidate, 10),
       parseInt(req.params.id, 10),
-      req.body.office,
     ];
 
     const result = await userQueries.registerCandidate(values);
