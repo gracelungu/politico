@@ -258,7 +258,7 @@ describe('User ', () => {
     });
 
 
-    it('Should return 403 when the authorization token is missing', (done) => {
+    it('Should return 401 when the authorization token is missing', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/office/1/register`,
@@ -267,13 +267,13 @@ describe('User ', () => {
           office: '1',
         }),
       }, (error, response, body) => {
-        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).status).toBe(401);
         expect(JSON.parse(body).error).toEqual('The authorization token is required');
         done();
       });
     });
 
-    it('Should return 403 when the authorization token is invalid', (done) => {
+    it('Should return 401 when the authorization token is invalid', (done) => {
       Request({
         headers: { 'content-type': 'application/json', authorization: 'invalidTtoken' },
         url: `${baseUrl}/office/1/register`,
@@ -282,14 +282,14 @@ describe('User ', () => {
           office: '1',
         }),
       }, (error, response, body) => {
-        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).status).toBe(401);
         expect(JSON.parse(body).error).toEqual('The authorization token is invalid');
         done();
       });
     });
 
 
-    it('Should return 403 when the user is not an admin', (done) => {
+    it('Should return 401 when the user is not an admin', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -317,7 +317,7 @@ describe('User ', () => {
             office: randomId,
           }),
         }, (error, response, body) => {
-          expect(JSON.parse(body).status).toBe(403);
+          expect(JSON.parse(body).status).toBe(401);
           expect(JSON.parse(body).error).toEqual('Only the admin is authorized to create a candidate');
           done();
         });
@@ -379,7 +379,7 @@ describe('User ', () => {
       });
     });
 
-    it('Should return 403 when the authorization token is missing', (done) => {
+    it('Should return 401 when the authorization token is missing', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/votes`,
@@ -390,13 +390,13 @@ describe('User ', () => {
           voter: 1,
         }),
       }, (error, response, body) => {
-        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).status).toBe(401);
         expect(JSON.parse(body).error).toEqual('The authorization token is required');
         done();
       });
     });
 
-    it('Should return 403 when the authorization token is invalid', (done) => {
+    it('Should return 401 when the authorization token is invalid', (done) => {
       Request({
         headers: { 'content-type': 'application/json', authorization: 'invalidToken' },
         url: `${baseUrl}/votes`,
@@ -407,7 +407,7 @@ describe('User ', () => {
           voter: 1,
         }),
       }, (error, response, body) => {
-        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).status).toBe(401);
         expect(JSON.parse(body).error).toEqual('The authorization token is invalid');
         done();
       });

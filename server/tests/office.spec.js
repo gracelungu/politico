@@ -73,7 +73,7 @@ describe('Server', () => {
       });
     });
 
-    it('Should return 403 when the token is missing', (done) => {
+    it('Should return 401 when the token is missing', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/offices`,
@@ -84,13 +84,13 @@ describe('Server', () => {
         }),
       }, (error, response, body) => {
         expect(body).toBeJsonString();
-        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).status).toBe(401);
         expect(JSON.parse(body).error).toEqual('The authorization token is required');
         done();
       });
     });
 
-    it('Should return 403 when the token is invalid', (done) => {
+    it('Should return 401 when the token is invalid', (done) => {
       Request({
         headers: { 'content-type': 'application/json', authorization: 'invalidtoken' },
         url: `${baseUrl}/offices`,
@@ -101,7 +101,7 @@ describe('Server', () => {
         }),
       }, (error, response, body) => {
         expect(body).toBeJsonString();
-        expect(JSON.parse(body).status).toBe(403);
+        expect(JSON.parse(body).status).toBe(401);
         expect(JSON.parse(body).error).toEqual('The authorization token is invalid');
         done();
       });

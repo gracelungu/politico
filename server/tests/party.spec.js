@@ -408,7 +408,7 @@ describe('PARTY', () => {
       });
     });
 
-    it('Should return 403 when the user is not an admin', (done) => {
+    it('Should return 401 when the user is not an admin', (done) => {
       Request({
         headers: { 'content-type': 'application/json' },
         url: `${baseUrl}/auth/signup`,
@@ -435,7 +435,7 @@ describe('PARTY', () => {
           (error, response, body) => {
             expect(body).toBeJsonString(body);
 
-            expect(JSON.parse(body).status).toBe(403);
+            expect(JSON.parse(body).status).toBe(401);
             expect(JSON.parse(body).error).toEqual('Only the admin is authorized to delete a party');
             done();
           },
@@ -478,7 +478,7 @@ describe('PARTY', () => {
       });
     });
 
-    it('Should return 403 when the authorization token is missing', (done) => {
+    it('Should return 401 when the authorization token is missing', (done) => {
       Request(
         {
           headers: { 'content-type': 'application/json' },
@@ -488,7 +488,7 @@ describe('PARTY', () => {
         (error, response, body) => {
           expect(body).toBeJsonString(body);
 
-          expect(JSON.parse(body).status).toBe(403);
+          expect(JSON.parse(body).status).toBe(401);
           expect(JSON.parse(body).error).toEqual('The authorization token is required');
           done();
         },
