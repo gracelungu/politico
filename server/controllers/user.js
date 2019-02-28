@@ -170,7 +170,7 @@ const resetPassword = async (req, res) => {
     service: 'gmail',
     auth: {
       user: 'stepslack.grace@gmail.com',
-      pass: '@Walteres2696',
+      pass: 'yourpassword',
     },
   });
 
