@@ -1,7 +1,6 @@
 // External modules
 import express from "express";
 import bodyParser from "body-parser";
-import cors from "cors";
 
 // Internal modules
 import party from "./server/routes/party";
@@ -16,7 +15,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Allow origins with cors
-app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 // Express routing
 app.use("/", party);

@@ -21,7 +21,6 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "cors": "^2.8.5",
     "coveralls": "^3.0.2",
     "eslint": "^5.15.2",
     "eslint-config-airbnb-base": "^13.1.0",
